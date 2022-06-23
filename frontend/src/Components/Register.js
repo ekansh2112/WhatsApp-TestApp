@@ -9,7 +9,7 @@ export default function Login() {
 					<h2 className="font-semibold text-4xl mb-3">Register</h2>
 					<p className="font-light text-sm mb-6">Before registering here, create an WhatsApp App in you Facebook Developer Account.</p>
 					<label className="text-md mb-3">Your Mobile Number</label>
-					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="/^[+]91(9|8|7)\d{9}$/" id="number" required></input>
+					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="[6789][0-9]{9}" maxlength="10" id="number" required></input>
 					<label className="text-md mb-3">WhatsApp Business App ID (WABA ID)</label>
 					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" id="wabaid" required></input>
 					<label className="text-md mb-3">Permanent Access Token</label>

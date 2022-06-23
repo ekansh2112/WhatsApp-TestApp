@@ -8,7 +8,7 @@ export default function Login() {
 				<div className="flex flex-col justify-center ml-16">
 					<h2 className="font-semibold text-4xl mb-16">Login</h2>
 					<label className="text-md mb-3">Your Mobile Number</label>
-					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="/^[+]91(9|8|7)\d{9}$/" id="number" required></input>
+					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="[6789][0-9]{9}" maxlength="10" id="number" required></input>
 					<label className="text-md mb-3">Password</label>
 					<input className="rounded-lg h-8 w-60 mb-12 px-3 focus:outline-none text-sm font-light py-2" type="password" id="password" required></input>
 					<button className="rounded-full h-8 w-60 bg-yellow-400 text-sm mb-6">LOGIN</button>
