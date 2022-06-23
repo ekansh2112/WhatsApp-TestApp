@@ -1,15 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Redirect, Navigate } from "react-router-dom";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Pages/Home";
 const ReactRoutes = () => {
+	const [loggedIn, setLoggedIn] = useState(1);
 	return (
 		<Router>
 			<Routes>
-				<Route exact path="/home" element={<Home />} />
-				<Route exact path="/" element={<Login/>} />
-				<Route exact path="/Register" element={<Register/>} />
+				<Route exact path="/" element={loggedIn ? <Navigate to="/login" /> : <Home />} />
+				<Route exact path="/login" element={<Login />} />
+				<Route exact path="/register" element={<Register />} />
 			</Routes>
 		</Router>
 	);
