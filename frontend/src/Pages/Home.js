@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Base from "../Base";
 import ActiveChat from "../Components/ActiveChat";
 import ChatSection from "../Components/ChatSection";
@@ -8,12 +8,12 @@ export default function Home() {
 	const disp = () => {
 		let arr = [];
 		for (let i = 0; i < 8; i++) {
-			if (i == 7) {
-				arr.push(<RecentChat last={true} />);
-			} else if (i == 2) {
-				arr.push(<RecentChat second={true} />);
+			if (i === 7) {
+				arr.push(<RecentChat key={i} last={true} />);
+			} else if (i === 2) {
+				arr.push(<RecentChat key={i} second={true} />);
 			} else {
-				arr.push(<RecentChat />);
+				arr.push(<RecentChat key={i} />);
 			}
 		}
 		return arr;

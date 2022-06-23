@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 export default function Navbar() {
 	const [viewDropDown, setViewDropDown] = useState(false);
 	return (
@@ -19,7 +20,9 @@ export default function Navbar() {
 									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contacts</a>
 									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Broadcast Lists</a>
-									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Settings</a>
+									<Link className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/settings">
+										Settings
+									</Link>
 								</div>
 							</div>
 						</div>
@@ -29,7 +32,6 @@ export default function Navbar() {
 								className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
 							>
 								<span className="sr-only">View notifications</span>
-								{/* Heroicon name: outline/bell */}
 								<svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" aria-hidden="true">
 									<path
 										strokeLinecap="round"
@@ -38,7 +40,6 @@ export default function Navbar() {
 									/>
 								</svg>
 							</button>
-							{/* Profile dropdown */}
 							<div className="ml-3 relative">
 								<div>
 									<button
@@ -58,26 +59,29 @@ export default function Navbar() {
 										<img
 											className="h-8 w-8 rounded-full"
 											src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-											alt
+											alt="navbar image"
 										/>
 									</button>
 								</div>
 								{viewDropDown && (
 									<div
-										className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+										className="origin-top-right absolute flex flex-col justify-center right-0 mt-2 w-60 h-52 rounded-lg shadow-lg p-3 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
 										role="menu"
 										aria-orientation="vertical"
 										aria-labelledby="user-menu-button"
 										tabIndex={-1}
 									>
-										<a className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">
-											Your Profile
+										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">
+											PROFILE
 										</a>
-										<a className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">
-											Settings
+										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">
+											DELETE CONTACTS
 										</a>
-										<a className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-2">
-											Sign out
+										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-2">
+											DELETE BROADCAST LISTS
+										</a>
+										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-2">
+											SIGN OUT
 										</a>
 									</div>
 								)}
