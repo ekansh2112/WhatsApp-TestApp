@@ -18,6 +18,7 @@ export default function Login(){
                             </label>
                             <input 
                                 type="tel"
+                                maxLength={13}
                                 id="number"
                                 pattern="[0,9]{10}"
                                 placeholder="123-45-678"

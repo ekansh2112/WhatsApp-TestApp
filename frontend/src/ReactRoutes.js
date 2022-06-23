@@ -8,8 +8,8 @@ const ReactRoutes = () => {
 		<Router>
 			<Routes>
 				<Route exact path="/home" element={<Home />} />
-				<Route exact path="/Login" element={<Login/>} />
-				<Route exact path="/" element={<Register/>} />
+				<Route exact path="/" element={<Login/>} />
+				<Route exact path="/Register" element={<Register/>} />
 			</Routes>
 		</Router>
 	);

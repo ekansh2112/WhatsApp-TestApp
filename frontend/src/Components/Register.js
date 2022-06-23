@@ -20,6 +20,7 @@ export default function Register(){
                                 Your Mobile Number
                             </label>
                             <input 
+                                maxLength={13}
                                 type="tel"
                                 id="number"
                                 pattern="[0,9]{10}"
@@ -34,7 +35,7 @@ export default function Register(){
                                 className="rounded px-1"
                                 id="password">
                             </input>
-                            <label htmlFor="password" className="font-semibold text-xm pt-5 pb-2 focus:outline-none block sm:text-sm rounded-lg">
+                            <label htmlFor="password" className="font-semibold text-xs pt-5 pb-2 focus:outline-none block rounded-lg">
                                 Permanent Access Token
                             </label>
                             <input 
