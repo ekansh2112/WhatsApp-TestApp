@@ -78,18 +78,18 @@ export default function Navbar() {
 										aria-labelledby="user-menu-button"
 										tabIndex={-1}
 									>
-										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">
+										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/profile" role="menuitem" tabIndex={-1} id="user-menu-item-0">
 											PROFILE
-										</a>
-										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">
+										</Link>
+										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/deletecontacts" role="menuitem" tabIndex={-1} id="user-menu-item-1">
 											DELETE CONTACTS
-										</a>
-										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-2">
+										</Link>
+										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/deletebroadcastlists" role="menuitem" tabIndex={-1} id="user-menu-item-2">
 											DELETE BROADCAST LISTS
-										</a>
-										<a className="block px-4 py-3 font-medium text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-2">
+										</Link>
+										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/login" role="menuitem" tabIndex={-1} id="user-menu-item-2">
 											SIGN OUT
-										</a>
+										</Link>
 									</div>
 								)}
 							</div>

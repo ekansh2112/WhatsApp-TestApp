@@ -6,17 +6,15 @@ export default function Login() {
 		<>
 			<div className="flex m-16 justify-between px-10 shadow-2xl rounded-lg bg-slate-300" style={{ height: "700px" }}>
 				<div className="flex flex-col justify-center ml-16">
-					<form action="" method="post">
-						<h2 className="font-semibold text-4xl mb-3">Register</h2>
-						<p className="font-light text-sm mb-6">Before registering here, create an WhatsApp App in you Facebook Developer Account.</p>
-						<label className="text-md mb-3">Your Mobile Number</label>
-						<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="[6789][0-9]{9}" maxLength="10" id="number" required></input>
-						<label className="text-md mb-3">WhatsApp Business App ID (WABA ID)</label>
-						<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" id="wabaid" required></input>
-						<label className="text-md mb-3">Permanent Access Token</label>
-						<input className="rounded-lg h-8 w-60 mb-10 px-3 focus:outline-none text-sm font-light py-2" type="text" id="patoken" required></input>
-						<button className="rounded-full h-8 w-60 bg-yellow-400 text-sm mb-6">REGISTER</button>
-					</form>
+					<h2 className="font-semibold text-4xl mb-3">Register</h2>
+					<p className="font-light text-sm mb-6">Before registering here, create an WhatsApp App in you Facebook Developer Account.</p>
+					<label className="text-md mb-3">Your Mobile Number</label>
+					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" pattern="[6789][0-9]{9}" maxLength="10" id="number" required></input>
+					<label className="text-md mb-3">WhatsApp Business App ID (WABA ID)</label>
+					<input className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2" type="text" id="wabaid" required></input>
+					<label className="text-md mb-3">Permanent Access Token</label>
+					<input className="rounded-lg h-8 w-60 mb-10 px-3 focus:outline-none text-sm font-light py-2" type="text" id="patoken" required></input>
+					<button className="rounded-full h-8 w-60 bg-yellow-400 text-sm mb-6">REGISTER</button>
 					<div className="mb-6 mt-4">
 						<hr className="border-slate-400 w-72 mb-6"></hr>
 						<p className="text-sm font-light">

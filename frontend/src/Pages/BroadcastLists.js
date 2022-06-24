@@ -6,7 +6,7 @@ export default function BroadcastLists() {
 	const disp = () => {
 		let arr = [];
 		for (let i = 0; i < 12; i++) {
-			arr.push(<List key={i} broadcastlists={true} />);
+			arr.push(<List key={i} needMB={true} />);
 		}
 		return arr;
 	};
