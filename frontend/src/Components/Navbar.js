@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ChatAltIcon } from "@heroicons/react/solid";
 export default function Navbar() {
 	const [viewDropDown, setViewDropDown] = useState(false);
 	return (
@@ -14,12 +15,18 @@ export default function Navbar() {
 							</div>
 							<div className="hidden sm:block sm:ml-6">
 								<div className="flex space-x-4">
-									<a className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">
-										New Message
-									</a>
-									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contacts</a>
-									<a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Broadcast Lists</a>
+									<Link className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/newmessage">
+										<ChatAltIcon className="h-5 w-5" />
+									</Link>
+									<Link className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page" to="/">
+										Home
+									</Link>
+									<Link className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/contacts">
+										Contacts
+									</Link>
+									<Link className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/broadcastlists">
+										Broadcast Lists
+									</Link>
 									<Link className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/settings">
 										Settings
 									</Link>

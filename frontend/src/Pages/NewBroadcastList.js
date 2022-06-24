@@ -1,14 +1,13 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/solid";
-import RecentChat from "../Components/RecentChat";
-import BroadcastContact from "../Components/BroadcastContact";
+import Contact from "../Components/Contact";
 export default function NewBroadcastList() {
-    const list = () => {
+	const list = () => {
 		let arr = [];
 		for (let i = 0; i < 8; i++) {
-				arr.push(<BroadcastContact />);
-			}
+			arr.push(<Contact />);
+		}
 		return arr;
 	};
 	return (

@@ -16,5 +16,8 @@ input[type="number"] {
 }
 .crossbutton {
 	top: 135px;
-	left: 985px;
+	left: 935px;
+	background-color: white;
+	color: black;
+	border-radius: 100%;
 }
