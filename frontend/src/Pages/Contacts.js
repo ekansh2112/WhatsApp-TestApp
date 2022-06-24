@@ -6,7 +6,7 @@ export default function Contacts() {
 	const disp = () => {
 		let arr = [];
 		for (let i = 0; i < 12; i++) {
-			arr.push(<Contact key={i} contacts={true} />);
+			arr.push(<Contact key={i} needMB={true} />);
 		}
 		return arr;
 	};

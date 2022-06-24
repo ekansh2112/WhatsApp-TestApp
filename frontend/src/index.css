@@ -1,22 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
-
-/* Firefox */
 input[type="number"] {
 	-moz-appearance: textfield;
 }
+
 .myshadow {
-	box-shadow: 0px 0px 10px 1px darkgrey;
+	box-shadow: 0px 0px 5px 1px lightgray;
 }
 .crossbutton {
 	top: 135px;
 	left: 935px;
+	background-color: white;
+	color: black;
+	border-radius: 100%;
+}
+.crossbutton1 {
+	top: 110px;
+	left: 960px;
+	background-color: white;
+	color: black;
+	border-radius: 100%;
+}
+.crossbutton2 {
+	top: 135px;
+	left: 985px;
 	background-color: white;
 	color: black;
 	border-radius: 100%;

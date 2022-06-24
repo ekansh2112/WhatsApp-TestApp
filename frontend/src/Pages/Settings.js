@@ -1,13 +1,13 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/solid";
 export default function Settings() {
 	return (
 		<>
 			<section className="flex justify-center items-center h-screen">
 				<div className="rounded-lg p-7 flex flex-col justify-center myshadow" style={{ height: "500px", width: "500px" }}>
-					<Link className="absolute crossbutton" to="/">
-						<XCircleIcon className="h-8 w-8 text-blue-500" />
+					<Link className="fixed crossbutton2" to="/">
+						<XCircleIcon className="h-8 w-8" />
 					</Link>
 					<h2 className="font-medium text-lg mb-3 text-center">To Receive Message Enter These Two Fields</h2>
 					<form action="" method="post" className="flex flex-col justify-between">
