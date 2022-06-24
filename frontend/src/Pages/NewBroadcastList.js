@@ -2,11 +2,12 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/solid";
 import RecentChat from "../Components/RecentChat";
+import BroadcastContact from "../Components/BroadcastContact";
 export default function NewBroadcastList() {
     const list = () => {
 		let arr = [];
 		for (let i = 0; i < 8; i++) {
-				arr.push(<RecentChat />);
+				arr.push(<BroadcastContact />);
 			}
 		return arr;
 	};
@@ -33,9 +34,8 @@ export default function NewBroadcastList() {
 							type="search"
 							id="search"
 							placeholder="Search Contact"
-							required
 						></input>
-						<div className="overflow-auto mx-6 mb-5" style={{ height: "200px", width: "400px" }}>
+						<div className="overflow-auto mx-6 mb-5" style={{ height: "250px", width: "400px" }}>
 							{list()}
 						</div>
 						<button className="rounded-full h-8 w-60 bg-yellow-400 mx-auto mt-3 text-sm mb-4">Save BroadCast List</button>
