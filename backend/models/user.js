@@ -39,14 +39,24 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		//TODO: add phone number validator
 		required: true,
+		unique: true,
 	},
-	phoneNumberID: String,
+	phoneNumberID: {
+		type: String,
+		default: "",
+	},
 	businessProfile: {
 		type: businessProfileSchema,
 		default: {},
 	},
-	hash: String,
-	salt: String,
+	hash: {
+		type: String,
+		default: "",
+	},
+	salt: {
+		type: String,
+		default: "",
+	},
 });
 
 // Method to set salt and hash the password for a user
