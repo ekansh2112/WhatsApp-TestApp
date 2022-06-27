@@ -1,29 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const businessProfileSchema = new mongoose.Schema({
-	address: {
-		type: String,
-		default: "",
-	},
-	description: {
-		type: String,
-		default: "",
-	},
-	vertical: {
-		//business industry
-		type: String,
-		default: "",
-	},
-	websites: {
-		type: Array,
-		default: [],
-	},
-	email: {
-		//TODO: add email validator
-		type: String,
-	},
-});
 const UserSchema = new mongoose.Schema({
 	wabaID: {
 		type: String,
@@ -39,14 +16,23 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		//TODO: add phone number validator
 		required: true,
+		unique: true,
 	},
-	phoneNumberID: String,
+	phoneNumberID: {
+		type: String,
+		default: "",
+	},
 	businessProfile: {
-		type: businessProfileSchema,
-		default: {},
+		type: mongoose.Schema.Types.Mixed,
 	},
-	hash: String,
-	salt: String,
+	hash: {
+		type: String,
+		default: "",
+	},
+	salt: {
+		type: String,
+		default: "",
+	},
 });
 
 // Method to set salt and hash the password for a user
