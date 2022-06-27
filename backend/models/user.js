@@ -1,29 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const businessProfileSchema = new mongoose.Schema({
-	address: {
-		type: String,
-		default: "",
-	},
-	description: {
-		type: String,
-		default: "",
-	},
-	vertical: {
-		//business industry
-		type: String,
-		default: "",
-	},
-	websites: {
-		type: Array,
-		default: [],
-	},
-	email: {
-		//TODO: add email validator
-		type: String,
-	},
-});
 const UserSchema = new mongoose.Schema({
 	wabaID: {
 		type: String,
@@ -46,8 +23,7 @@ const UserSchema = new mongoose.Schema({
 		default: "",
 	},
 	businessProfile: {
-		type: businessProfileSchema,
-		default: {},
+		type: mongoose.Schema.Types.Mixed,
 	},
 	hash: {
 		type: String,

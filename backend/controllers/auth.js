@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { getBusinessProfile } = require("./user");
 const axios = require("axios").default;
 require("dotenv").config();
 
@@ -22,7 +23,7 @@ exports.signUp = async (req, res) => {
 				Authorization: `Bearer ${userData.accessToken}`,
 			},
 		})
-		.then((wares) => {
+		.then(async (wares) => {
 			// console.log("_________________", wares.status);
 			if (wares.status != 200) {
 				return res.status(wares.status).json({
@@ -34,11 +35,23 @@ exports.signUp = async (req, res) => {
 			const arr = wares.data.data;
 			if (arr.find((number) => req.body.phoneNumber === number.display_phone_number)) {
 				const phoneNumberID = arr.find((number) => req.body.phoneNumber === number.display_phone_number).id;
+				var profileData = {};
+				await getBusinessProfile(phoneNumberID, userData.accessToken, (wares) => {
+					if (wares.status != 200) {
+						return res.status(500).json({
+							stat: "error",
+							msg: "Something went wrong, please try again.",
+						});
+					}
+					profileData = wares.data.data?.[0];
+				});
 				const user = new User({
 					...userData,
 					phoneNumber: req.body.phoneNumber,
 					phoneNumberID,
+					businessProfile: profileData,
 				});
+
 				user.setPassword(req.body.password);
 				user.save((err, newuser) => {
 					// console.log("_______err,newuser____________", err, newuser);
