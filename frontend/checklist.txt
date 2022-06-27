@@ -1,3 +1,5 @@
 1. Cross button position
-2. logo
-3. check and add all forms
+2. logo - aaj
+3. check and add all forms - aaj
+4. More components and less components - aaj
+5. Image Profile Update

@@ -6,7 +6,7 @@ export default function NewMessage() {
 	const disp = () => {
 		let arr = [];
 		for (let i = 0; i < 12; i++) {
-			arr.push(<Contact key={i} needMB={true} needCheckBox={true} />);
+			arr.push(<Contact key={i} needMB={true} needRadio={true} />);
 		}
 		return arr;
 	};
@@ -18,12 +18,11 @@ export default function NewMessage() {
 						<XCircleIcon className="h-8 w-8" />
 					</Link>
 					<div className="flex flex-col">
-						<label className="text-sm font-normal mb-2">New Message</label>
 						<input
 							className="rounded-lg myshadow h-9 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="text"
 							id="newmessage"
-							placeholder="Type message here..."
+							placeholder="Message"
 							required
 						></input>
 					</div>

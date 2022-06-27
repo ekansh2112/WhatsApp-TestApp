@@ -12,11 +12,16 @@ input[type="number"] {
 }
 
 .myshadow {
-	box-shadow: 0px 0px 5px 1px lightgray;
+	box-shadow: 0px 0px 4px 1px lightgray;
 }
 .crossbutton {
 	top: 135px;
 	left: 935px;
+	background-color: white;
+	color: black;
+	border-radius: 100%;
+}
+.crossbutton3 {
 	background-color: white;
 	color: black;
 	border-radius: 100%;
@@ -34,4 +39,25 @@ input[type="number"] {
 	background-color: white;
 	color: black;
 	border-radius: 100%;
+}
+.img-wrap {
+	position: relative;
+	width: 100px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+.uploadbutton {
+	position: absolute;
+	padding: 30px;
+	color: #fff;
+	width: 100px;
+	opacity: 0;
+	transition: 0.25s all ease;
+	background: #000000;
+}
+.img-upload:hover .uploadbutton {
+	opacity: 1;
+}
+.myselect {
+	border-right: 16px solid transparent;
 }
