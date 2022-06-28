@@ -91,7 +91,7 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
-	const user = await User.findOne({ wabaId: req.body.phoneNumber });
+	const user = await User.findOne({ wabaID: req.body.phoneNumber });
 	if (!user) {
 		return res.status(404).json({
 			stat: "error",
@@ -137,6 +137,13 @@ exports.signIn = async (req, res) => {
 					accessToken: userData.accessToken,
 					phoneNumberID: userData.phoneNumberID,
 				},
+			});
+		})
+		.catch((err) => {
+			console.log(err.response.status);
+			return res.status(err.response.status).json({
+				stat: "error",
+				message: "Something went wrong, please try again.",
 			});
 		});
 };
