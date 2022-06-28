@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BusinessOwner from "../Assets/image.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../helpers/auth/authentication.js";
 export default function Register() {
 	const [values, setValues] = useState({
@@ -13,6 +13,7 @@ export default function Register() {
 		error: "",
 		success: false,
 	});
+	const navigate = useNavigate();
 	const { mobileNumber, wabaId, perAccToken, password } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
@@ -20,18 +21,17 @@ export default function Register() {
 	const signupUser = (e) => {
 		e.preventDefault();
 		if (password !== "") {
-			signup({ phoneNumber: mobileNumber, wabaID: wabaId, accessToken: perAccToken, password: password })
+			signup({ phoneNumber: "1" + mobileNumber, wabaID: wabaId, accessToken: perAccToken, password: password })
 				.then((data) => {
-					if (data?.detail) {
+					if (data?.stat === "success") {
 						setValues({
-							...values,
-							username: "",
-							email: "",
-							password1: "",
-							password2: "",
+							mobileNumber: "",
+							wabaId: "",
+							perAccToken: "",
+							password: "",
 						});
-						// localStorage.setItem("emailV", true);
-						<Navigate to="/" />;
+						// TODO Toast
+						navigate("/login");
 					} else {
 						if (data?.stat === "error") {
 							return toast(data?.message, {
@@ -62,7 +62,7 @@ export default function Register() {
 						<input
 							className="rounded-lg h-8 w-60 mb-3 px-3 focus:outline-none text-sm font-light py-2"
 							type="text"
-							pattern="[6789][0-9]{9}"
+							pattern="[56789][0-9]{9}"
 							maxLength="10"
 							name="mobilenumber"
 							placeholder="Enter Your Mobile Number"
