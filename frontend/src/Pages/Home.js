@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Base from "../Base";
 import ActiveChat from "../Components/ActiveChat";
 import ChatSection from "../Components/ChatSection";
 import InputMessage from "../Components/InputMessage";
 import RecentChat from "../Components/RecentChat";
+import { isAuthenticated } from "../helpers/auth/authentication.js";
 export default function Home() {
 	const disp = () => {
 		let arr = [];
@@ -18,6 +19,9 @@ export default function Home() {
 		}
 		return arr;
 	};
+	useEffect(() => {
+		 isAuthenticated();
+	}, []);
 	return (
 		<>
 			<Base>

@@ -91,7 +91,7 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
-	const user = await User.findOne({ wabaID: req.body.phoneNumber });
+	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
 	if (!user) {
 		return res.status(404).json({
 			stat: "error",

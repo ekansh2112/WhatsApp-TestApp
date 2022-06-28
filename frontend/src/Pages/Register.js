@@ -10,8 +10,6 @@ export default function Register() {
 		wabaId: "",
 		perAccToken: "",
 		password: "",
-		error: "",
-		success: false,
 	});
 	const navigate = useNavigate();
 	const { mobileNumber, wabaId, perAccToken, password } = values;
@@ -32,12 +30,10 @@ export default function Register() {
 						});
 						// TODO Toast
 						navigate("/login");
-					} else {
-						if (data?.stat === "error") {
-							return toast(data?.message, {
-								type: "error",
-							});
-						}
+					} else if (data?.stat === "error") {
+						return toast(data?.message, {
+							type: "error",
+						});
 					}
 				})
 				.catch((e) => {

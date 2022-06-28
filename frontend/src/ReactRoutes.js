@@ -15,7 +15,7 @@ import Notifications from "./Pages/Notifications";
 import NewMessage from "./Pages/NewMessage";
 import { toast } from "react-toastify";
 import { isAuthenticated, signout } from "./helpers/auth/authentication";
-import { profileData } from "./data/users/profileData";
+// import { profileData } from "./data/users/profileData";
 import { BaseContext } from "./Context";
 import { useCookies } from "react-cookie";
 const ReactRoutes = () => {
@@ -27,21 +27,21 @@ const ReactRoutes = () => {
 			return toast(data?.detail, { type: "success", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
 		});
 	};
-	useEffect(() => {
-		if (isAuthenticated()) {
-			profileData((statusText, status) => {
-				if (status === 403 || status === 401) {
-					localStorage.removeItem("token");
-					removeCookie("user", { path: "/" });
-					handleNotification(`Something went wrong! Status: ${statusText}`, "error");
-				}
-			}).then((data) => {
-				setCookie("user", data, { path: "/" });
-			});
-		} else {
-			removeCookie("user", { path: "/" });
-		}
-	}, [isAuthenticated()]);
+	// useEffect(() => {
+	// 	if (isAuthenticated()) {
+	// 		profileData((statusText, status) => {
+	// 			if (status === 403 || status === 401) {
+	// 				localStorage.removeItem("token");
+	// 				removeCookie("user", { path: "/" });
+	// 				handleNotification(`Something went wrong! Status: ${statusText}`, "error");
+	// 			}
+	// 		}).then((data) => {
+	// 			setCookie("user", data, { path: "/" });
+	// 		});
+	// 	} else {
+	// 		removeCookie("user", { path: "/" });
+	// 	}
+	// }, [isAuthenticated()]);
 	function requireAuth(nextState, replace, next) {
 		if (!(isAuthenticated() && cookies.user)) {
 			replace({

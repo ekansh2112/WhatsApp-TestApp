@@ -1,7 +1,6 @@
-import { Login_API, Logout_API, Register_API } from "../../backend";
+import { Login_API, Register_API, isAuthenticated_API } from "../../backend";
 import { toast } from "react-toastify";
 export const signup = (user) => {
-	console.log(user, "idgaf");
 	return fetch(Register_API, {
 		method: "POST",
 		headers: {
@@ -11,46 +10,49 @@ export const signup = (user) => {
 		body: JSON.stringify(user),
 	})
 		.then((response) => {
-			console.log(response, "idgaf2");
 			return response.json();
 		})
 		.catch((err) => console.log(err));
 };
-export const signin = (user) => {
-	const formData = new FormData();
-	for (const name in user) {
-		formData.append(name, user[name]);
-	}
+export const signin = (user, next) => {
 	return fetch(Login_API, {
 		method: "POST",
-		body: formData,
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(user),
+	})
+		.then((response) => {
+			console.log(response, "idgaf7277272");
+			return response.json();
+		})
+		.then((response) => {
+			next(response);
+		})
+		.catch((err) => console.log(err));
+};
+export const isAuthenticated = () => {
+	return fetch(isAuthenticated_API, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
 		})
+		.then((response) => {
+			// console.log(response, "idgaf4939");
+		})
 		.catch((err) => console.log(err));
-};
-export const authenticate = (data, next) => {
-	if (typeof window !== undefined) {
-		localStorage.setItem("token", JSON.stringify(data));
-		next();
-	}
-};
-export const isAuthenticated = () => {
-	if (typeof window == undefined) {
-		return false;
-	}
-	if (localStorage.getItem("token")) {
-		return true;
-	} else {
-		return false;
-	}
 };
 export const signout = (next) => {
 	const tokenValue = localStorage.getItem("token").replace(/['"]+/g, "");
 	if (typeof window !== undefined) {
 		localStorage.removeItem("token");
-		return fetch(Logout_API, {
+		return fetch(isAuthenticated, {
 			method: "POST",
 			headers: {
 				Authorization: "Token " + tokenValue,
