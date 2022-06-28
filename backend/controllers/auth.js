@@ -4,7 +4,7 @@ const axios = require("axios").default;
 require("dotenv").config();
 
 exports.signUp = async (req, res) => {
-	const isUser = await User.findOne({ wabaId: req.body.wabaID });
+	const isUser = await User.findOne({ wabaID: req.body.wabaID });
 	if (isUser != undefined) {
 		return res.json({
 			stat: "error",
@@ -81,7 +81,13 @@ exports.signUp = async (req, res) => {
 					message: "Business account with provided details, does not exist",
 				});
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			console.log(err.response.status);
+			return res.status(err.response.status).json({
+				stat: "error",
+				message: "Something went wrong, please try again.",
+			});
+		});
 };
 
 exports.signIn = async (req, res) => {
