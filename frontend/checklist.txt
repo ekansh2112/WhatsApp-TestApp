@@ -3,3 +3,6 @@
 3. check and add all forms - aaj
 4. More components and less components - aaj
 5. Image Profile Update
+6. Use Node Prune
+7. Loading
+8. Checks and random string handling
