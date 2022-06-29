@@ -5,6 +5,8 @@ const authRoutes = require("./routes/auth");
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
+
 var app = express();
 
 app.use(express.static(__dirname));
@@ -32,7 +34,14 @@ const {
 	MODE = "DEVELOPMENT",
 } = process.env;
 
-app.use(cors());
+app.use(cookieParser());
+app.use(
+	cors({
+		origin: "http://localhost:3001",
+		methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+		credentials: true,
+	})
+);
 app.use(bodyParser.json());
 
 app.use(

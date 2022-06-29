@@ -15,7 +15,9 @@ export const signup = (user) => {
 		.catch((err) => console.log(err));
 };
 export const signin = (user, next) => {
+	console.log("signin");
 	return fetch(Login_API, {
+		credentials: "include",
 		method: "POST",
 		headers: {
 			Accept: "application/json",
@@ -34,6 +36,7 @@ export const signin = (user, next) => {
 };
 export const isAuthenticated = () => {
 	return fetch(isAuthenticated_API, {
+		credentials: "include",
 		method: "GET",
 		headers: {
 			Accept: "application/json",
@@ -44,7 +47,7 @@ export const isAuthenticated = () => {
 			return response.json();
 		})
 		.then((response) => {
-			// console.log(response, "idgaf4939");
+			console.log(response, "IS AUTH");
 		})
 		.catch((err) => console.log(err));
 };
