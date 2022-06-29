@@ -19,15 +19,14 @@ export default function Login() {
 		if (password !== "") {
 			signin({ phoneNumber: "1" + mobileNumber, password: password }, (data) => {
 				if (data?.stat === "success") {
-					console.log("success");
 					setValues({
 						mobileNumber: "",
 						password: "",
 					});
+					console.log(data, "idgaf272772");
 					// TODO Toast
 					navigate("/");
 				} else if (data?.stat === "error") {
-					console.log(data, "idgaf72772");
 					return toast(data?.msg, {
 						type: "error",
 					});

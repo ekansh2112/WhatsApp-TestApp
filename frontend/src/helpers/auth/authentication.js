@@ -15,7 +15,6 @@ export const signup = (user) => {
 		.catch((err) => console.log(err));
 };
 export const signin = (user, next) => {
-	console.log("signin");
 	return fetch(Login_API, {
 		credentials: "include",
 		method: "POST",
@@ -26,7 +25,6 @@ export const signin = (user, next) => {
 		body: JSON.stringify(user),
 	})
 		.then((response) => {
-			console.log(response, "idgaf7277272");
 			return response.json();
 		})
 		.then((response) => {
@@ -43,11 +41,9 @@ export const isAuthenticated = () => {
 			"Content-Type": "application/json",
 		},
 	})
+		.then()
 		.then((response) => {
 			return response.json();
-		})
-		.then((response) => {
-			console.log(response, "IS AUTH");
 		})
 		.catch((err) => console.log(err));
 };
