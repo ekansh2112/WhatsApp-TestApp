@@ -38,9 +38,9 @@ exports.signUp = async (req, res) => {
 				var profileData = {};
 				await getBusinessProfile(phoneNumberID, userData.accessToken, (wares) => {
 					if (wares.status != 200) {
-						return res.status(500).json({
+						return res.status(wares.status).json({
 							stat: "error",
-							msg: "Something went wrong, please try again.",
+							msg: wares.statusText,
 						});
 					}
 					profileData = wares.data.data?.[0];
@@ -64,7 +64,6 @@ exports.signUp = async (req, res) => {
 						if (newuser) {
 							return res.json({
 								stat: "success",
-								user,
 								message: "User created succesfully.",
 							});
 						} else {
@@ -82,15 +81,22 @@ exports.signUp = async (req, res) => {
 				});
 		})
 		.catch((err) => {
-			console.log(err.response.status);
+			// console.log(err.response);
+			var message;
+			if (err.response.status === 400 || err.response.status === 401 || err.response.status === 403) {
+				message = "Invalid information provided.";
+			} else {
+				message = "Something went wrong, please try again.";
+			}
 			return res.status(err.response.status).json({
 				stat: "error",
-				message: "Something went wrong, please try again.",
+				message,
 			});
 		});
 };
 
 exports.signIn = async (req, res) => {
+	console.log("called");
 	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
 	if (!user) {
 		return res.status(404).json({
@@ -98,6 +104,7 @@ exports.signIn = async (req, res) => {
 			msg: "User does not exist",
 		});
 	}
+	console.log(user);
 	console.log("LOG: ", user);
 	if (!user.validPassword(req.body.password)) {
 		return res.status(400).json({
@@ -134,8 +141,11 @@ exports.signIn = async (req, res) => {
 				stat: "success",
 				msg: "User logged in",
 				data: {
-					accessToken: userData.accessToken,
-					phoneNumberID: userData.phoneNumberID,
+					user: {
+						wabaID: user.wabaID,
+						phoneNumberID: user.phoneNumberID,
+						businessProfile: user.businessProfile,
+					},
 				},
 			});
 		})
@@ -169,7 +179,6 @@ exports.isAuthenticated = (req, res) => {
 	if (req.session.phoneNumberID && req.session.accessToken) {
 		return res.json({
 			isAuth: true,
-			accessToken: req.session.accessToken,
 			phoneNumberID: req.session.phoneNumberID,
 		});
 	} else {

@@ -19,6 +19,7 @@ export default function Login() {
 		if (password !== "") {
 			signin({ phoneNumber: "1" + mobileNumber, password: password }, (data) => {
 				if (data?.stat === "success") {
+					console.log("success");
 					setValues({
 						mobileNumber: "",
 						password: "",
