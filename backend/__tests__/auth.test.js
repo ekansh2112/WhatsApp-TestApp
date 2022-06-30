@@ -7,8 +7,7 @@ describe("Authentication API", () => {
 			.post("/api/signup/")
 			.send({
 				wabaID: "101699879238080",
-				accessToken:
-					"EAAd1IET54WABAJwu46WEzKxhzoFEubNKiqJUjenPUHRvfJNvxRwFbGBeEYVRkmcHUZC3HHwZCKpzzqjyurOmy6ZBHNlRzvqUbftkXMU4e9RT1ji3nsBKLZBhxDoOP4kj6GK3IvGjtlJZCaL5R9d1tfAqugRMa4rLIdrij6E5DkLMSSsCV0ag1QFr9TH0bhzUVNKhXAcvBmKS6Bn0Ys9vk",
+				accessToken: "",
 				phoneNumber: "5550843602",
 				password: "testing123"
 			})
