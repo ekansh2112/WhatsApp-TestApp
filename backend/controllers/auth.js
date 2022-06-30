@@ -95,7 +95,6 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
-	console.log("called");
 	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
 	if (!user) {
 		return res.status(404).json({
@@ -103,8 +102,6 @@ exports.signIn = async (req, res) => {
 			msg: "User does not exist"
 		});
 	}
-	console.log(user);
-	console.log("LOG: ", user);
 	if (!user.validPassword(req.body.password)) {
 		return res.status(400).json({
 			stat: "error",
@@ -166,7 +163,6 @@ exports.logout = (req, res) => {
 			});
 		}
 		res.clearCookie(process.env?.SESS_NAME);
-		if (req.session) console.log(req.session);
 		return res.json({
 			stat: "success",
 			msg: "User logged out successfully"
