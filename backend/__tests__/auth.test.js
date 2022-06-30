@@ -1,27 +1,91 @@
 const request = require("supertest");
 const app = require("../app");
+const { MongoMemoryServer } = require("mongodb-memory-server");
+const mongoose = require("mongoose");
 
 describe("Authentication API", () => {
-	it("User already exists", (done) => {
-		request(app)
-			.post("/api/signup/")
-			.send({
-				wabaID: "101699879238080",
-				accessToken: "",
-				phoneNumber: "5550843602",
-				password: "testing123"
-			})
-			.set("Accept", "*/*")
-			.expect("Content-Type", "/json/")
-			.expect(409)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
+	beforeAll(async () => {
+		const mongoserver = await MongoMemoryServer.create();
+		await mongoose.connect(mongoserver.getUri());
 	});
-	it("registered phones numbers", () => {});
 
-	it("business profile", () => {});
+	afterAll(async () => {
+		await mongoose.disconnect();
+		await mongoose.connection.close();
+	});
 
-	it("create new user", () => {});
+	describe("Wrong input", () => {
+		it("when provided wrong waba id", async () => {
+			await request(app)
+				.post("/api/signup/")
+				.send({
+					wabaID: "102699879238080",
+					accessToken: process.env.TEST_TOKEN,
+					phoneNumber: "15550843602",
+					password: "testing123"
+				})
+				.set("Accept", "*/*")
+				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect(400);
+		});
+
+		it("when provided wrong access token -> unauthorized", async () => {
+			await request(app)
+				.post("/api/signup/")
+				.send({
+					wabaID: "101699879238080",
+					accessToken: process.env.TEST_TOKEN_WRONG,
+					phoneNumber: "15550843602",
+					password: "testing123"
+				})
+				.set("Accept", "*/*")
+				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect(401);
+		});
+
+		it("when provided wrong phone number", async () => {
+			await request(app)
+				.post("/api/signup/")
+				.send({
+					wabaID: "101699879238080",
+					accessToken: process.env.TEST_TOKEN,
+					phoneNumber: "15550843600",
+					password: "testing123"
+				})
+				.set("Accept", "*/*")
+				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect(404);
+		});
+	});
+
+	describe("Register new user", () => {
+		it("POST create new user", async () => {
+			await request(app)
+				.post("/api/signup/")
+				.send({
+					wabaID: "101699879238080",
+					accessToken: process.env.TEST_TOKEN,
+					phoneNumber: "15550843602",
+					password: "testing123"
+				})
+				.set("Accept", "*/*")
+				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect(200);
+		});
+		it("POST create new user (User already exists)", async () => {
+			await request(app)
+				.post("/api/signup/")
+				.send({
+					wabaID: "101699879238080",
+					accessToken: process.env.TEST_TOKEN,
+					phoneNumber: "15550843602",
+					password: "testing123"
+				})
+				.set("Accept", "*/*")
+				.expect("Content-Type", "application/json; charset=utf-8")
+				.expect(409);
+		});
+
+		//TODO: email and password validation tests pending
+	});
 });

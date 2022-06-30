@@ -51,7 +51,6 @@ exports.signUp = async (req, res) => {
 					phoneNumberID,
 					businessProfile: profileData
 				});
-
 				user.setPassword(req.body.password);
 				user.save((err, newuser) => {
 					// console.log("_______err,newuser____________", err, newuser);
