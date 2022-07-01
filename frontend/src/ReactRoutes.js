@@ -19,14 +19,14 @@ import { isAuthenticated, signout } from "./helpers/auth/authentication";
 import { BaseContext } from "./Context";
 import { useCookies } from "react-cookie";
 const ReactRoutes = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-	const logoutUser = (event) => {
-		event.preventDefault();
-		signout((data) => {
-			removeCookie("user", { path: "/" });
-			return toast(data?.detail, { type: "success", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
-		});
-	};
+	// const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+	// const logoutUser = (event) => {
+	// 	event.preventDefault();
+	// 	signout((data) => {
+	// 		removeCookie("user", { path: "/" });
+	// 		return toast(data?.detail, { type: "success", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
+	// 	});
+	// };
 	// useEffect(() => {
 	// 	if (isAuthenticated()) {
 	// 		profileData((statusText, status) => {
@@ -42,68 +42,70 @@ const ReactRoutes = () => {
 	// 		removeCookie("user", { path: "/" });
 	// 	}
 	// }, [isAuthenticated()]);
-	function requireAuth(nextState, replace, next) {
-		if (!(isAuthenticated() && cookies.user)) {
-			replace({
-				pathname: "/signin",
-				state: { nextPathname: nextState.location.pathname },
-			});
-		}
-		next();
-	}
+	// function requireAuth(nextState, replace, next) {
+	// 	if (!(isAuthenticated() && cookies.user)) {
+	// 		replace({
+	// 			pathname: "/signin",
+	// 			state: { nextPathname: nextState.location.pathname },
+	// 		});
+	// 	}
+	// 	next();
+	// }
 
-	// ANCHOR Notifications
-	const [notification, setNotification] = useState("");
-	const [notificationType, setNotificationType] = useState("");
-	const [toggleNotification, setToggleNotification] = useState(false);
-	const handleNotification = (message, type) => {
-		setNotification(message);
-		setNotificationType(type);
-		setToggleNotification(!toggleNotification);
-	};
-	useEffect(() => {
-		if (notificationType === "success") {
-			return toast(notification, { type: "success", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
-		}
-		if (notificationType === "error") {
-			return toast(notification, { type: "error", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
-		}
-		if (notificationType === "warning") {
-			return toast(notification, { type: "warning", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
-		}
-	}, [toggleNotification]);
-	// ANCHOR Remember Me
-	const [rememberMe, setRememberMe] = useState(true);
-	const handleRememberMe = (e) => {
-		const input = e.target;
-		const value = input.type === "checkbox" ? input.checked : input.value;
-		setRememberMe(value);
-	};
-	useEffect(() => {
-		var mounted = true;
-		if (mounted) {
-			if (!rememberMe) {
-				window.addEventListener("unload", signout);
-				return () => {
-					window.removeEventListener("unload", signout);
-				};
-			}
-		}
-		return () => {
-			mounted = false;
-		};
-	});
+	// // ANCHOR Notifications
+	// const [notification, setNotification] = useState("");
+	// const [notificationType, setNotificationType] = useState("");
+	// const [toggleNotification, setToggleNotification] = useState(false);
+	// const handleNotification = (message, type) => {
+	// 	setNotification(message);
+	// 	setNotificationType(type);
+	// 	setToggleNotification(!toggleNotification);
+	// };
+	// useEffect(() => {
+	// 	if (notificationType === "success") {
+	// 		return toast(notification, { type: "success", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
+	// 	}
+	// 	if (notificationType === "error") {
+	// 		return toast(notification, { type: "error", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
+	// 	}
+	// 	if (notificationType === "warning") {
+	// 		return toast(notification, { type: "warning", autoClose: 5000, position: "bottom-center", hideProgressBar: false, pauseOnHover: true, pauseOnFocusLoss: true });
+	// 	}
+	// }, [toggleNotification]);
+	// // ANCHOR Remember Me
+	// const [rememberMe, setRememberMe] = useState(true);
+	// const handleRememberMe = (e) => {
+	// 	const input = e.target;
+	// 	const value = input.type === "checkbox" ? input.checked : input.value;
+	// 	setRememberMe(value);
+	// };
+	// useEffect(() => {
+	// 	var mounted = true;
+	// 	if (mounted) {
+	// 		if (!rememberMe) {
+	// 			window.addEventListener("unload", signout);
+	// 			return () => {
+	// 				window.removeEventListener("unload", signout);
+	// 			};
+	// 		}
+	// 	}
+	// 	return () => {
+	// 		mounted = false;
+	// 	};
+	// });
 	const [loggedIn, setLoggedIn] = useState(0);
 	return (
 		<BaseContext.Provider
-			value={{
-				logoutUser,
-				notification,
-				notificationType,
-				handleNotification,
-				cookies,
-				setCookie,
-			}}
+			value={
+				{
+					// logoutUser,
+					// notification,
+					// notificationType,
+					// handleNotification,
+					// cookies,
+					// setCookie,
+				}
+			}
 		>
 			<BrowserRouter>
 				<Routes>

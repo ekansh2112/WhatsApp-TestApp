@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import BusinessOwner from "../Assets/image.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../helpers/auth/authentication.js";
 export default function Register() {
@@ -28,21 +27,17 @@ export default function Register() {
 							perAccToken: "",
 							password: "",
 						});
-						// TODO Toast
+						toast.success(data?.message);
 						navigate("/login");
 					} else if (data?.stat === "error") {
-						return toast(data?.message, {
-							type: "error",
-						});
+						return toast.error(data?.message);
 					}
 				})
 				.catch((e) => {
 					console.log(e);
 				});
 		} else {
-			return toast(`Please enter a password!`, {
-				type: "warning",
-			});
+			return toast.warning("Please enter a password!");
 		}
 	};
 	return (
@@ -136,7 +131,6 @@ export default function Register() {
 					<img className="rounded-lg mr-16 my-12" src={BusinessOwner} alt="Business Owner Communicating" />
 				</div>
 			</div>
-			<ToastContainer theme={"colored"} autoClose="5000" position="bottom-center" pauseOnHover={true} hideProgressBar={false} closeOnClick={false} />
 		</>
 	);
 }

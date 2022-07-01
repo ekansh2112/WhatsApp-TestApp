@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import BusinessOwner from "../Assets/image.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { signin } from "../helpers/auth/authentication.js";
 export default function Login() {
@@ -17,27 +16,24 @@ export default function Login() {
 	const signinUser = (e) => {
 		e.preventDefault();
 		if (password !== "") {
-			signin({ phoneNumber: "1" + mobileNumber, password: password }, (data) => {
-				if (data?.stat === "success") {
-					setValues({
-						mobileNumber: "",
-						password: "",
-					});
-					console.log(data, "idgaf272772");
-					// TODO Toast
-					navigate("/");
-				} else if (data?.stat === "error") {
-					return toast(data?.msg, {
-						type: "error",
-					});
-				}
-			}).catch((e) => {
-				console.log(e);
-			});
+			signin({ phoneNumber: "1" + mobileNumber, password: password })
+				.then((data) => {
+					if (data?.stat === "success") {
+						setValues({
+							mobileNumber: "",
+							password: "",
+						});
+						toast.success(data?.msg);
+						navigate("/");
+					} else if (data?.stat === "error") {
+						return toast.error(data?.msg);
+					}
+				})
+				.catch((e) => {
+					console.log(e);
+				});
 		} else {
-			return toast(`Please enter a password!`, {
-				type: "warning",
-			});
+			return toast.warning("Please enter a password!");
 		}
 	};
 	return (
