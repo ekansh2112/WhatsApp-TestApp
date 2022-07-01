@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
+const contactRoutes = require('./routes/contacts')
 const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
@@ -66,6 +67,8 @@ app.use(
 
 // routes middleware
 app.use("/api", authRoutes);
+app.use('/api/contacts',contactRoutes)
+
 
 const port = process.env.PORT || 3000;
 const start = async () => {
