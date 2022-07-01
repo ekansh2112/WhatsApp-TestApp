@@ -40,7 +40,7 @@ exports.signUp = async (req, res) => {
 					if (wares.status != 200) {
 						return res.status(wares.status).json({
 							stat: "error",
-							msg: wares.statusText
+							message: wares.statusText
 						});
 					}
 					profileData = wares.data.data?.[0];
@@ -99,13 +99,13 @@ exports.signIn = async (req, res) => {
 	if (!user) {
 		return res.status(404).json({
 			stat: "error",
-			msg: "User does not exist"
+			message: "User does not exist"
 		});
 	}
 	if (!user.validPassword(req.body.password)) {
 		return res.status(400).json({
 			stat: "error",
-			msg: "Wrong Password"
+			message: "Wrong Password"
 		});
 	}
 	const userData = {
@@ -129,13 +129,14 @@ exports.signIn = async (req, res) => {
 			}
 			req.session.phoneNumberID = userData.phoneNumberID;
 			req.session.accessToken = userData.accessToken;
+			req.session.wabaID = user.wabaID;
 			/*
 			setting up data inside our session,
 			at this point, cookie will get set in the browser.
 			*/
 			return res.json({
 				stat: "success",
-				msg: "User logged in",
+				message: "User logged in",
 				data: {
 					user: {
 						wabaID: user.wabaID,
@@ -159,13 +160,13 @@ exports.logout = (req, res) => {
 		if (err) {
 			return res.status(400).json({
 				stat: "error",
-				msg: "Unable to logout, please try again."
+				message: "Unable to logout, please try again."
 			});
 		}
 		res.clearCookie(process.env?.SESS_NAME);
 		return res.json({
 			stat: "success",
-			msg: "User logged out successfully"
+			message: "User logged out successfully"
 		});
 	});
 };
