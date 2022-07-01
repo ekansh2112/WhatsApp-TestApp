@@ -1,5 +1,5 @@
-const express = require("express");
 const mongoose = require("mongoose");
+<<<<<<< HEAD
 const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const contactRoutes = require('./routes/contacts')
@@ -7,17 +7,16 @@ const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+=======
+>>>>>>> 916d46e52495cc4f57c6ff1fb8f62297664adcc1
 
-var app = express();
+const app = require("./app");
 
-app.use(express.static(__dirname));
-require("dotenv").config();
-// console.log(process.env.MONGOURI);
 const connectDB = async () => {
 	try {
 		await mongoose.connect(process.env.MONGOURI, {
 			useNewUrlParser: true,
-			useUnifiedTopology: true,
+			useUnifiedTopology: true
 		});
 		console.log("MongoDB Connected");
 	} catch (err) {
@@ -26,6 +25,7 @@ const connectDB = async () => {
 		process.exit(1);
 	}
 };
+<<<<<<< HEAD
 // connectDB();
 
 const {
@@ -69,6 +69,8 @@ app.use(
 app.use("/api", authRoutes);
 app.use('/api/contacts',contactRoutes)
 
+=======
+>>>>>>> 916d46e52495cc4f57c6ff1fb8f62297664adcc1
 
 const port = process.env.PORT || 3000;
 const start = async () => {
@@ -77,6 +79,7 @@ const start = async () => {
 		app.listen(port, () => console.log(`Server is listening on port ${port}...`));
 	} catch (error) {
 		console.log(error);
+		process.exit(1);
 	}
 };
 

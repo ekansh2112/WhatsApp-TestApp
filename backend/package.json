@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,16 @@
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "mongoose": "^6.4.0",
+<<<<<<< HEAD
     "nodemon": "^2.0.18",
     "package.json": "^2.0.1"
+=======
+    "nodemon": "^2.0.18"
+  },
+  "devDependencies": {
+    "jest": "^28.1.2",
+    "mongodb-memory-server": "^8.7.2",
+    "supertest": "^6.2.3"
+>>>>>>> 916d46e52495cc4f57c6ff1fb8f62297664adcc1
   }
 }
