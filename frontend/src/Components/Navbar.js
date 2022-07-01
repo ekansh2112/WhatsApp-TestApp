@@ -1,8 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChatAltIcon } from "@heroicons/react/solid";
+import { signout } from "../helpers/auth/authentication.js";
+import { toast } from "react-toastify";
 export default function Navbar() {
 	const [viewDropDown, setViewDropDown] = useState(false);
+	const navigate = useNavigate();
+	const signOutUser = (e) => {
+		e.preventDefault();
+		signout()
+			.then((data) => {
+				if (data?.stat === "success") {
+					toast.success(data?.message);
+					navigate("/login");
+				} else if (data?.stat === "error") {
+					return toast.error(data?.message);
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	};
 	return (
 		<>
 			<nav className="bg-gray-800">
@@ -87,7 +105,16 @@ export default function Navbar() {
 										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/deletebroadcastlists" role="menuitem" tabIndex={-1} id="user-menu-item-2">
 											DELETE BROADCAST LISTS
 										</Link>
-										<Link className="block px-4 py-3 font-medium text-sm text-gray-700" to="/login" role="menuitem" tabIndex={-1} id="user-menu-item-2">
+										<Link
+											className="block px-4 py-3 font-medium text-sm text-gray-700"
+											to="/login"
+											role="menuitem"
+											tabIndex={-1}
+											id="user-menu-item-2"
+											onClick={(e) => {
+												signOutUser(e);
+											}}
+										>
 											SIGN OUT
 										</Link>
 									</div>

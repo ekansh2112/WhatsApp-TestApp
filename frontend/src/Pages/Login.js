@@ -26,7 +26,7 @@ export default function Login() {
 						toast.success(data?.msg);
 						navigate("/");
 					} else if (data?.stat === "error") {
-						return toast.error(data?.msg);
+						return toast.error(data?.message);
 					}
 				})
 				.catch((e) => {

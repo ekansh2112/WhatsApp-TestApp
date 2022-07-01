@@ -1,4 +1,4 @@
-import { Login_API, Register_API, isAuthenticated_API } from "../../backend";
+import { Login_API, Register_API, isAuthenticated_API, Signout_API } from "../../backend";
 export const signup = (user) => {
 	return fetch(Register_API, {
 		method: "POST",
@@ -8,7 +8,6 @@ export const signup = (user) => {
 		},
 		body: JSON.stringify(user),
 	})
-		.then()
 		.then((response) => {
 			return response.json();
 		})
@@ -24,7 +23,6 @@ export const signin = (user) => {
 		},
 		body: JSON.stringify(user),
 	})
-		.then()
 		.then((response) => {
 			return response.json();
 		})
@@ -39,39 +37,28 @@ export const isAuthenticated = () => {
 			"Content-Type": "application/json",
 		},
 	})
-		.then()
 		.then((response) => {
 			return response.json();
 		})
+		.then((response) => {
+			return response;
+		})
 		.catch((err) => console.log(err));
 };
-// export const signout = (next) => {
-// 	const tokenValue = localStorage.getItem("token").replace(/['"]+/g, "");
-// 	if (typeof window !== undefined) {
-// 		localStorage.removeItem("token");
-// 		return fetch(isAuthenticated, {
-// 			method: "POST",
-// 			headers: {
-// 				Authorization: "Token " + tokenValue,
-// 			},
-// 			body: {},
-// 		})
-// 			.then((response) => {
-// 				if (response?.status === 403 || response?.status === 401) {
-// 					return toast(`Something went wrong! Status: ${response.statusText}`, {
-// 						type: "error",
-// 						autoClose: 5000,
-// 						position: "bottom-center",
-// 						hideProgressBar: false,
-// 						pauseOnHover: true,
-// 						pauseOnFocusLoss: true,
-// 					});
-// 				}
-// 				return response.json();
-// 			})
-// 			.then((data) => {
-// 				next(data);
-// 			})
-// 			.catch((err) => console.log(err));
-// 	}
-// };
+export const signout = () => {
+	return fetch(Signout_API, {
+		credentials: "include",
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((err) => console.log(err));
+};
