@@ -6,6 +6,7 @@ const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contacts");
+const userRoutes = require("./routes/user");
 var app = express();
 
 app.use(express.static(__dirname));
@@ -51,5 +52,6 @@ app.use(
 // routes middleware
 app.use("/api", authRoutes);
 app.use("/api/contacts", contactRoutes);
+app.use("/api/user", userRoutes);
 
 module.exports = app;

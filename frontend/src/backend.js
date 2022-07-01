@@ -1,7 +1,7 @@
 const BACKEND = "http://localhost:2000/";
 
 //AUTHENTICATION APIs
-export const Register_API = `${BACKEND}api/signup/`;
+export const Register_API = `${BACKEND}api/user/update`;
 export const Login_API = `${BACKEND}api/login/`;
 export const isAuthenticated_API = `${BACKEND}api/isauth/`;
 

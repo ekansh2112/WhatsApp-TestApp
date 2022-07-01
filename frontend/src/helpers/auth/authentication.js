@@ -3,10 +3,13 @@ export const signup = (user) => {
 	return fetch(Register_API, {
 		method: "POST",
 		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
+			Accept: "*/*",
+			"Content-Type": "application/json; charset=utf-8"
 		},
-		body: JSON.stringify(user),
+		body: JSON.stringify({
+			messaging_product: "whatsapp",
+			address: "hello"
+		})
 	})
 		.then()
 		.then((response) => {
@@ -20,9 +23,9 @@ export const signin = (user) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
+			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(user),
+		body: JSON.stringify(user)
 	})
 		.then()
 		.then((response) => {
@@ -36,8 +39,8 @@ export const isAuthenticated = () => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
+			"Content-Type": "application/json"
+		}
 	})
 		.then()
 		.then((response) => {
