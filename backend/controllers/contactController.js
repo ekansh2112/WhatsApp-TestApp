@@ -11,8 +11,10 @@ exports.contact_list = async(req, res) =>{
     }
     catch(err){
         console.log(err)
-        res.status(500).send(err);
-    }
+        return res.json({
+            stat: "error",
+            message: err
+        });    }
 }
 
 
@@ -27,23 +29,38 @@ exports.create_contact = async(req, res) =>{
                 user_wabaID: user_wabaID, 
                 fname: req.body.fname,
                 lname: req.body.lname,
-                phoneNumber: "91"+req.body.phoneNumber,            
+                phoneNumber: "91"+req.body.phoneNumber,  
+                dob : req.body.dob,          
                 email: req.body.email,
                 address: req.body.address
             })
             try{
                 await contact.save();
-                res.send(contact);}
+                return res.json({
+                    stat: "success",
+                    message: "Contact created successfully"
+                });               
+            }
+
             catch (err){
-                res.status(500).send(err);
+                return res.status(500).json({
+                    stat: "error",
+                    message: err
+                });
             }
         }
         else{
-            res.send("Contact Already Exists")
-        }
+            return res.json({
+                stat: "error",
+                message: "Contact already exists"
+            });        }
     } catch (error) {
-        console.log(error); res.send(error);
-    }
+        console.log(error); 
+        
+        return res.json({
+            stat: "error",
+            message: error
+        });    }
 }
 
 
@@ -55,8 +72,10 @@ exports.update_contact = async(req, res) =>{
     try {
         const check = await Contact.find({"phoneNumber": phone, "user_wabaID": user_wabaID}).count();
         if(check == 0){
-            res.send("Contact doesn't exist");
-        }
+            return res.json({
+                stat: "error",
+                message: "Contact doesn't exist"
+            });        }
         else{
             try{
                 const details = {
@@ -71,18 +90,17 @@ exports.update_contact = async(req, res) =>{
                 //FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
 
                 if(contacts.matchedCount < 1)  
-                    res.send("Contact Not Found");
-
+                    return res.json({
+                        stat: "error",
+                        message: "Contact not found"
+                    });
                 else if (contacts.modifiedCount >= 1) 
                     //res.send(contacts);
-                    return res.json({"message": "Contact updated Successfully"})
-            
-
-                else{
                     return res.json({
-                        "message": "Contact information is up to date."
-                    })
-                }
+                        stat: "success",
+                        message: "Contact updated successfully"
+                    });          
+
             }
                 catch(err){
                     console.log(err)
@@ -106,10 +124,16 @@ exports.delete_contact = async(req, res) =>{
         //FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
 
         if(contacts.acknowledged == true && contacts.deletedCount == 1)
-            res.send(phone + " is deleted from Contacts List");
+            return res.json({
+                stat: "success",
+                message: phone + " is deleted from Contacts List"
+            });
     }
     catch(err){
-        res.status(500).send(err);
+        return res.status(500).json({
+            stat: "error",
+            message: err
+        });
     }}
 
 
@@ -125,7 +149,9 @@ exports.search_contact = async(req, res) =>{
         res.send(contacts);
     }
     catch(err){
-        res.status(500).send(err);
-    }
+        return res.status(500).json({
+            stat: "error",
+            message: err
+        });    }
     
 }
