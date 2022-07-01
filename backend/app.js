@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-
+const contactRoutes = require("./routes/contacts");
 var app = express();
 
 app.use(express.static(__dirname));
