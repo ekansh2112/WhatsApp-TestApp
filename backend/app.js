@@ -5,14 +5,11 @@ const bodyParser = require("body-parser");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-
+const contactRoutes = require("./routes/contacts");
 var app = express();
 
 app.use(express.static(__dirname));
 require("dotenv").config();
-// console.log(process.env.MONGOURI);
-
-// connectDB();
 
 const {
 	COOKIE_EXPIRY = 1000 * 60 * 60 * 24,
@@ -24,7 +21,7 @@ const {
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "http://localhost:3001",
+		origin: `http://localhost:${process.env.CLIENT_PORT}`,
 		methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
 		credentials: true
 	})
@@ -53,5 +50,6 @@ app.use(
 
 // routes middleware
 app.use("/api", authRoutes);
+app.use("/api/contacts", contactRoutes);
 
 module.exports = app;
