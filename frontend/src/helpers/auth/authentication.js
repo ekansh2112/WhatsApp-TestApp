@@ -4,9 +4,9 @@ export const signup = (user) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(user)
+		body: JSON.stringify(user),
 	})
 		.then((response) => {
 			return response.json();
@@ -19,9 +19,9 @@ export const signin = (user) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(user)
+		body: JSON.stringify(user),
 	})
 		.then((response) => {
 			return response.json();
@@ -34,8 +34,8 @@ export const isAuthenticated = () => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();

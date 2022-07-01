@@ -23,7 +23,7 @@ export default function Login() {
 							mobileNumber: "",
 							password: "",
 						});
-						toast.success(data?.msg);
+						toast.success(data?.message);
 						navigate("/");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
