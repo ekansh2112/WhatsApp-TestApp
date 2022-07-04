@@ -15,6 +15,7 @@ exports.getBusinessProfile = async (phoneNumberID, accessToken, next) => {
 		});
 };
 
+//FIXME: wab api not taking req body
 exports.updateBusinessProfile = async (req, res) => {
 	console.log("afaefaeaw", req.body);
 	console.log(req.session.phoneNumberID), " IN UPDATE PROFILE";
