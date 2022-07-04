@@ -8,10 +8,11 @@ export const newContact = (contact) => {
 		},
 		body: JSON.stringify(contact),
 	})
-		.then()
 		.then((response) => {
-			console.log(response, "idgaf33773");
 			return response.json();
+		})
+		.then((response) => {
+			return response;
 		})
 		.catch((err) => console.log(err));
 };

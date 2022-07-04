@@ -20,10 +20,11 @@ export default function NewContact() {
 	};
 	const createContact = (e) => {
 		e.preventDefault();
-		if (firstName !== "") {
+		if (mobileNumber !== "") {
 			newContact({ fname: firstName, lname: lastName, phoneNumber: mobileNumber, email: emailAddress, addressLine1: addressLine1, addressLine2: addressLine2, birthDate: birthDate })
 				.then((data) => {
-					if (data?.user_wabaID) {
+					console.log(data, "idgaf33773");
+					if (data?.stat === "success") {
 						setValues({
 							firstName: "",
 							lastName: "",
@@ -33,9 +34,9 @@ export default function NewContact() {
 							addressLine2: "",
 							birthDate: "",
 						});
-						toast.success("Contact Created");
+						toast.success(data?.message);
 						navigate("/");
-					} else if (data?.errors) {
+					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}
 				})
@@ -43,7 +44,7 @@ export default function NewContact() {
 					console.log(e);
 				});
 		} else {
-			return toast.warning("Please enter a name!");
+			return toast.warning("Please enter the mobile number!");
 		}
 	};
 	return (
