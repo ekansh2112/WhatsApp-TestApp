@@ -1,25 +1,16 @@
 import React from "react";
-import LeftMessage from "./LeftMessage";
-import RightMessage from "./RightMessage";
+import Message from "./Message";
 export default function ChatSection() {
-	return (
-		<>
-			<div className="flex rounded-lg bg-blue-100 justify-end px-5 pb-2">
-				<RightMessage />
-			</div>
-			<div className="flex rounded-lg bg-blue-100 justify-start px-5 pb-2">
-				<LeftMessage />
-			</div>
-			<div className="flex rounded-lg bg-blue-100 justify-end px-5 pb-2">
-				<RightMessage />
-			</div>
-			<div className="flex rounded-lg bg-blue-100 justify-start px-5 pb-2">
-				<LeftMessage />
-			</div>
-			<div className="flex rounded-lg bg-blue-100 justify-end px-5 pb-2">
-				<RightMessage />
-			</div>
-			
-		</>
-	);
+	const disp = () => {
+		let arr = [];
+		for (let i = 0; i < 18; i++) {
+			arr.push(
+				<div key={i} className={i % 2 === 0 ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
+					<Message />
+				</div>
+			);
+		}
+		return arr;
+	};
+	return <>{disp()}</>;
 }

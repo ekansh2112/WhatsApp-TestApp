@@ -18,14 +18,14 @@ export default function Notifications() {
 						<div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
 							<div className="pointer-events-auto relative w-96 max-w-md">
 								<div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-2xl">
-									<div className="px-4 flex justify-between items-center sm:px-6">
+									<div className="flex justify-between items-center px-6">
 										<Link className="crossbutton3" to="/">
 											<XCircleIcon className="h-8 w-8" />
 										</Link>
 										<button className="rounded-full h-8 w-32 bg-yellow-400 text-xs font-medium">Mark all as read</button>
 									</div>
-									<div className="relative mt-6 flex-1 px-4 sm:px-9">
-										<div className="absolute inset-0 px-4 sm:px-9">{disp()}</div>
+									<div className="relative mt-6 flex-1 px-9">
+										<div className="absolute inset-0 px-9">{disp()}</div>
 									</div>
 								</div>
 							</div>

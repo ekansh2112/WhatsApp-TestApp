@@ -17,7 +17,7 @@ export default function InputMessage() {
 					onChange={(e) => {
 						setMessage(e.target.value);
 					}}
-					className="pl-4 py-2 h-12 mr-5 focus:outline-none block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg"
+					className="pl-4 py-2 h-12 mr-5 focus:outline-none block w-full shadow-sm text-sm border-gray-300 rounded-lg"
 				/>
 				<button type="submit" onClick={sendMessage} className="inline-flex p-2 rotate-45 rounded-full justify-center h-12 w-12 bg-yellow-300 border border-transparent shadow-sm text-black">
 					<PaperAirplaneIcon className="h-6 w-6" />

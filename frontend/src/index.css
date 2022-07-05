@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	background-color: #ebf0f7;
+	font-family: "Inter", sans-serif;
+	transition: all 0.5s linear;
+}
+.newnotification {
+	position: absolute;
+	top: 20px;
+	right: 69px;
+	display: block;
+	height: 10px;
+	width: 10px;
+	background: #ffc632;
+	border-radius: 100%;
+}
+.bgOnProfileButton {
+	border-radius: 100%;
+	background-color: #c5dbf0;
+}
+.dropdownShadow {
+	box-shadow: 0px 0px 25px 2px rgba(0, 0, 0, 0.1);
+}
+.removeScrollbar::-webkit-scrollbar {
+	display: none;
+}
+.bgOnChatPanel {
+	background-color: #d8e5f3;
+}
+.bgOnActiveChat {
+	background-color: #dedfcf;
+}
+.bgOnMessage {
+	background-color: #dad9d9;
+}
+.bgOnRecentChat {
+	background-color: #d7e0ef;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;

@@ -8,11 +8,13 @@ import { isAuthenticated } from "../helpers/auth/authentication.js";
 export default function Home() {
 	const disp = () => {
 		let arr = [];
-		for (let i = 0; i < 8; i++) {
-			if (i === 7) {
+		let contactNumber = 18;
+		let random = Math.floor(Math.random() * 17);
+		for (let i = 0; i < 18; i++) {
+			if (i === contactNumber - 1) {
 				arr.push(<RecentChat key={i} last={true} />);
-			} else if (i === 2) {
-				arr.push(<RecentChat key={i} second={true} />);
+			} else if (i === random) {
+				arr.push(<RecentChat key={i} active={true} />);
 			} else {
 				arr.push(<RecentChat key={i} />);
 			}
@@ -20,16 +22,18 @@ export default function Home() {
 		return arr;
 	};
 	useEffect(() => {
-		 isAuthenticated();
+		isAuthenticated();
 	}, []);
 	return (
 		<>
 			<Base>
 				<div className="flex items-center">
-					<div className="bg-whit m-10 w-80 h-full shadow-2xl p-7 overflow-hidden sm:rounded-lg">{disp()}</div>
-					<div className="bg-whit ml-6 mr-3 mt-10 mb-10 shadow-2xl overflow-hidden sm:rounded-lg bg-blue-100" style={{ height: "616px", width: "1040px" }}>
+					<div className="mx-10 ml-14 p-7 bg-white removeScrollbar overflow-y-scroll rounded-2xl" style={{ height: "616px", width: "315px" }}>
+						{disp()}
+					</div>
+					<div className="my-6 rounded-2xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
 						<ActiveChat />
-						<div className="pt-3" style={{ height: "440px" }}>
+						<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
 							<ChatSection />
 						</div>
 						<InputMessage />
