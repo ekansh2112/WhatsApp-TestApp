@@ -51,6 +51,7 @@ export default function DeleteContacts() {
 					<Link className="fixed crossbutton" to="/">
 						<XCircleIcon className="h-8 w-8" />
 					</Link>
+					
 					<input
 						className="rounded-lg self-center myshadow h-9 w-full mt-1 mb-5 px-3 focus:outline-none text-xs font-light py-3"
 						type="search"
