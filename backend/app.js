@@ -7,6 +7,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contacts");
 const userRoutes = require("./routes/user");
+const messageRoutes = require("./routes/message");
 var app = express();
 
 app.use(express.static(__dirname));
@@ -53,5 +54,6 @@ app.use(
 app.use("/api", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/messages", messageRoutes);
 
 module.exports = app;
