@@ -1,13 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { XCircleIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
+import { contactList } from "../helpers/contacts/contacts";
 export default function NewBroadcastList() {
+	const [Contacts, setContacts] = useState([]);
+	useEffect(() => {
+		contactList().then((data) => {
+			setContacts(data);
+		});
+	}, []);
 	const disp = () => {
 		let arr = [];
-		for (let i = 0; i < 12; i++) {
-			arr.push(<Contact key={i} needMB={true} needCheckBox={true} />);
-		}
+		Contacts.map((contact, index) => {
+			console.log(contact, "abc");
+			arr.push(<Contact key={index} contact={contact} needMB={true} needCheckBox={true} />);
+		});
 		return arr;
 	};
 	return (

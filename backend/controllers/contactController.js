@@ -17,7 +17,6 @@ exports.contact_list = async(req, res) =>{
         });    }
 }
 
-
 // POST ../api/contacts/create
 exports.create_contact = async(req, res) =>{
     const user_wabaID = "107654008661174";//GET THE WABA ID of Business User
@@ -117,12 +116,12 @@ exports.update_contact = async(req, res) =>{
 
 // DELETE ../api/contacts/:id/delete - Search by Contact Number
 exports.delete_contact = async(req, res) =>{
-
+    console.log(req.body,"abc");
     try{
         const phone = "91"+req.params.id;
-        const contacts = await Contact.deleteOne({"user_wabaID" : "107654008661174", "phoneNumber": phone});
+        const contacts = await Contact.deleteOne({ user_wabaID: "107654008661174", phoneNumber: "917290941111" });
         //FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
-
+        console.log(contacts);
         if(contacts.acknowledged == true && contacts.deletedCount == 1)
             return res.json({
                 stat: "success",

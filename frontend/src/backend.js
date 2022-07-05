@@ -8,7 +8,7 @@ export const Signout_API = `${BACKEND}api/logout/`;
 
 // Contacts APIs
 export const NewContacts_API = `${BACKEND}api/contacts/create`;
-export const DeleteContacts_API = `${BACKEND}api/contacts/delete`;
+export const DeleteContacts_API = `${BACKEND}api/contacts/`;
 export const Contacts_API = `${BACKEND}api/contacts`;
 
 // Broadcast Lists APIs
