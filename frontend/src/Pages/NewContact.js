@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { XCircleIcon } from "@heroicons/react/solid";
 import { newContact } from "../helpers/contacts/contacts.js";
 export default function NewContact() {
 	const [values, setValues] = useState({
@@ -50,10 +49,7 @@ export default function NewContact() {
 	return (
 		<>
 			<section className="flex justify-center items-center h-screen">
-				<div className="rounded-lg p-7 flex flex-col justify-center myshadow" style={{ height: "550px", width: "450px" }}>
-					<Link className="fixed crossbutton1" to="/">
-						<XCircleIcon className="h-8 w-8" />
-					</Link>
+				<div className="rounded-lg p-7 flex flex-col justify-center panelShadow" style={{ height: "550px", width: "450px" }}>
 					<form className="flex flex-col justify-between" method="POST">
 						<div className="flex flex-row justify-between">
 							<div className="flex flex-col">
@@ -61,7 +57,7 @@ export default function NewContact() {
 									First Name
 								</label>
 								<input
-									className="rounded-lg myshadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
+									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
 									type="text"
 									name="firstname"
 									placeholder="First Name"
@@ -75,7 +71,7 @@ export default function NewContact() {
 									Last Name
 								</label>
 								<input
-									className="rounded-lg myshadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
+									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
 									type="text"
 									name="lastname"
 									placeholder="Last Name"
@@ -88,7 +84,7 @@ export default function NewContact() {
 							Mobile Number
 						</label>
 						<input
-							className="rounded-lg myshadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="text"
 							pattern="[56789][0-9]{9}"
 							maxLength="10"
@@ -102,7 +98,7 @@ export default function NewContact() {
 							Email Address
 						</label>
 						<input
-							className="rounded-lg myshadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="text"
 							name="email"
 							placeholder="Email"
@@ -113,7 +109,7 @@ export default function NewContact() {
 							Address Line 1
 						</label>
 						<input
-							className="rounded-lg myshadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="text"
 							name="addressline1"
 							placeholder="Address Line 1"
@@ -124,7 +120,7 @@ export default function NewContact() {
 							Address Line 2
 						</label>
 						<input
-							className="rounded-lg myshadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="text"
 							name="addressline2"
 							placeholder="Address Line 2"
@@ -135,7 +131,7 @@ export default function NewContact() {
 							Birthday
 						</label>
 						<input
-							className="rounded-lg myshadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
 							type="date"
 							name="birthday"
 							value={birthDate}

@@ -38,7 +38,7 @@ export default function Login() {
 	};
 	return (
 		<>
-			<div className="flex m-16 justify-between px-10 myshadow rounded-lg bg-slate-300" style={{ height: "650px" }}>
+			<div className="flex m-16 justify-between px-10 panelShadow rounded-lg bg-slate-300" style={{ height: "650px" }}>
 				<div className="flex flex-col justify-center ml-16">
 					<h2 className="font-semibold text-4xl mb-16">Login</h2>
 					<form className="flex flex-col" method="POST">

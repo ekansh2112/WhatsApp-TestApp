@@ -73,7 +73,7 @@ export default function Navbar() {
 									<UserCircleIcon className={viewDropDown ? "h-8 w-8 bgOnProfileButton" : "h-8 w-8"} />
 								</button>
 								{viewDropDown && (
-									<div className="absolute flex flex-col right-0 top-16 h-48 rounded-2xl dropdownShadow p-2 bg-white">
+									<div className="absolute flex flex-col right-0 top-16 h-48 rounded-2xl panelShadow p-2 bg-white">
 										<Link className="px-4 py-3 text-sm font-semibold uppercase" to="/profile">
 											PROFILE
 										</Link>
