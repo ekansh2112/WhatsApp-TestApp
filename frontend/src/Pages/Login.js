@@ -53,7 +53,7 @@ export default function Login() {
 							value={mobileNumber}
 							onChange={handleChange("mobileNumber")}
 							required
-						></input>
+						/>
 						<label className="text-md mb-3">Password</label>
 						<input
 							className="rounded-lg h-8 w-60 mb-12 px-3 text-sm font-light py-2"
@@ -64,7 +64,7 @@ export default function Login() {
 							value={password}
 							onChange={handleChange("password")}
 							required
-						></input>
+						/>
 						<button
 							className="rounded-full h-8 w-60 bgOnButton text-sm mb-6"
 							type={"submit"}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { newContact } from "../helpers/contacts/contacts.js";
 export default function NewContact() {
 	const [values, setValues] = useState({
@@ -64,7 +64,7 @@ export default function NewContact() {
 									value={firstName}
 									onChange={handleChange("firstName")}
 									required
-								></input>
+								/>
 							</div>
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-2" htmlFor="lastname">
@@ -77,7 +77,7 @@ export default function NewContact() {
 									placeholder="Last Name"
 									value={lastName}
 									onChange={handleChange("lastName")}
-								></input>
+								/>
 							</div>
 						</div>
 						<label className="text-sm font-normal mb-2" htmlFor="mobilenumber">
@@ -93,7 +93,7 @@ export default function NewContact() {
 							value={mobileNumber}
 							onChange={handleChange("mobileNumber")}
 							required
-						></input>
+						/>
 						<label className="text-sm font-normal mb-2" htmlFor="email">
 							Email Address
 						</label>
@@ -104,7 +104,7 @@ export default function NewContact() {
 							placeholder="Email"
 							value={emailAddress}
 							onChange={handleChange("emailAddress")}
-						></input>
+						/>
 						<label className="text-sm font-normal mb-2" htmlFor="addressline1">
 							Address Line 1
 						</label>
@@ -115,7 +115,7 @@ export default function NewContact() {
 							placeholder="Address Line 1"
 							value={addressLine1}
 							onChange={handleChange("addressLine1")}
-						></input>
+						/>
 						<label className="text-sm font-normal mb-2" htmlFor="addressline2">
 							Address Line 2
 						</label>
@@ -126,17 +126,11 @@ export default function NewContact() {
 							placeholder="Address Line 2"
 							value={addressLine2}
 							onChange={handleChange("addressLine2")}
-						></input>
+						/>
 						<label className="text-sm font-normal mb-2" htmlFor="birthday">
 							Birthday
 						</label>
-						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
-							type="date"
-							name="birthday"
-							value={birthDate}
-							onChange={handleChange("birthDate")}
-						></input>
+						<input className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3" type="date" name="birthday" value={birthDate} onChange={handleChange("birthDate")} />
 						<button
 							className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-xs font-medium"
 							type={"submit"}

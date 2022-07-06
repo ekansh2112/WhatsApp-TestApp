@@ -10,16 +10,9 @@ export default function Settings() {
 						<h2 className="font-medium text-lg mb-3 text-center">To Receive Message Enter These Two Fields</h2>
 						<form action="" method="post" className="flex flex-col justify-between">
 							<label className="text-md font-medium mb-3">App ID</label>
-							<input
-								className="rounded-lg inputShadow h-9 w-full mb-6 px-3 text-sm font-light py-2"
-								type="text"
-								pattern="[6789][0-9]{9}"
-								maxLength="10"
-								placeholder="App ID"
-								required
-							></input>
+							<input className="rounded-lg inputShadow h-9 w-full mb-6 px-3 text-sm font-light py-2" type="text" pattern="[6789][0-9]{9}" maxLength="10" placeholder="App ID" required />
 							<label className="text-md font-medium mb-3">App Secret</label>
-							<input className="rounded-lg inputShadow h-9 w-full mb-6 px-3 text-sm font-light py-2" type="text" id="wabaid" placeholder="App Secret" required></input>
+							<input className="rounded-lg inputShadow h-9 w-full mb-6 px-3 text-sm font-light py-2" type="text" id="wabaid" placeholder="App Secret" required />
 							<button className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-sm mb-4">SAVE</button>
 						</form>
 						<div className="mb-6 mt-3">
@@ -34,7 +27,7 @@ export default function Settings() {
 						<div className="">
 							<hr className="border-slate-400 w-full mb-6"></hr>
 							<div className="flex justify-center items-center">
-								<input className="rounded-lg h-5 w-5" type="checkbox" id="notifications" required></input>
+								<input className="rounded-lg h-5 w-5" type="checkbox" id="notifications" required />
 								<label className="ml-5 text-lg">Enable Notifications</label>
 							</div>
 						</div>

@@ -60,7 +60,7 @@ export default function Register() {
 							value={mobileNumber}
 							onChange={handleChange("mobileNumber")}
 							required
-						></input>
+						/>
 						<label className="text-md mb-3" htmlFor="mobilenumber">
 							WhatsApp Business App ID (WABA ID)
 						</label>
@@ -72,7 +72,7 @@ export default function Register() {
 							value={wabaId}
 							onChange={handleChange("wabaId")}
 							required
-						></input>
+						/>
 						<label className="text-md mb-3" htmlFor="patoken">
 							Permanent Access Token
 						</label>
@@ -84,7 +84,7 @@ export default function Register() {
 							value={perAccToken}
 							onChange={handleChange("perAccToken")}
 							required
-						></input>
+						/>
 						<label className="text-md mb-3" htmlFor="password">
 							Create Password
 						</label>
@@ -97,7 +97,7 @@ export default function Register() {
 							value={password}
 							onChange={handleChange("password")}
 							required
-						></input>
+						/>
 						<button
 							className="rounded-full h-8 w-60 bgOnButton text-sm mb-4"
 							type={"submit"}
