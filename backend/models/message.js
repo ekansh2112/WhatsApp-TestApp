@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
-	message: {
-		type: String,
-		required: true
-	},
+	// message: {
+	// 	type: String,
+	// 	required: true
+	// },
 	//REVIEW -> for now working on text message only.
 	messageType: {
 		type: String //image/text/audio/video/doc
@@ -16,7 +16,7 @@ const messageSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	extraPayload: {
+	message: {
 		type: mongoose.Schema.Types.Mixed
 	},
 	timeStamp: {
