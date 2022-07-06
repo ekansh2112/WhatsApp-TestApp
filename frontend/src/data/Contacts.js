@@ -1,6 +1,4 @@
-import { NewContacts_API } from "../../backend";
-import { DeleteContacts_API } from "../../backend";
-import { Contacts_API } from "../../backend";
+import { NewContacts_API, Contacts_API, DeleteContacts_API } from "../backend";
 export const newContact = (contact) => {
 	return fetch(NewContacts_API, {
 		method: "POST",
@@ -19,7 +17,6 @@ export const newContact = (contact) => {
 		})
 		.catch((err) => console.log(err));
 };
-
 export const contactList = () => {
 	return fetch(`${Contacts_API}/all`, {
 		method: "GET",
@@ -36,8 +33,7 @@ export const contactList = () => {
 			return response;
 		});
 };
-
-export const delContact = (contact) => {
+export const deleteContact = (contact) => {
 	return fetch(`${DeleteContacts_API}${contact.phone}/delete`, {
 		method: "DELETE",
 		headers: {

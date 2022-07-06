@@ -13,10 +13,13 @@ import DeleteBroadcastLists from "./Pages/DeleteBroadcastLists";
 import DeleteContacts from "./Pages/DeleteContacts";
 import BusinessProfile from "./Pages/BussinessProfile";
 import NewMessage from "./Pages/NewMessage";
+import { contactList } from "./data/Contacts";
 import { isAuthenticated } from "./helpers/auth/authentication";
 import { toast } from "react-toastify";
 const ReactRoutes = () => {
+	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
 	// ANCHOR User & Auth
 	function PrivateRoute({ children }) {
 		if (cookies.user) {
@@ -27,6 +30,14 @@ const ReactRoutes = () => {
 			return <Navigate to="/login" />;
 		}
 	}
+
+	// ANCHOR Contacts
+	const [listOfContacts, setListOfContacts] = useState([]);
+	useEffect(() => {
+		contactList().then((data) => {
+			setListOfContacts(data);
+		});
+	}, []);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -43,19 +54,10 @@ const ReactRoutes = () => {
 				/>
 				<Route
 					exact
-					path="/settings"
+					path="/newmessage"
 					element={
 						<PrivateRoute>
-							<Settings />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					exact
-					path="/contacts"
-					element={
-						<PrivateRoute>
-							<Contacts />
+							<NewMessage ListOfContacts={listOfContacts} />
 						</PrivateRoute>
 					}
 				/>
@@ -70,19 +72,10 @@ const ReactRoutes = () => {
 				/>
 				<Route
 					exact
-					path="/broadcastlists"
+					path="/contacts"
 					element={
 						<PrivateRoute>
-							<BroadcastLists />
-						</PrivateRoute>
-					}
-				/>
-				<Route
-					exact
-					path="/newbroadcastlist"
-					element={
-						<PrivateRoute>
-							<NewBroadcastList />
+							<Contacts ListOfContacts={listOfContacts} />
 						</PrivateRoute>
 					}
 				/>
@@ -91,7 +84,25 @@ const ReactRoutes = () => {
 					path="/deletecontacts"
 					element={
 						<PrivateRoute>
-							<DeleteContacts />
+							<DeleteContacts ListOfContacts={listOfContacts} />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newbroadcastlist"
+					element={
+						<PrivateRoute>
+							<NewBroadcastList ListOfContacts={listOfContacts} />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/broadcastlists"
+					element={
+						<PrivateRoute>
+							<BroadcastLists />
 						</PrivateRoute>
 					}
 				/>
@@ -106,19 +117,19 @@ const ReactRoutes = () => {
 				/>
 				<Route
 					exact
-					path="/profile"
+					path="/settings"
 					element={
 						<PrivateRoute>
-							<BusinessProfile />
+							<Settings />
 						</PrivateRoute>
 					}
 				/>
 				<Route
 					exact
-					path="/newmessage"
+					path="/profile"
 					element={
 						<PrivateRoute>
-							<NewMessage />
+							<BusinessProfile />
 						</PrivateRoute>
 					}
 				/>
