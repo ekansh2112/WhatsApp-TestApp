@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { newContact } from "../helpers/contacts/contacts.js";
+import { newContact } from "../data/Contacts";
 import Base from "../Base";
 export default function NewContact() {
 	const [values, setValues] = useState({
@@ -50,15 +50,15 @@ export default function NewContact() {
 	return (
 		<>
 			<Base>
-				<section className="flex justify-center items-center h-screen">
-					<div className="rounded-lg p-7 flex flex-col justify-center panelShadow" style={{ height: "550px", width: "450px" }}>
+				<section className="flex justify-center items-center mt-20">
+					<div className="rounded-lg py-7 px-10 flex flex-col justify-center panelShadow bg-white" style={{ height: "600px", width: "500px" }}>
 						<div className="flex flex-row justify-between">
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-2" htmlFor="firstname">
 									First Name
 								</label>
 								<input
-									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 text-xs font-light py-3"
+									className="rounded-lg inputShadow h-9 w-44 mb-4 px-3 text-xs font-light py-3"
 									type="text"
 									name="firstname"
 									placeholder="First Name"
@@ -72,7 +72,7 @@ export default function NewContact() {
 									Last Name
 								</label>
 								<input
-									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 text-xs font-light py-3"
+									className="rounded-lg inputShadow h-9 w-44 mb-4 px-3 text-xs font-light py-3"
 									type="text"
 									name="lastname"
 									placeholder="Last Name"
@@ -85,7 +85,7 @@ export default function NewContact() {
 							Mobile Number
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
+							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							pattern="[56789][0-9]{9}"
 							maxLength="10"
@@ -99,7 +99,7 @@ export default function NewContact() {
 							Email Address
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
+							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="email"
 							placeholder="Email"
@@ -110,7 +110,7 @@ export default function NewContact() {
 							Address Line 1
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
+							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="addressline1"
 							placeholder="Address Line 1"
@@ -121,7 +121,7 @@ export default function NewContact() {
 							Address Line 2
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
+							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="addressline2"
 							placeholder="Address Line 2"
@@ -131,9 +131,9 @@ export default function NewContact() {
 						<label className="text-sm font-normal mb-2" htmlFor="birthday">
 							Birthday
 						</label>
-						<input className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3" type="date" name="birthday" value={birthDate} onChange={handleChange("birthDate")} />
+						<input className="rounded-lg inputShadow h-9 w-full mb-5 px-3 text-xs font-light py-3" type="date" name="birthday" value={birthDate} onChange={handleChange("birthDate")} />
 						<button
-							className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-xs font-medium"
+							className="rounded-full h-9 w-60 bgOnButton mx-auto mt-3 text-xs font-medium"
 							type={"submit"}
 							onClick={(e) => {
 								createContact(e);
