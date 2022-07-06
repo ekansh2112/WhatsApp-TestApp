@@ -44,7 +44,7 @@ export default function Login() {
 					<form className="flex flex-col" method="POST">
 						<label className="text-md mb-3">Your Mobile Number</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-6 px-3 text-sm font-light py-2"
 							type="text"
 							pattern="[56789][0-9]{9}"
 							maxLength="10"
@@ -56,7 +56,7 @@ export default function Login() {
 						></input>
 						<label className="text-md mb-3">Password</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-12 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-12 px-3 text-sm font-light py-2"
 							type="text"
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
 							name="password"
@@ -66,7 +66,7 @@ export default function Login() {
 							required
 						></input>
 						<button
-							className="rounded-full h-8 w-60 bg-yellow-400 text-sm mb-6"
+							className="rounded-full h-8 w-60 bgOnButton text-sm mb-6"
 							type={"submit"}
 							onClick={(e) => {
 								signinUser(e);

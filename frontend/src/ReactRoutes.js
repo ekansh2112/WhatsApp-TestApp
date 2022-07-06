@@ -11,7 +11,6 @@ import Settings from "./Pages/Settings";
 import DeleteBroadcastLists from "./Pages/DeleteBroadcastLists";
 import DeleteContacts from "./Pages/DeleteContacts";
 import BusinessProfile from "./Pages/BussinessProfile";
-import Notifications from "./Pages/Notifications";
 import NewMessage from "./Pages/NewMessage";
 const ReactRoutes = () => {
 	const [loggedIn, setLoggedIn] = useState(0);
@@ -29,7 +28,6 @@ const ReactRoutes = () => {
 				<Route exact path="/deletecontacts" element={<DeleteContacts />} />
 				<Route exact path="/deletebroadcastlists" element={<DeleteBroadcastLists />} />
 				<Route exact path="/profile" element={<BusinessProfile />} />
-				<Route exact path="/notifications" element={<Notifications />} />
 				<Route exact path="/newmessage" element={<NewMessage />} />
 			</Routes>
 		</BrowserRouter>

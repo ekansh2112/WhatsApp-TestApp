@@ -51,7 +51,7 @@ export default function Register() {
 							Your Mobile Number
 						</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-3 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-3 px-3 text-sm font-light py-2"
 							type="text"
 							pattern="[56789][0-9]{9}"
 							maxLength="10"
@@ -65,7 +65,7 @@ export default function Register() {
 							WhatsApp Business App ID (WABA ID)
 						</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-3 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-3 px-3 text-sm font-light py-2"
 							type="text"
 							name="wabaid"
 							placeholder="Enter Your WABA ID"
@@ -77,7 +77,7 @@ export default function Register() {
 							Permanent Access Token
 						</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-3 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-3 px-3 text-sm font-light py-2"
 							type="text"
 							name="patoken"
 							placeholder="Enter Your Permanent Access Token"
@@ -89,7 +89,7 @@ export default function Register() {
 							Create Password
 						</label>
 						<input
-							className="rounded-lg h-8 w-60 mb-6 px-3 focus:outline-none text-sm font-light py-2"
+							className="rounded-lg h-8 w-60 mb-6 px-3 text-sm font-light py-2"
 							type="text"
 							pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
 							name="password"
@@ -99,7 +99,7 @@ export default function Register() {
 							required
 						></input>
 						<button
-							className="rounded-full h-8 w-60 bg-yellow-400 text-sm mb-4"
+							className="rounded-full h-8 w-60 bgOnButton text-sm mb-4"
 							type={"submit"}
 							onClick={(e) => {
 								signupUser(e);

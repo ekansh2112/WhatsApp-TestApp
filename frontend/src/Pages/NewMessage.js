@@ -24,22 +24,11 @@ export default function NewMessage() {
 				<section className="flex justify-center items-center mt-20">
 					<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
 						<div className="flex flex-col">
-							<input
-								className="rounded-lg inputShadow h-9 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
-								type="text"
-								id="newmessage"
-								placeholder="Message"
-								required
-							></input>
+							<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3" type="text" id="newmessage" placeholder="Message" required></input>
 						</div>
-						<input
-							className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 focus:outline-none text-xs font-light py-3"
-							type="search"
-							id="search"
-							placeholder="Search for a contact"
-						></input>
+						<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact"></input>
 						<div className="flex flex-col justify-start overflow-y-scroll removeScrollbar w-full">{disp()}</div>
-						<button className="rounded-full flex items-center justify-center h-8 w-60 bg-yellow-400 mx-auto mt-6 text-xs font-medium py-4">SEND MESSAGE</button>
+						<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4">SEND MESSAGE</button>
 					</div>
 				</section>
 			</Base>

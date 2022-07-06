@@ -21,9 +21,9 @@ export default function Home() {
 		}
 		return arr;
 	};
-	useEffect(() => {
-		isAuthenticated();
-	}, []);
+	// useEffect(() => {
+	// 	isAuthenticated();
+	// }, []);
 	return (
 		<>
 			<Base>

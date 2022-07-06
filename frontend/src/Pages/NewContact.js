@@ -57,7 +57,7 @@ export default function NewContact() {
 									First Name
 								</label>
 								<input
-									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
+									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 text-xs font-light py-3"
 									type="text"
 									name="firstname"
 									placeholder="First Name"
@@ -71,7 +71,7 @@ export default function NewContact() {
 									Last Name
 								</label>
 								<input
-									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 focus:outline-none text-xs font-light py-3"
+									className="rounded-lg inputShadow h-8 w-44 mb-4 px-3 text-xs font-light py-3"
 									type="text"
 									name="lastname"
 									placeholder="Last Name"
@@ -84,7 +84,7 @@ export default function NewContact() {
 							Mobile Number
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							pattern="[56789][0-9]{9}"
 							maxLength="10"
@@ -98,7 +98,7 @@ export default function NewContact() {
 							Email Address
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="email"
 							placeholder="Email"
@@ -109,7 +109,7 @@ export default function NewContact() {
 							Address Line 1
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="addressline1"
 							placeholder="Address Line 1"
@@ -120,7 +120,7 @@ export default function NewContact() {
 							Address Line 2
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
 							name="addressline2"
 							placeholder="Address Line 2"
@@ -131,14 +131,14 @@ export default function NewContact() {
 							Birthday
 						</label>
 						<input
-							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 focus:outline-none text-xs font-light py-3"
+							className="rounded-lg inputShadow h-8 w-full mb-4 px-3 text-xs font-light py-3"
 							type="date"
 							name="birthday"
 							value={birthDate}
 							onChange={handleChange("birthDate")}
 						></input>
 						<button
-							className="rounded-full h-8 w-60 bg-yellow-400 mx-auto mt-3 text-xs font-medium"
+							className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-xs font-medium"
 							type={"submit"}
 							onClick={(e) => {
 								createContact(e);
