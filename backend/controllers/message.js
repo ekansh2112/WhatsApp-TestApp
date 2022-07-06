@@ -10,6 +10,7 @@ const sendAnyMessage = async (req, messageBody, next) => {
 			}
 		})
 		.then((res) => {
+			console.log("___IN SEND ANY MESSAGE___", res);
 			next(res);
 		});
 };
@@ -20,9 +21,9 @@ const uploadMedia = async (req, file, next) => {
 		.post(
 			`${process.env.WABAPI}/${req.session.phoneNumberID}/media`,
 			{
-				messagin_product: "whatsapp",
+				messaging_product: "whatsapp",
 				file,
-				type: file.type
+				type: "image/png"
 			},
 			{
 				headers: {
@@ -31,7 +32,11 @@ const uploadMedia = async (req, file, next) => {
 			}
 		)
 		.then((res) => {
+			// console.log("____IN UPLOAD MEDIA____", res);
 			next(res);
+		})
+		.catch((err) => {
+			console.log("____ ERROR IN UPLOAD MEDIA____", err);
 		});
 };
 
@@ -159,49 +164,58 @@ exports.sendFileMessage = async (req, res) => {
 						message: wares.statusText
 					});
 				}
-			}).then(async (data) => {
-				if (messageBody.type === "image")
-					messageBody = {
-						...messageBody,
-						image: {
-							id: data
-						}
-					};
-				else
-					messageBody = {
-						...messageBody,
-						document: {
-							...data.fields.otherData,
-							id: data
-						}
-					};
-
-				await sendAnyMessage(req, messageBody, (wares) => {
-					storeMessage(
-						req,
-						{
-							messagePayload: messageBody, //REVIEW
-							contactNumber: data.fields.contactNumber,
-							messageType: data.fields.messageType
-						},
-						wares,
-						(status, statusCode, resData) => {
-							console.log(resData);
-							if (!status) {
-								return res.status(statusCode).json({
-									stat: "error",
-									message: "Something went wrong!"
-								});
-							} else {
-								return res.json({
-									stat: "success",
-									message: resData
-								});
+			})
+				.then(async (data) => {
+					console.log("AFTER UPLOAD MEDIA", data);
+					if (messageBody.type === "image")
+						messageBody = {
+							...messageBody,
+							image: {
+								id: data
 							}
-						}
-					);
+						};
+					else
+						messageBody = {
+							...messageBody,
+							document: {
+								...data.fields.otherData,
+								id: data
+							}
+						};
+
+					await sendAnyMessage(req, messageBody, (wares) => {
+						storeMessage(
+							req,
+							{
+								messagePayload: messageBody, //REVIEW
+								contactNumber: data.fields.contactNumber,
+								messageType: data.fields.messageType
+							},
+							wares,
+							(status, statusCode, resData) => {
+								console.log(resData);
+								if (!status) {
+									return res.status(statusCode).json({
+										stat: "error",
+										message: "Something went wrong!"
+									});
+								} else {
+									return res.json({
+										stat: "success",
+										message: resData
+									});
+								}
+							}
+						);
+					});
+				})
+				.catch((err) => {
+					console.log(err.response.status);
+					return res.status(500).json({
+						stat: "error",
+						message: "something went wrong."
+					});
 				});
-			});
 		}
 	});
 };
