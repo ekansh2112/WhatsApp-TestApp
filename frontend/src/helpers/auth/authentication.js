@@ -1,4 +1,4 @@
-import { Login_API, Register_API, isAuthenticated_API, Signout_API } from "../../backend";
+import { Register_API,Login_API, isAuthenticated_API, Signout_API } from "../../backend";
 export const signup = (user) => {
 	return fetch(Register_API, {
 		method: "POST",

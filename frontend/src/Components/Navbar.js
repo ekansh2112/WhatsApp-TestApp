@@ -4,7 +4,9 @@ import { UserCircleIcon } from "@heroicons/react/solid";
 import { signout } from "../helpers/auth/authentication.js";
 import { toast } from "react-toastify";
 import Logo from "../Assets/TallyXWhatsApp.svg";
+import { useCookies } from "react-cookie";
 export default function Navbar() {
+	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [viewDropDown, setViewDropDown] = useState(false);
 	const navigate = useNavigate();
 	const signOutUser = (e) => {
@@ -12,6 +14,7 @@ export default function Navbar() {
 		signout()
 			.then((data) => {
 				if (data?.stat === "success") {
+					removeCookie("user");
 					toast.success(data?.message);
 					navigate("/login");
 				} else if (data?.stat === "error") {
@@ -64,7 +67,7 @@ export default function Navbar() {
 									<UserCircleIcon className={viewDropDown ? "h-8 w-8 bgOnProfileButton" : "h-8 w-8"} />
 								</button>
 								{viewDropDown && (
-									<div className="absolute flex flex-col right-0 top-16 h-48 rounded-2xl panelShadow p-2 bg-white">
+									<div className="absolute flex flex-col right-0 top-16 h-48 rounded-3xl panelShadow p-2 bg-white">
 										<Link className="px-4 py-3 text-sm font-semibold uppercase" to="/profile">
 											PROFILE
 										</Link>

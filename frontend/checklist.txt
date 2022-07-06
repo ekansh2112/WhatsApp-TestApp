@@ -4,3 +4,6 @@
 4. Use Node Prune
 5. Loading
 6. Checks and random string handling
+
+isauth jab bhi call and if it is false then delete cookie
+and on logout

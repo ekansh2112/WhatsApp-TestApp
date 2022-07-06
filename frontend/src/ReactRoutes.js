@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Home from "./Pages/Home";
@@ -12,23 +13,115 @@ import DeleteBroadcastLists from "./Pages/DeleteBroadcastLists";
 import DeleteContacts from "./Pages/DeleteContacts";
 import BusinessProfile from "./Pages/BussinessProfile";
 import NewMessage from "./Pages/NewMessage";
+import { isAuthenticated } from "./helpers/auth/authentication";
+import { toast } from "react-toastify";
 const ReactRoutes = () => {
-	const [loggedIn, setLoggedIn] = useState(0);
+	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+	// ANCHOR User & Auth
+	function PrivateRoute({ children }) {
+		if (cookies.user) {
+			return children;
+		} else {
+			// TODO 2 times
+			// toast.error("You need to login first!");
+			return <Navigate to="/login" />;
+		}
+	}
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route exact path="/" element={loggedIn ? <Navigate to="/login" /> : <Home />} />
-				<Route exact path="/login" element={<Login />} />
-				<Route exact path="/register" element={<Register />} />
-				<Route exact path="/settings" element={<Settings />} />
-				<Route exact path="/contacts" element={<Contacts />} />
-				<Route exact path="/newcontact" element={<NewContact />} />
-				<Route exact path="/broadcastlists" element={<BroadcastLists />} />
-				<Route exact path="/newbroadcastlist" element={<NewBroadcastList />} />
-				<Route exact path="/deletecontacts" element={<DeleteContacts />} />
-				<Route exact path="/deletebroadcastlists" element={<DeleteBroadcastLists />} />
-				<Route exact path="/profile" element={<BusinessProfile />} />
-				<Route exact path="/newmessage" element={<NewMessage />} />
+				<Route exact path="/register" element={cookies.user ? <Navigate to="/" /> : <Register />} />
+				<Route exact path="/login" element={cookies.user ? <Navigate to="/" /> : <Login />} />
+				<Route
+					exact
+					path="/"
+					element={
+						<PrivateRoute>
+							<Home />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/settings"
+					element={
+						<PrivateRoute>
+							<Settings />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/contacts"
+					element={
+						<PrivateRoute>
+							<Contacts />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newcontact"
+					element={
+						<PrivateRoute>
+							<NewContact />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/broadcastlists"
+					element={
+						<PrivateRoute>
+							<BroadcastLists />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newbroadcastlist"
+					element={
+						<PrivateRoute>
+							<NewBroadcastList />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/deletecontacts"
+					element={
+						<PrivateRoute>
+							<DeleteContacts />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/deletebroadcastlists"
+					element={
+						<PrivateRoute>
+							<DeleteBroadcastLists />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/profile"
+					element={
+						<PrivateRoute>
+							<BusinessProfile />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newmessage"
+					element={
+						<PrivateRoute>
+							<NewMessage />
+						</PrivateRoute>
+					}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);

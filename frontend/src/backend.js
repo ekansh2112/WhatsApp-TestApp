@@ -1,10 +1,13 @@
-const BACKEND = "http://localhost:2000/";
+const BACKEND = "http://localhost:4000/";
 
 // Authentication APIs
 export const Register_API = `${BACKEND}api/signup/`;
 export const Login_API = `${BACKEND}api/login/`;
 export const isAuthenticated_API = `${BACKEND}api/isauth/`;
 export const Signout_API = `${BACKEND}api/logout/`;
+
+// Profile APIs
+export const ProfileUpdate_API = `${BACKEND}api/signup/`;
 
 // Contacts APIs
 export const NewContacts_API = `${BACKEND}api/contacts/create`;

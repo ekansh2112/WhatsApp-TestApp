@@ -31,30 +31,28 @@ export default function BusinessProfile() {
 								</div>
 							)}
 						</div>
-						<form action="" method="post" className="flex flex-col justify-between">
-							<label className="text-sm font-normal text-slate-900 mb-2">Description</label>
-							<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="text" id="description" placeholder="Add description" />
-							<label className="text-sm font-normal text-slate-900 mb-2">Address</label>
-							<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="text" id="address" placeholder="Add your address" />
-							<label className="text-sm font-normal text-slate-900 mb-2">Email</label>
-							<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="email" id="email" placeholder="Add your email" />
-							<div className="flex flex-row justify-between">
-								<div className="flex flex-col">
-									<label className="text-sm font-normal text-slate-900 mb-2">Vertical</label>
-									<select className="rounded-lg myselect inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium" name="vertical">
-										<option value="Auto">Auto</option>
-										<option value="Electronics">Electronics</option>
-										<option value="Grocery">Grocery</option>
-										<option value="Home Appliances">Home Appliances</option>
-									</select>
-								</div>
-								<div className="flex flex-col">
-									<label className="text-sm font-normal text-slate-900 mb-2">Website</label>
-									<input className="rounded-lg inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium py-3" type="url" placeholder="Add your website" />
-								</div>
+						<label className="text-sm font-normal text-slate-900 mb-2">Description</label>
+						<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="text" id="description" placeholder="Add description" />
+						<label className="text-sm font-normal text-slate-900 mb-2">Address</label>
+						<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="text" id="address" placeholder="Add your address" />
+						<label className="text-sm font-normal text-slate-900 mb-2">Email</label>
+						<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-medium py-3" type="email" id="email" placeholder="Add your email" />
+						<div className="flex flex-row justify-between">
+							<div className="flex flex-col">
+								<label className="text-sm font-normal text-slate-900 mb-2">Vertical</label>
+								<select className="rounded-lg myselect inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium" name="vertical">
+									<option value="Auto">Auto</option>
+									<option value="Electronics">Electronics</option>
+									<option value="Grocery">Grocery</option>
+									<option value="Home Appliances">Home Appliances</option>
+								</select>
 							</div>
-							<button className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-xs font-medium">UPDATE PROFILE</button>
-						</form>
+							<div className="flex flex-col">
+								<label className="text-sm font-normal text-slate-900 mb-2">Website</label>
+								<input className="rounded-lg inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium py-3" type="url" placeholder="Add your website" />
+							</div>
+						</div>
+						<button className="rounded-full h-8 w-60 bgOnButton mx-auto mt-3 text-xs font-medium">UPDATE PROFILE</button>
 					</div>
 				</section>
 			</Base>

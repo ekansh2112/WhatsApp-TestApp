@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { newContact } from "../helpers/contacts/contacts.js";
+import Base from "../Base";
 export default function NewContact() {
 	const [values, setValues] = useState({
 		firstName: "",
@@ -48,9 +49,9 @@ export default function NewContact() {
 	};
 	return (
 		<>
-			<section className="flex justify-center items-center h-screen">
-				<div className="rounded-lg p-7 flex flex-col justify-center panelShadow" style={{ height: "550px", width: "450px" }}>
-					<form className="flex flex-col justify-between" method="POST">
+			<Base>
+				<section className="flex justify-center items-center h-screen">
+					<div className="rounded-lg p-7 flex flex-col justify-center panelShadow" style={{ height: "550px", width: "450px" }}>
 						<div className="flex flex-row justify-between">
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-2" htmlFor="firstname">
@@ -140,9 +141,9 @@ export default function NewContact() {
 						>
 							SAVE CONTACT
 						</button>
-					</form>
-				</div>
-			</section>
+					</div>
+				</section>
+			</Base>
 		</>
 	);
 }

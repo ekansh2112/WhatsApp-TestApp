@@ -64,3 +64,6 @@ input:focus {
 .bgOnButton {
 	background-color: #ffc632;
 }
+.lineColor {
+	border-color: #a0acb7;
+}
