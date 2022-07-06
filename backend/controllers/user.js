@@ -17,30 +17,41 @@ exports.getBusinessProfile = async (phoneNumberID, accessToken, next) => {
 
 //FIXME: wab api not taking req body
 exports.updateBusinessProfile = async (req, res) => {
-	console.log("afaefaeaw", req.body);
+	console.log(req.body);
 	console.log(req.session.phoneNumberID), " IN UPDATE PROFILE";
 	await axios
-		.post(`${process.env.WABAPI}	${req.session.phoneNumberID}/whatsapp_business_profile`, {
-			headers: {
-				Authorization: `Bearer ${req.session.accessToken}`,
-				Accept: "*/*",
-				"Content-Type": "application/json; charset=utf-8"
-			},
-			body: JSON.stringify({
+		.post(
+			`${process.env.WABAPI}/${req.session.phoneNumberID}/whatsapp_business_profile`,
+			{
 				messaging_product: "whatsapp",
 				...req.body
-			})
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${req.session.accessToken}`,
+					Accept: "*/*",
+					"Content-Type": "application/json; charset=utf-8"
+				}
+			}
+		)
+		.then((wares) => {
+			console.log("_____________________________", wares.status);
+			if (wares.status !== 200) {
+				return res.status(wares.status).json({
+					stat: "error",
+					message: "Something went wrong."
+				});
+			} else {
+				return res.json({
+					stat: "success",
+					message: "User profile updated successfully."
+				});
+			}
 		})
-		.then((res) => {
-			console.log("_____________________________", res);
-			return res.json({
-				stat: "working"
-			});
-		})
-		.catch((err) => {
-			console.log(err.response?.data);
-			return res.status(500).json({
-				stat: "error"
+		.catch((e) => {
+			return res.status(e?.response?.status || 500).json({
+				stat: "error",
+				message: e?.response?.statusText || "Something went wrong."
 			});
 		});
 };
