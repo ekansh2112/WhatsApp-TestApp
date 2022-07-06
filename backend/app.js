@@ -6,6 +6,7 @@ const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const contactRoutes = require("./routes/contacts");
+const broadcastRoutes = require('./routes/broadcast-lists')
 const userRoutes = require("./routes/user");
 const messageRoutes = require("./routes/message");
 var app = express();
@@ -55,5 +56,7 @@ app.use("/api", authRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/messages", messageRoutes);
+app.use('/api/broadcast', broadcastRoutes)
+
 
 module.exports = app;
