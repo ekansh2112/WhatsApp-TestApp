@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BusinessOwner from "../Assets/image.png";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../helpers/auth/authentication.js";
+import { signup } from "../helpers/auth/authentication";
 export default function Register() {
 	const [values, setValues] = useState({
 		mobileNumber: "",
@@ -34,6 +34,7 @@ export default function Register() {
 					}
 				})
 				.catch((e) => {
+					toast.error("Not able to register! Please try again!");
 					console.log(e);
 				});
 		} else if (wabaId === "" && mobileNumber === "" && perAccToken === "" && password === "") {
@@ -66,7 +67,6 @@ export default function Register() {
 						placeholder="Enter Your Mobile Number"
 						value={mobileNumber}
 						onChange={handleChange("mobileNumber")}
-						required
 					/>
 					<label className="text-sm font-normal mb-2" htmlFor="mobilenumber">
 						WhatsApp Business App ID (WABA ID)
@@ -78,7 +78,6 @@ export default function Register() {
 						placeholder="Enter Your WABA ID"
 						value={wabaId}
 						onChange={handleChange("wabaId")}
-						required
 					/>
 					<label className="text-sm font-normal mb-2" htmlFor="patoken">
 						Permanent Access Token
@@ -90,7 +89,6 @@ export default function Register() {
 						placeholder="Enter Your Permanent Access Token"
 						value={perAccToken}
 						onChange={handleChange("perAccToken")}
-						required
 					/>
 					<label className="text-sm font-normal mb-2" htmlFor="password">
 						Create Password
@@ -103,7 +101,6 @@ export default function Register() {
 						placeholder="Enter A Strong Password"
 						value={password}
 						onChange={handleChange("password")}
-						required
 					/>
 					<button
 						className="rounded-full h-9 w-72 bgOnButton text-sm font-medium mb-4"

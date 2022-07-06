@@ -1,4 +1,5 @@
-import { Register_API,Login_API, isAuthenticated_API, Signout_API } from "../../backend";
+import { Register_API, Login_API, isAuthenticated_API, Signout_API } from "../../backend";
+import { toast } from "react-toastify";
 export const signup = (user) => {
 	return fetch(Register_API, {
 		method: "POST",
@@ -11,7 +12,10 @@ export const signup = (user) => {
 		.then((response) => {
 			return response.json();
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to register! Please try again!");
+			return console.log(err);
+		});
 };
 export const signin = (user) => {
 	return fetch(Login_API, {
@@ -26,7 +30,10 @@ export const signin = (user) => {
 		.then((response) => {
 			return response.json();
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to login! Please try again!");
+			return console.log(err);
+		});
 };
 export const isAuthenticated = () => {
 	return fetch(isAuthenticated_API, {
@@ -60,5 +67,8 @@ export const signout = () => {
 		.then((response) => {
 			return response;
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to logout! Please try again!");
+			return console.log(err);
+		});
 };

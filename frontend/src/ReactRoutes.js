@@ -36,9 +36,11 @@ const ReactRoutes = () => {
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
 	useEffect(() => {
-		contactList().then((data) => {
-			setListOfContacts(data);
-		});
+		if (cookies.user) {
+			contactList().then((data) => {
+				setListOfContacts(data);
+			});
+		}
 	}, [newContactAdded]);
 	return (
 		<BrowserRouter>
@@ -86,7 +88,7 @@ const ReactRoutes = () => {
 					path="/deletecontacts"
 					element={
 						<PrivateRoute>
-							<DeleteContacts ListOfContacts={listOfContacts} />
+							<DeleteContacts ListOfContacts={listOfContacts} newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
 						</PrivateRoute>
 					}
 				/>

@@ -13,7 +13,7 @@ export default function List({ needMB, needCheckBox }) {
 				</div>
 				{needCheckBox && (
 					<div className="flex ml-24 justify-center items-center">
-						<input className="rounded-lg h-5 w-5" type="checkbox" id="selectcontact" required />
+						<input className="rounded-lg h-5 w-5" type="checkbox" id="selectcontact" />
 					</div>
 				)}
 			</div>

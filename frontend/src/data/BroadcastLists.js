@@ -12,7 +12,6 @@ export const newBroadcastList = (broadcastlist) => {
 			return response.json();
 		})
 		.then((response) => {
-			console.log(response);
 			return response;
 		})
 		.catch((err) => console.log(err));
@@ -29,9 +28,9 @@ export const broadcastLists = () => {
 			return response.json();
 		})
 		.then((response) => {
-			console.log(response);
 			return response;
-		});
+		})
+		.catch((err) => console.log(err));
 };
 export const deleteBroadcastList = (broadcastlist) => {
 	return fetch(`${DeleteBroadcastLists_API}${broadcastlist.phone}/delete`, {

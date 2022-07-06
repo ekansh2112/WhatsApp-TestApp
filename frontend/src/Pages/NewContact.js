@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { newContact } from "../data/Contacts";
 import Base from "../Base";
-export default function NewContact(props) {
+import { getRandomColor, createImageFromInitials } from "../utilities/ImageGenerator";
+export default function NewContact({ setNewContactAdded, newContactAdded }) {
 	const [values, setValues] = useState({
 		firstName: "",
 		lastName: "",
@@ -20,9 +21,16 @@ export default function NewContact(props) {
 	const createContact = (e) => {
 		e.preventDefault();
 		if (mobileNumber !== "") {
-			newContact({ fname: firstName, lname: lastName, phoneNumber: mobileNumber, email: emailAddress, address: address, birthDate: birthDate })
+			newContact({
+				image: createImageFromInitials(100, firstName + " " + lastName, getRandomColor(), "#FFFFFF"),
+				fname: firstName,
+				lname: lastName,
+				phoneNumber: mobileNumber,
+				email: emailAddress,
+				address: address,
+				birthDate: birthDate,
+			})
 				.then((data) => {
-					console.log(data, "idgaf33773");
 					if (data?.stat === "success") {
 						setValues({
 							firstName: "",
@@ -33,8 +41,8 @@ export default function NewContact(props) {
 							birthDate: "",
 						});
 						toast.success(data?.message);
-						props.setNewContactAdded(!props.newContactAdded);
-						navigate("/");
+						setNewContactAdded(!newContactAdded);
+						navigate("/contacts");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}
@@ -63,7 +71,6 @@ export default function NewContact(props) {
 									placeholder="First Name"
 									value={firstName}
 									onChange={handleChange("firstName")}
-									required
 								/>
 							</div>
 							<div className="flex flex-col">
@@ -92,7 +99,6 @@ export default function NewContact(props) {
 							placeholder="Mobile Number"
 							value={mobileNumber}
 							onChange={handleChange("mobileNumber")}
-							required
 						/>
 						<label className="text-sm font-normal mb-2" htmlFor="email">
 							Email Address

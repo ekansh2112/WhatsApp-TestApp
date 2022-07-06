@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserCircleIcon } from "@heroicons/react/solid";
-import { signout } from "../helpers/auth/authentication.js";
+import { signout } from "../helpers/auth/authentication";
 import { toast } from "react-toastify";
 import Logo from "../Assets/TallyXWhatsApp.svg";
 import { useCookies } from "react-cookie";
@@ -22,6 +22,7 @@ export default function Navbar() {
 				}
 			})
 			.catch((e) => {
+				toast.error("Not able to logout! Please try again!");
 				console.log(e);
 			});
 	};
