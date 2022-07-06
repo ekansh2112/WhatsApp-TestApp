@@ -10,7 +10,7 @@ root.render(
 	<React.StrictMode>
 		<CookiesProvider>
 			<ReactRoutes />
-			<ToastContainer theme="colored" position="bottom-center" autoClose={5000} hideProgressBar={false} pauseOnFocusLoss pauseOnHover />
+			<ToastContainer theme="colored" position="bottom-center" autoClose={5000} hideProgressBar={true} pauseOnFocusLoss pauseOnHover />
 		</CookiesProvider>
 	</React.StrictMode>
 );

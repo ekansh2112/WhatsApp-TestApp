@@ -4,7 +4,6 @@ import ActiveChat from "../Components/ActiveChat";
 import ChatSection from "../Components/ChatSection";
 import InputMessage from "../Components/InputMessage";
 import RecentChat from "../Components/RecentChat";
-import { isAuthenticated } from "../helpers/auth/authentication.js";
 export default function Home() {
 	const disp = () => {
 		let arr = [];
@@ -21,17 +20,14 @@ export default function Home() {
 		}
 		return arr;
 	};
-	useEffect(() => {
-		isAuthenticated();
-	}, []);
 	return (
 		<>
 			<Base>
 				<div className="flex items-center">
-					<div className="mx-10 ml-14 p-7 bg-white removeScrollbar overflow-y-scroll rounded-2xl" style={{ height: "616px", width: "315px" }}>
+					<div className="mx-10 ml-14 p-7 bg-white removeScrollbar overflow-y-scroll rounded-3xl" style={{ height: "616px", width: "315px" }}>
 						{disp()}
 					</div>
-					<div className="my-6 rounded-2xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+					<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
 						<ActiveChat />
 						<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
 							<ChatSection />

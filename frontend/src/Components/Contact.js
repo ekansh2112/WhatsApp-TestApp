@@ -8,7 +8,7 @@ export default function Contact({ needMB, needCheckBox, needRadio, contact }) {
 			<div className={needMB && (needCheckBox || needRadio) ? "flex mb-3 justify-center" : needMB ? "flex mb-3" : "flex"}>
 				{needRadio && (
 					<div className="flex mr-10 justify-center items-center">
-						<input className="rounded-lg h-5 w-5 focus:outline-none" type="radio" id="selectcontact" name="selectcontact" required></input>
+						<input className="rounded-lg h-5 w-5" type="radio" id="selectcontact" name="selectcontact" required />
 					</div>
 				)}
 				<img className="w-14 h-14 rounded-full mr-3" src={createImageFromInitials(100, name, getRandomColor(), "#FFFFFF")} alt="image_1" />
@@ -18,7 +18,7 @@ export default function Contact({ needMB, needCheckBox, needRadio, contact }) {
 				</div>
 				{needCheckBox && (
 					<div className="flex ml-24 justify-center items-center">
-						<input className="rounded-lg h-5 w-5 focus:outline-none" type="checkbox" id="selectcontact" required></input>
+						<input className="rounded-lg h-5 w-5" type="checkbox" id="selectcontact" required />
 					</div>
 				)}
 			</div>
