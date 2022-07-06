@@ -1,29 +1,79 @@
 const Message = require("../models/message");
 const axios = require("axios").default;
+const formidable = require("formidable");
 
-const sendTextMessage = async (message, next) => {
-	const { messageBody, contactNumber, messageType } = message;
+const sendAnyMessage = async (req, messageBody, next) => {
 	await axios
-		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, {
+		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, messageBody, {
 			headers: {
-				Authorization: `Bearer ${req.session.accessToken}`,
-				Accept: "*/*",
-				"Content-Type": "application/json; charset=utf-8"
-			},
-			body: {
-				messaging_product: "whatsapp",
-				type: messageType,
-				to: contactNumber,
-				text: {
-					preview_url: true,
-					body: messageBody
-				}
+				Authorization: "Bearer " + req.session.accessToken
 			}
 		})
 		.then((res) => {
-			console.log(res);
 			next(res);
 		});
+};
+
+const uploadMedia = async (req, file, next) => {
+	console.log("______________________", file);
+	await axios
+		.post(
+			`${process.env.WABAPI}/${req.session.phoneNumberID}/media`,
+			{
+				messagin_product: "whatsapp",
+				file,
+				type: file.type
+			},
+			{
+				headers: {
+					Authorization: "Bearer " + req.session.accessToken
+				}
+			}
+		)
+		.then((res) => {
+			next(res);
+		});
+};
+
+const storeMessage = (req, payload, wares, next) => {
+	if (wares.status != 200) {
+		next(false, wares.status);
+	} else {
+		const message = new Message({
+			message: payload.messagePayload,
+			messageType: payload.messageType,
+			sender: req.session.phoneNumberID,
+			receiver: payload.contactNumber,
+			status: true
+		});
+
+		//STORE THIS OBJECT IN DB
+		message.save(async (err, newMessage) => {
+			if (err) {
+				console.log(err);
+				next(false, 400);
+			} else {
+				if (newMessage) {
+					console.log("NEWMESSAGE", newMessage);
+					next(true, 200, newMessage);
+				} else {
+					next(false, 500);
+				}
+			}
+		});
+	}
+};
+
+const parseForm = (req, next) => {
+	const form = formidable({ multiples: true });
+	form.parse(req, (err, fields, files) => {
+		if (err) {
+			next(false);
+			console.log(err);
+			return;
+		}
+		next(true, { fields, files });
+	});
 };
 exports.sendMessage = async (req, res) => {
 	//CHECK USER AUTHENTICATION
@@ -33,84 +83,127 @@ exports.sendMessage = async (req, res) => {
 			message: "User unauthorized."
 		});
 	}
-	/*
-        user_wabaID -> get from session
-        req.body -> 
-        contactNumber,
-        messageBody,
-        messageType,(text/image/doc/audio/video)
-    */
 
-	const { messageBody, contactNumber, messageType } = req.body;
-	const message = new Message({
-		message: messageBody,
-		messageType,
-		sender: req.session.wabaID,
-		receiver: contactNumber
-	});
-
-	//STORE THIS OBJECT IN DB (message status -> false (i.e pending)
-	message.save((err, newMessage) => {
-		if (err) {
-			return res.status(400).json({
-				stat: "error",
-				message: err._message
-			});
-		} else {
-			if (newMessage) {
-				return res.json({
-					stat: "success",
-					messageData: message
-				});
-			} else {
-				return res.status(500).json({
-					stat: "error",
-					message: "something went wrong, please try again"
-				});
-			}
-		}
-	});
-
-	// WA API CALL TO SEND MESSAGE
+	let messageBody = {
+		messaging_product: "whatsapp",
+		recipient_type: "individual",
+		to: req.body.contactNumber,
+		messageType: req.body.messageType,
+		text: req.body.messagePayload.text
+	};
+	console.log(messageBody);
 	try {
-		await sendTextMessage(message, (res) => {
-			console.log(res);
-			if (!res.status == 200) {
-				return res.status(res.status).json({
-					stat: "error",
-					message: res.statusText
-				});
-			}
-
-			const updatedMessage = Message.updateOne(
+		// WA API CALL TO SEND MESSAGE
+		await sendAnyMessage(req, messageBody, (wares) => {
+			console.log("SEND TEXT MESSAGE RES", wares.status, wares.statusText);
+			storeMessage(
+				req,
 				{
-					_id: message._id
+					messagePayload: req.body.messagePayload,
+					messageType: req.body.messageType,
+					contactNumber: req.body.contactNumber
 				},
-				{
-					status: true
+				wares,
+				(status, statusCode, resData) => {
+					if (!status) {
+						return res.status(statusCode).json({
+							stat: "error",
+							message: "Something went wrong!"
+						});
+					} else {
+						return res.json({
+							stat: "success",
+							message: resData
+						});
+					}
 				}
 			);
-
-			if (updatedMessage) {
-				return res.json({
-					stat: "success",
-					messageData: updatedMessage
-				});
-			} else {
-				return res.json({
-					stat: "error"
-				});
-			}
 		});
 	} catch (e) {
+		//CATCH error, if any and send response accordingly.
 		console.log(e);
+		return res.status(e?.response?.status || 500).json({
+			stat: "error",
+			message: e?.response?.statusText || "Something went wrong."
+		});
 	}
+};
 
-	/**
-	 * if response not 200 -> return error with corresponding response status code and delete entry from db
-	 * else -> success -> update message status to true (sent).
-	 */
-	//CATCH error, if any and send response accordingly.
+exports.sendFileMessage = async (req, res) => {
+	//CHECK USER AUTHENTICATION
+	if (!req.session.phoneNumberID || !req.session.wabaID) {
+		return res.status(401).json({
+			stat: "error",
+			message: "User unauthorized."
+		});
+	}
+	parseForm(req, async (status, data) => {
+		if (!status)
+			return res.status(400).json({
+				stat: "error",
+				message: "File error."
+			});
+		else {
+			console.log(data);
+			let messageBody = {
+				messaging_product: "whatsapp",
+				recipient_type: "individual",
+				to: data.fields.contactNumber,
+				type: data.fields.messageType
+			};
+
+			await uploadMedia(req, data.files, (wares) => {
+				if (wares.status != 200) {
+					return wares.status(wares.status).json({
+						stat: "error",
+						message: wares.statusText
+					});
+				}
+			}).then(async (data) => {
+				if (messageBody.type === "image")
+					messageBody = {
+						...messageBody,
+						image: {
+							id: data
+						}
+					};
+				else
+					messageBody = {
+						...messageBody,
+						document: {
+							...data.fields.otherData,
+							id: data
+						}
+					};
+
+				await sendAnyMessage(req, messageBody, (wares) => {
+					storeMessage(
+						req,
+						{
+							messagePayload: messageBody, //REVIEW
+							contactNumber: data.fields.contactNumber,
+							messageType: data.fields.messageType
+						},
+						wares,
+						(status, statusCode, resData) => {
+							console.log(resData);
+							if (!status) {
+								return res.status(statusCode).json({
+									stat: "error",
+									message: "Something went wrong!"
+								});
+							} else {
+								return res.json({
+									stat: "success",
+									message: resData
+								});
+							}
+						}
+					);
+				});
+			});
+		}
+	});
 };
 
 exports.getMessages = (req, res) => {
