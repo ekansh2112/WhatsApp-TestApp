@@ -3,25 +3,24 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { newContact } from "../data/Contacts";
 import Base from "../Base";
-export default function NewContact() {
+export default function NewContact(props) {
 	const [values, setValues] = useState({
 		firstName: "",
 		lastName: "",
 		mobileNumber: "",
 		emailAddress: "",
-		addressLine1: "",
-		addressLine2: "",
+		address: "",
 		birthDate: "",
 	});
 	const navigate = useNavigate();
-	const { firstName, lastName, mobileNumber, emailAddress, addressLine1, addressLine2, birthDate } = values;
+	const { firstName, lastName, mobileNumber, emailAddress, address, birthDate } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const createContact = (e) => {
 		e.preventDefault();
 		if (mobileNumber !== "") {
-			newContact({ fname: firstName, lname: lastName, phoneNumber: mobileNumber, email: emailAddress, addressLine1: addressLine1, addressLine2: addressLine2, birthDate: birthDate })
+			newContact({ fname: firstName, lname: lastName, phoneNumber: mobileNumber, email: emailAddress, address: address, birthDate: birthDate })
 				.then((data) => {
 					console.log(data, "idgaf33773");
 					if (data?.stat === "success") {
@@ -30,11 +29,11 @@ export default function NewContact() {
 							lastName: "",
 							mobileNumber: "",
 							emailAddress: "",
-							addressLine1: "",
-							addressLine2: "",
+							address: "",
 							birthDate: "",
 						});
 						toast.success(data?.message);
+						props.setNewContactAdded(!props.newContactAdded);
 						navigate("/");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
@@ -51,7 +50,7 @@ export default function NewContact() {
 		<>
 			<Base>
 				<section className="flex justify-center items-center mt-20">
-					<div className="rounded-lg py-7 px-10 flex flex-col justify-center panelShadow bg-white" style={{ height: "600px", width: "500px" }}>
+					<div className="rounded-lg py-7 px-10 flex flex-col justify-center panelShadow bg-white" style={{ height: "550px", width: "500px" }}>
 						<div className="flex flex-row justify-between">
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-2" htmlFor="firstname">
@@ -106,32 +105,21 @@ export default function NewContact() {
 							value={emailAddress}
 							onChange={handleChange("emailAddress")}
 						/>
-						<label className="text-sm font-normal mb-2" htmlFor="addressline1">
-							Address Line 1
+						<label className="text-sm font-normal mb-2" htmlFor="address">
+							Address
 						</label>
 						<input
 							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
 							type="text"
-							name="addressline1"
-							placeholder="Address Line 1"
-							value={addressLine1}
-							onChange={handleChange("addressLine1")}
-						/>
-						<label className="text-sm font-normal mb-2" htmlFor="addressline2">
-							Address Line 2
-						</label>
-						<input
-							className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
-							type="text"
-							name="addressline2"
-							placeholder="Address Line 2"
-							value={addressLine2}
-							onChange={handleChange("addressLine2")}
+							name="address"
+							placeholder="Address"
+							value={address}
+							onChange={handleChange("address")}
 						/>
 						<label className="text-sm font-normal mb-2" htmlFor="birthday">
 							Birthday
 						</label>
-						<input className="rounded-lg inputShadow h-9 w-full mb-5 px-3 text-xs font-light py-3" type="date" name="birthday" value={birthDate} onChange={handleChange("birthDate")} />
+						<input className="rounded-lg inputShadow h-9 w-full mb-7 px-3 text-xs font-light py-3" type="date" name="birthday" value={birthDate} onChange={handleChange("birthDate")} />
 						<button
 							className="rounded-full h-9 w-60 bgOnButton mx-auto mt-3 text-xs font-medium"
 							type={"submit"}

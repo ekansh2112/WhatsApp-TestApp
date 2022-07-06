@@ -30,6 +30,8 @@ const ReactRoutes = () => {
 			return <Navigate to="/login" />;
 		}
 	}
+	// ANCHOR Props
+	const [newContactAdded, setNewContactAdded] = useState(false);
 
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
@@ -37,7 +39,7 @@ const ReactRoutes = () => {
 		contactList().then((data) => {
 			setListOfContacts(data);
 		});
-	}, []);
+	}, [newContactAdded]);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -66,7 +68,7 @@ const ReactRoutes = () => {
 					path="/newcontact"
 					element={
 						<PrivateRoute>
-							<NewContact />
+							<NewContact newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
 						</PrivateRoute>
 					}
 				/>

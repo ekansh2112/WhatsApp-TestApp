@@ -16,7 +16,7 @@ export default function NewBroadcastList({ ListOfContacts }) {
 									<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3" type="text" id="bclname" placeholder="Name of the broadcast list" required />
 								</div>
 								<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact" />
-								<div className="flex flex-col justify-start overflow-y-scroll w-full">
+								<div className="flex flex-col justify-start overflow-y-scroll removeScrollbar w-full">
 									{ListOfContacts?.map((contact, index) => {
 										return <Contact key={index} contact={contact} needMB={true} needCheckBox={true} />;
 									})}

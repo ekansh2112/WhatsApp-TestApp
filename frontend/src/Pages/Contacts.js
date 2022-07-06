@@ -17,9 +17,9 @@ export default function Contacts({ ListOfContacts }) {
 										<PlusIcon className="h-6 w-6 inline" />
 									</Link>
 								</div>
-								<div className="flex flex-col justify-start overflow-y-scroll w-full">
+								<div className="flex flex-col justify-start overflow-y-scroll removeScrollbar w-full">
 									{ListOfContacts?.map((contact, index) => {
-										return <Contact key={index} contact={contact} needMB={true} needCheckBox={true} />;
+										return <Contact key={index} contact={contact} needMB={true} />;
 									})}
 								</div>
 							</div>
