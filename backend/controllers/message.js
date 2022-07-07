@@ -107,6 +107,7 @@ exports.sendTemplate= async(req,phoneNumber,next) =>{
 		}
 		
 	}
+	
 	console.log(msgbody)
 	try {
 		// WA API CALL TO SEND MESSAGE
