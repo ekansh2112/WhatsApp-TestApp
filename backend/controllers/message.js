@@ -2,9 +2,10 @@ const Message = require("../models/message");
 const axios = require("axios").default;
 const formidable = require("formidable");
 const fs = require("fs");
+const crypto = require("crypto");
 
 const sendAnyMessage = async (req, messageBody, next) => {
-	console.log(req.session.accessToken,"s22");
+	console.log(req.session.accessToken, "s22");
 	await axios
 		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, messageBody, {
 			headers: {
@@ -47,28 +48,48 @@ const storeMessage = (req, payload, wares, next) => {
 	if (wares.status != 200) {
 		next(false, wares.status);
 	} else {
-		const message = new Message({
+		const messageData = {
 			message: payload.messagePayload,
 			messageType: payload.messageType,
 			sender: req.session.phoneNumberID,
 			receiver: payload.contactNumber,
 			status: true
-		});
+		};
+		const initVector = crypto.randomBytes(16);
+		const securityKey = crypto.randomBytes(32);
 
-		//STORE THIS OBJECT IN DB
-		message.save(async (err, newMessage) => {
-			if (err) {
-				// console.log(err);
-				next(false, 400);
-			} else {
-				if (newMessage) {
-					// console.log("NEWMESSAGE", newMessage);
-					next(true, 200, newMessage);
+		try {
+			const cipher = crypto.createCipheriv(process.env.ALGORITHM, securityKey, initVector);
+			let encryptedData = cipher.update(JSON.stringify(messageData), "utf-8", "hex");
+			encryptedData += cipher.final("hex");
+			const message = new Message({
+				message: encryptedData
+			});
+			//STORE THIS OBJECT IN DB
+			message.save(async (err, newMessage) => {
+				if (err) {
+					// console.log(err);
+					next(false, 400);
 				} else {
-					next(false, 500);
+					if (newMessage) {
+						// console.log("NEWMESSAGE", newMessage);
+						try {
+							const decipher = crypto.createDecipheriv(process.env.ALGORITHM, securityKey, initVector);
+							let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
+							decryptedData += decipher.final("utf8");
+							console.log("DECRYPTED DATA", JSON.parse(decryptedData));
+							next(true, 200, JSON.parse(decryptedData));
+						} catch (e) {
+							next(false, 500);
+						}
+					} else {
+						next(false, 500);
+					}
 				}
-			}
-		});
+			});
+		} catch (e) {
+			next(false, 500);
+		}
 	}
 };
 
@@ -96,18 +117,17 @@ const parseForm = (req, next) => {
 	});
 };
 
-exports.sendTemplate= async(req,phoneNumber,next) =>{
-	let msgbody={
-		messaging_product:"whatsapp",
+exports.sendTemplate = async (req, phoneNumber, next) => {
+	let msgbody = {
+		messaging_product: "whatsapp",
 		to: phoneNumber,
-		type:"template",
-		template:{
-			name:"message",
-			language:{code:"en_US"}
+		type: "template",
+		template: {
+			name: "message",
+			language: { code: "en_US" }
 		}
-		
-	}
-	console.log(msgbody)
+	};
+	console.log(msgbody);
 	try {
 		// WA API CALL TO SEND MESSAGE
 		await sendAnyMessage(req, msgbody, (wares) => {
@@ -116,7 +136,6 @@ exports.sendTemplate= async(req,phoneNumber,next) =>{
 	} catch (e) {
 		//CATCH error, if any and send response accordingly.
 		console.log(e);
-
 	}
 };
 
