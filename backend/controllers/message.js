@@ -3,6 +3,7 @@ const axios = require("axios").default;
 const formidable = require("formidable");
 
 const sendAnyMessage = async (req, messageBody, next) => {
+	console.log(req.session.accessToken,"s22");
 	await axios
 		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, messageBody, {
 			headers: {
@@ -80,6 +81,32 @@ const parseForm = (req, next) => {
 		next(true, { fields, files });
 	});
 };
+
+exports.sendTemplate= async(req,phoneNumber,res) =>{
+	let msgbody={
+		messaging_product:"whatsapp",
+		to: phoneNumber,
+		type:"template",
+		template:{
+			name:"first",
+			language:{code:"en_US"}
+		}
+		
+	}
+	console.log(msgbody)
+	try {
+		// WA API CALL TO SEND MESSAGE
+		await sendAnyMessage(req, msgbody, (wares) => {
+			console.log(req.session.accessToken,"abcdef");
+			console.log("SEND TEXT MESSAGE RES", wares.status, wares.statusText);
+		});
+	} catch (e) {
+		//CATCH error, if any and send response accordingly.
+		console.log(e);
+
+	}
+};
+
 exports.sendMessage = async (req, res) => {
 	//CHECK USER AUTHENTICATION
 	if (!req.session.phoneNumberID || !req.session.wabaID) {

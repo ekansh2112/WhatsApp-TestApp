@@ -1,6 +1,7 @@
 import { NewContacts_API, Contacts_API, DeleteContacts_API } from "../backend";
 export const newContact = (contact) => {
 	return fetch(NewContacts_API, {
+		credentials:"include",
 		method: "POST",
 		headers: {
 			Accept: "application/json",

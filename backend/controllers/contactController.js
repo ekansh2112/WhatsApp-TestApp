@@ -1,6 +1,6 @@
 const { db } = require('../models/contact');
-const Contact = require('../models/contact')
-
+const Contact = require('../models/contact');
+const { sendTemplate } = require('./message');
 
 // GET ../api/contacts/all
 exports.contact_list = async(req, res) =>{
@@ -21,8 +21,10 @@ exports.contact_list = async(req, res) =>{
 exports.create_contact = async(req, res) =>{
     const user_wabaID = "107654008661174";//GET THE WABA ID of Business User
     const phoneNumber = "91"+req.body.phoneNumber;
+    
     try {
         const check = await Contact.find({"phoneNumber": phoneNumber, "user_wabaID": user_wabaID}).count();
+
         if(check == 0){
             const contact = new Contact({
                 user_wabaID: user_wabaID, 
@@ -35,6 +37,12 @@ exports.create_contact = async(req, res) =>{
             })
             try{
                 await contact.save();
+                sendTemplate(req,phoneNumber,()=>{
+                    return res.json({
+						stat: "success",
+						message: "Contact created successfully",
+					});
+                });
                 return res.json({
                     stat: "success",
                     message: "Contact created successfully"
