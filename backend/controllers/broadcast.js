@@ -36,21 +36,12 @@ exports.sendBroadCast= async(req,res)=>{
 				};
 				try {
 					await sendAnyMessage(req, msgbody, (wares) => {
-						if (wares.status !== 200) {
-							return res.status(500).json({
-								stat: "error",
-								message: "something went 123wrong",
-							});
-						}
 						return res.status(200).json({
 							stat: "success",
 						});
 					});
 				} catch (e) {
-					return res.status(500).json({
-						stat: "error",
-						message: "something went111 wrong",
-					});
+					
 				}
 			} catch (e) {
 				return res.status(500).json({
