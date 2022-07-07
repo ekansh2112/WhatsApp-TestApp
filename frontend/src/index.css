@@ -7,7 +7,8 @@ body {
 	font-family: "Inter", sans-serif;
 	transition: all 0.5s linear;
 }
-input:focus {
+input:focus,
+textarea:focus {
 	outline: none;
 }
 .bgOnProfileButton {

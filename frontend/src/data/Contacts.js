@@ -2,6 +2,7 @@ import { NewContacts_API, Contacts_API, DeleteContacts_API } from "../backend";
 import { toast } from "react-toastify";
 export const newContact = (contact) => {
 	return fetch(NewContacts_API, {
+		credentials:"include",
 		method: "POST",
 		headers: {
 			Accept: "application/json",
