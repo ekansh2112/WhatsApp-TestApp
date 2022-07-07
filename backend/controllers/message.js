@@ -96,7 +96,7 @@ const parseForm = (req, next) => {
 	});
 };
 
-exports.sendTemplate= async(req,phoneNumber,res) =>{
+exports.sendTemplate= async(req,phoneNumber,next) =>{
 	let msgbody={
 		messaging_product:"whatsapp",
 		to: phoneNumber,
@@ -111,8 +111,7 @@ exports.sendTemplate= async(req,phoneNumber,res) =>{
 	try {
 		// WA API CALL TO SEND MESSAGE
 		await sendAnyMessage(req, msgbody, (wares) => {
-			console.log(req.session.accessToken,"abcdef");
-			console.log("SEND TEXT MESSAGE RES", wares.status, wares.statusText);
+			next(wares);
 		});
 	} catch (e) {
 		//CATCH error, if any and send response accordingly.
