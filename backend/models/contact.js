@@ -26,13 +26,7 @@ const ContactSchema = new Schema({
 	phoneNumber: {
 		type: String,
 		required: true
-		// required: [true, "Phone number is required !"],
-		// validate: {
-		// validator: (v) => {
-		// return v.length == 10;
-		// },
-		// message: (props) => props.value + " Must be 10 digits !",
-		// },
+
     },
 
 
