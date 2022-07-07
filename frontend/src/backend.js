@@ -18,3 +18,6 @@ export const Contacts_API = `${BACKEND}api/contacts/`;
 export const NewBroadcastLists_API = `${BACKEND}api/broadcastlists/create/`;
 export const DeleteBroadcastLists_API = `${BACKEND}api/broadcastlists/`;
 export const BroadcastLists_API = `${BACKEND}api/broadcastlists/`;
+
+// Message APIs
+export const SendMessage = `${BACKEND}api/messages/send/`;

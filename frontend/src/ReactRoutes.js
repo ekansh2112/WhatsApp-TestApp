@@ -30,14 +30,18 @@ const ReactRoutes = () => {
 			return <Navigate to="/login" />;
 		}
 	}
+	// ANCHOR Props
+	const [newContactAdded, setNewContactAdded] = useState(false);
 
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
 	useEffect(() => {
-		contactList().then((data) => {
-			setListOfContacts(data);
-		});
-	}, []);
+		if (cookies.user) {
+			contactList().then((data) => {
+				setListOfContacts(data);
+			});
+		}
+	}, [newContactAdded]);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -66,7 +70,7 @@ const ReactRoutes = () => {
 					path="/newcontact"
 					element={
 						<PrivateRoute>
-							<NewContact />
+							<NewContact newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
 						</PrivateRoute>
 					}
 				/>
@@ -84,7 +88,7 @@ const ReactRoutes = () => {
 					path="/deletecontacts"
 					element={
 						<PrivateRoute>
-							<DeleteContacts ListOfContacts={listOfContacts} />
+							<DeleteContacts ListOfContacts={listOfContacts} newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
 						</PrivateRoute>
 					}
 				/>

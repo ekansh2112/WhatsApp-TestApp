@@ -13,12 +13,12 @@ export default function NewBroadcastList({ ListOfContacts }) {
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
 								<div className="flex flex-col">
 									<label className="text-sm font-normal mb-2">Broadcast List Name</label>
-									<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3" type="text" id="bclname" placeholder="Name of the broadcast list" required />
+									<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3" type="text" id="bclname" placeholder="Name of the broadcast list" />
 								</div>
 								<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact" />
-								<div className="flex flex-col justify-start overflow-y-scroll w-full">
+								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
 									{ListOfContacts?.map((contact, index) => {
-										return <Contact key={index} contact={contact} needMB={true} needCheckBox={true} />;
+										return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needCheckBox={true} />;
 									})}
 								</div>
 								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4">SAVE BROADCAST LIST</button>

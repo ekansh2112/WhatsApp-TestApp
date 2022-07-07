@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BusinessOwner from "../Assets/image.png";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { signin } from "../helpers/auth/authentication.js";
+import { signin } from "../helpers/auth/authentication";
 import { useCookies } from "react-cookie";
 export default function Login() {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -33,6 +33,7 @@ export default function Login() {
 					}
 				})
 				.catch((e) => {
+					toast.error("Not able to login! Please try again!");
 					console.log(e);
 				});
 		} else if (mobileNumber === "" && password === "") {
@@ -58,7 +59,6 @@ export default function Login() {
 						placeholder="Enter Your Mobile Number"
 						value={mobileNumber}
 						onChange={handleChange("mobileNumber")}
-						required
 					/>
 					<label className="text-sm font-normal mb-2">Password</label>
 					<input
@@ -69,7 +69,6 @@ export default function Login() {
 						placeholder="Enter A Strong Password"
 						value={password}
 						onChange={handleChange("password")}
-						required
 					/>
 					<button
 						className="rounded-full h-9 w-72 bgOnButton text-sm font-medium mb-6"
