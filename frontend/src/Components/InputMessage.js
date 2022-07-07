@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { PaperClipIcon } from "@heroicons/react/outline";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { newMessage } from "../data/Messages";
 export default function InputMessage() {
+	const sendButton = useRef(null);
 	const [values, setValues] = useState({
 		previewUrl: "",
 		message: "",
@@ -74,6 +75,16 @@ export default function InputMessage() {
 					placeholder="Type your message here"
 					value={message}
 					onChange={handleChange("message")}
+					onKeyDown={(e) => {
+						const keyCode = e.code;
+						const wasShiftPressed = e.shiftKey;
+						if (!wasShiftPressed) {
+							if (keyCode === "Enter") {
+								e.preventDefault();
+								sendButton.current.click();
+							}
+						}
+					}}
 				/>
 				<button
 					className="rounded-full h-12 w-12 flex items-center justify-center bgOnButton rotate-90"
@@ -81,6 +92,7 @@ export default function InputMessage() {
 					onClick={(e) => {
 						sendMessage(e);
 					}}
+					ref={sendButton}
 				>
 					<PaperAirplaneIcon className="h-6 w-6" />
 				</button>
