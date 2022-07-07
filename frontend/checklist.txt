@@ -8,3 +8,4 @@ correct address in newcontact
 Contacts - image, check new contact, read contacts, delete contacts
 broadcast list - make new list, read list, delete list
 latest message store and check error
+search contact
