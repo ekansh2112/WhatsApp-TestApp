@@ -48,6 +48,7 @@ exports.create_contact = async (req, res) => {
 						dob: req.body.dob, //Format: YYYY-MM-DD
 						email: req.body.email,
 						address: req.body.address,
+						image: req.body.image,
 					});
 
 					try {

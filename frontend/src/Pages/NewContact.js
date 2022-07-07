@@ -19,16 +19,17 @@ export default function NewContact({ setCrudContactList, crudContactList }) {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const createContact = (e) => {
+		let imageString = createImageFromInitials(100, firstName + " " + lastName, getRandomColor(), "#FFFFFF");
 		e.preventDefault();
 		if (mobileNumber !== "") {
 			newContact({
-				image: createImageFromInitials(100, firstName + " " + lastName, getRandomColor(), "#FFFFFF"),
+				image: imageString,
 				fname: firstName,
 				lname: lastName,
 				phoneNumber: mobileNumber,
 				email: emailAddress,
 				address: address,
-				birthDate: birthDate,
+				dob: birthDate,
 			})
 				.then((data) => {
 					if (data?.stat === "success") {

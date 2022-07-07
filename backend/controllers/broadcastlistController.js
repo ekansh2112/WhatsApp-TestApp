@@ -95,7 +95,7 @@ exports.delete_broadcast_list = async(req, res) => {
       if(broadcast_list.acknowledged == true && broadcast_list.deletedCount == 1)
       return res.json({
           stat: "success",
-          message: title + " is deleted from Contacts List"
+          message: title + " is deleted from broadcast List"
       });
 
       else{
