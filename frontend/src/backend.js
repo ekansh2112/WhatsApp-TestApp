@@ -7,7 +7,7 @@ export const isAuthenticated_API = `${BACKEND}api/isauth/`;
 export const Signout_API = `${BACKEND}api/logout/`;
 
 // Profile APIs
-export const ProfileUpdate_API = `${BACKEND}api/signup/`;
+export const ProfileUpdate_API = `${BACKEND}api/user/update/`;
 
 // Contacts APIs
 export const NewContacts_API = `${BACKEND}api/contacts/create/`;

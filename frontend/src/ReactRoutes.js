@@ -16,8 +16,33 @@ import NewMessage from "./Pages/NewMessage";
 import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
 const ReactRoutes = () => {
+	// ANCHOR Props
+	const [changeInProfile, setChangeInProfile] = useState(false);
+	const [crudContactList, setCrudContactList] = useState(false);
+	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
+
 	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+	const [user, setUser] = useState({
+		wabaID: cookies.user.wabaID || "",
+		phoneNumberID: cookies.user.phoneNumberID || "",
+		businessProfile: {
+			address: cookies.user.businessProfile.address || "",
+			description: cookies.user.businessProfile.description || "",
+			vertical: cookies.user.businessProfile.vertical || "",
+			email: cookies.user.businessProfile.email || "",
+			websites: [cookies.user.businessProfile.websites[0] || ""],
+			messaging_product: cookies.user.businessProfile.messaging_product || "",
+		},
+	});
+	const {
+		wabaID,
+		phoneNumberID,
+		businessProfile: { address, description, vertical, email, websites, messaging_product },
+	} = user;
+	useEffect(() => {
+		setCookie("user", user);
+	}, [changeInProfile]);
 
 	// ANCHOR User & Auth
 	function PrivateRoute({ children }) {
@@ -29,9 +54,6 @@ const ReactRoutes = () => {
 			return <Navigate to="/login" />;
 		}
 	}
-	// ANCHOR Props
-	const [crudContactList, setCrudContactList] = useState(false);
-	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
 
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
@@ -143,7 +165,7 @@ const ReactRoutes = () => {
 					path="/profile"
 					element={
 						<PrivateRoute>
-							<BusinessProfile />
+							<BusinessProfile setUser={setUser} changeInProfile={changeInProfile} setChangeInProfile={setChangeInProfile} />
 						</PrivateRoute>
 					}
 				/>
