@@ -4,8 +4,8 @@ const formidable = require("formidable");
 const fs = require("fs");
 const crypto = require("crypto");
 
+//ANCHOR - WA API call to send message to a contact number.
 const sendAnyMessage = async (req, messageBody, next) => {
-	console.log(req.session.accessToken, "s22");
 	await axios
 		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, messageBody, {
 			headers: {
@@ -18,6 +18,7 @@ const sendAnyMessage = async (req, messageBody, next) => {
 		});
 };
 
+//ANCHOR - WA API call to upload file on fb server.
 const uploadMedia = async (req, file, next) => {
 	console.log("in upload media", req.session.phoneNumberID);
 	await axios
@@ -26,7 +27,7 @@ const uploadMedia = async (req, file, next) => {
 			{
 				messaging_product: "whatsapp",
 				file,
-				type: "image/jpeg"
+				type: file.mimetype
 			},
 			{
 				headers: {
@@ -36,7 +37,6 @@ const uploadMedia = async (req, file, next) => {
 			}
 		)
 		.then((res) => {
-			console.log("____IN UPLOAD MEDIA____", res);
 			next(res);
 		})
 		.catch((err) => {
@@ -44,6 +44,7 @@ const uploadMedia = async (req, file, next) => {
 		});
 };
 
+//ANCHOR - storing messages in DB after encrypting them.
 const storeMessage = (req, payload, wares, next) => {
 	if (wares.status != 200) {
 		next(false, wares.status);
@@ -93,30 +94,27 @@ const storeMessage = (req, payload, wares, next) => {
 	}
 };
 
+// ANCHOR - form parser for multipart data
 const parseForm = (req, next) => {
 	var form = new formidable.IncomingForm();
 	form.uploadDir = __dirname;
 	var mypath = "";
 	form.on("file", (field, file) => {
-		// console.log("__________________", file);
 		mypath = form.uploadDir + "\\" + file.originalFilename;
-		fs.rename(form.uploadDir + "/" + file.newFilename, form.uploadDir + "/" + file.originalFilename, (err) => {
-			// console.log("{}{}{}{}{}{}{}{", err);
-		});
+		fs.rename(form.uploadDir + "/" + file.newFilename, form.uploadDir + "/" + file.originalFilename, (err) => {});
 	});
 	form.parse(req, (err, fields, files) => {
 		if (err) {
 			next(false);
-			// console.log(err);
 			return;
 		}
 		const file = fs.createReadStream(mypath);
 		if (!file) console.log("_______");
-		// console.log("MY PATH____skjefnew_____________________", mypath, file);
 		next(true, { fields, file });
 	});
 };
 
+//ANCHOR - API wrapper for sending template message.
 exports.sendTemplate = async (req, phoneNumber, next) => {
 	let msgbody = {
 		messaging_product: "whatsapp",
@@ -139,6 +137,7 @@ exports.sendTemplate = async (req, phoneNumber, next) => {
 	}
 };
 
+//ANCHOR - API wrapper for sending text message.
 exports.sendMessage = async (req, res) => {
 	//CHECK USER AUTHENTICATION
 	if (!req.session.phoneNumberID || !req.session.wabaID) {
@@ -193,6 +192,7 @@ exports.sendMessage = async (req, res) => {
 	}
 };
 
+//ANCHOR -  API wrapper for sending file message.
 exports.sendFileMessage = async (req, res) => {
 	//CHECK USER AUTHENTICATION
 	if (!req.session.phoneNumberID || !req.session.wabaID) {
@@ -227,7 +227,7 @@ exports.sendFileMessage = async (req, res) => {
 						message: wares.statusText
 					});
 				}
-				console.log("AFTER UPLOAD MEDIA", wares);
+				console.log("AFTER UPLOAD MEDIA", wares.data);
 				if (messageBody.type === "image")
 					messageBody = {
 						...messageBody,
@@ -239,8 +239,9 @@ exports.sendFileMessage = async (req, res) => {
 					messageBody = {
 						...messageBody,
 						document: {
-							...data.fields.otherData,
-							id: data
+							filename: data.fields.filename,
+							caption: data.fields.caption,
+							id: wares.data.id
 						}
 					};
 				console.log("BEFORE SEND ANY MESSAGE", messageBody);
