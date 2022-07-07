@@ -66,7 +66,15 @@ export default function InputMessage() {
 					name=""
 					ref={fileInput}
 				/>
-				<input className="px-4 py-2 h-12 text-sm w-5/6 rounded-full" type="text" name="message" placeholder="Type your message here" value={message} onChange={handleChange("message")} />
+				<textarea
+					className="px-4 h-12 text-sm w-5/6 rounded-full removeScrollbar"
+					style={{ paddingTop: "14px", resize: "none" }}
+					type="text"
+					name="message"
+					placeholder="Type your message here"
+					value={message}
+					onChange={handleChange("message")}
+				/>
 				<button
 					className="rounded-full h-12 w-12 flex items-center justify-center bgOnButton rotate-90"
 					type="submit"
