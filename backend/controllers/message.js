@@ -19,15 +19,15 @@ const sendAnyMessage = async (req, messageBody, next) => {
 };
 
 //ANCHOR - WA API call to upload file on fb server.
-const uploadMedia = async (req, file, next) => {
-	console.log("in upload media", req.session.phoneNumberID);
+const uploadMedia = async (req, file, type, next) => {
+	console.log("in upload media", file);
 	await axios
 		.post(
 			`${process.env.WABAPI}/${req.session.phoneNumberID}/media`,
 			{
 				messaging_product: "whatsapp",
 				file,
-				type: file.mimetype
+				type
 			},
 			{
 				headers: {
@@ -37,10 +37,12 @@ const uploadMedia = async (req, file, next) => {
 			}
 		)
 		.then((res) => {
-			next(res);
+			next(true, res);
 		})
 		.catch((err) => {
 			console.log("____ ERROR IN UPLOAD MEDIA____");
+			console.log(err);
+			next(false);
 		});
 };
 
@@ -96,21 +98,39 @@ const storeMessage = (req, payload, wares, next) => {
 
 // ANCHOR - form parser for multipart data
 const parseForm = (req, next) => {
-	var form = new formidable.IncomingForm();
-	form.uploadDir = __dirname;
-	var mypath = "";
+	var form = formidable({
+		keepExtensions: true,
+		uploadDir: __dirname + "\\assets\\",
+		allowEmptyFiles: false
+	});
 	form.on("file", (field, file) => {
-		mypath = form.uploadDir + "\\" + file.originalFilename;
-		fs.rename(form.uploadDir + "/" + file.newFilename, form.uploadDir + "/" + file.originalFilename, (err) => {});
+		form.filename = () => {
+			return file.originalFilename;
+		};
+		// fs.rename(form.uploadDir + "/" + file.newFilename, form.uploadDir + "/" + file.originalFilename, (err) => {});
 	});
 	form.parse(req, (err, fields, files) => {
 		if (err) {
 			next(false);
 			return;
+		} else {
+			console.log("FORM.PARSE", files);
+			try {
+				const file = fs.createReadStream(files?.file?.filepath);
+				// if (!file) console.log("_______");
+				// console.log("PARSE FORM __ ", fields, file);
+				next(true, {
+					fields,
+					file: {
+						file,
+						name: files?.file?.originalFilename,
+						type: files?.file?.mimetype || ""
+					}
+				});
+			} catch (e) {
+				next(false);
+			}
 		}
-		const file = fs.createReadStream(mypath);
-		if (!file) console.log("_______");
-		next(true, { fields, file });
 	});
 };
 
@@ -219,15 +239,15 @@ exports.sendFileMessage = async (req, res) => {
 
 			console.log("HELLO");
 
-			await uploadMedia(req, data.file, async (wares) => {
-				console.log("-------------------------", wares.status);
-				if (wares.status != 200) {
-					return wares.status(wares.status).json({
+			await uploadMedia(req, data.file.file, data.file?.type, async (status, wares) => {
+				// console.log("-------------------------", wares.status);
+				if (!status || !wares || wares.status != 200) {
+					return res.status((wares && wares.status) || 500).json({
 						stat: "error",
-						message: wares.statusText
+						message: (wares && wares.statusText) || "Something went wrong!"
 					});
 				}
-				console.log("AFTER UPLOAD MEDIA", wares.data);
+				// console.log("AFTER UPLOAD MEDIA", wares.data);
 				if (messageBody.type === "image")
 					messageBody = {
 						...messageBody,
@@ -239,8 +259,8 @@ exports.sendFileMessage = async (req, res) => {
 					messageBody = {
 						...messageBody,
 						document: {
-							filename: data.fields.filename,
-							caption: data.fields.caption,
+							filename: data.file?.name || "document",
+							caption: data.fields?.caption || "",
 							id: wares.data.id
 						}
 					};
