@@ -9,7 +9,6 @@ export default function DeleteContacts({ setNewContactAdded, newContactAdded, Li
 	const [values, setValues] = useState({
 		mobileNumber: "",
 	});
-	const navigate = useNavigate();
 	const { mobileNumber } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
