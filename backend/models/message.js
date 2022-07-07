@@ -7,19 +7,23 @@ const messageSchema = new Schema({
 	// 	required: true
 	// },
 	//REVIEW -> for now working on text message only.
-	messageType: {
-		type: String //image/text/audio/video/doc
-	},
-	sender: String,
-	receiver: String,
-	status: {
-		type: Boolean,
-		default: false
-	},
+	// messageType: {
+	// 	type: String //image/text/audio/video/doc
+	// },
+	// sender: String,
+	// receiver: String,
+	// status: {
+	// 	type: Boolean,
+	// 	default: false
+	// },
 	message: {
 		type: mongoose.Schema.Types.Mixed
 	},
-	timeStamp: {
+	// timeStamp: {
+	// 	type: Date,
+	// 	default: Date.now()
+	// }
+	dateCreated: {
 		type: Date,
 		default: Date.now()
 	}
