@@ -102,7 +102,7 @@ exports.sendTemplate= async(req,phoneNumber,res) =>{
 		to: phoneNumber,
 		type:"template",
 		template:{
-			name:"first",
+			name:"message",
 			language:{code:"en_US"}
 		}
 		
