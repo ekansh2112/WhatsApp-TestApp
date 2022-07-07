@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { newContact } from "../data/Contacts";
 import Base from "../Base";
 import { getRandomColor, createImageFromInitials } from "../utilities/ImageGenerator";
-export default function NewContact({ setNewContactAdded, newContactAdded }) {
+export default function NewContact({ setCrudContactList, crudContactList }) {
 	const [values, setValues] = useState({
 		firstName: "",
 		lastName: "",
@@ -41,7 +41,7 @@ export default function NewContact({ setNewContactAdded, newContactAdded }) {
 							birthDate: "",
 						});
 						toast.success(data?.message);
-						setNewContactAdded(!newContactAdded);
+						setCrudContactList(!crudContactList);
 						navigate("/contacts");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);

@@ -2,7 +2,7 @@ import { NewContacts_API, Contacts_API, DeleteContacts_API } from "../backend";
 import { toast } from "react-toastify";
 export const newContact = (contact) => {
 	return fetch(NewContacts_API, {
-		credentials:"include",
+		credentials: "include",
 		method: "POST",
 		headers: {
 			Accept: "application/json",
@@ -22,7 +22,7 @@ export const newContact = (contact) => {
 		});
 };
 export const contactList = () => {
-	return fetch(`${Contacts_API}/all`, {
+	return fetch(Contacts_API, {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
@@ -41,7 +41,7 @@ export const contactList = () => {
 		});
 };
 export const deleteContact = (contact) => {
-	return fetch(`${DeleteContacts_API}delete/${contact.phoneNumber}`, {
+	return fetch(`${DeleteContacts_API}${contact.phoneNumber}`, {
 		method: "DELETE",
 		headers: {
 			Accept: "application/json",

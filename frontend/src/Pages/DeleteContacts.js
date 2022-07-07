@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import { toast } from "react-toastify";
 import { deleteContact } from "../data/Contacts";
 import Base from "../Base";
-export default function DeleteContacts({ setNewContactAdded, newContactAdded, ListOfContacts }) {
+export default function DeleteContacts({ setCrudContactList, crudContactList, ListOfContacts }) {
 	const [values, setValues] = useState({
 		mobileNumber: "",
 	});
@@ -23,7 +23,7 @@ export default function DeleteContacts({ setNewContactAdded, newContactAdded, Li
 							mobileNumber: "",
 						});
 						toast.success(data?.message);
-						setNewContactAdded(!newContactAdded);
+						setCrudContactList(!crudContactList);
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}

@@ -14,8 +14,7 @@ import DeleteContacts from "./Pages/DeleteContacts";
 import BusinessProfile from "./Pages/BussinessProfile";
 import NewMessage from "./Pages/NewMessage";
 import { contactList } from "./data/Contacts";
-import { isAuthenticated } from "./helpers/auth/authentication";
-import { toast } from "react-toastify";
+import { broadcastLists } from "./data/BroadcastLists";
 const ReactRoutes = () => {
 	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -31,7 +30,8 @@ const ReactRoutes = () => {
 		}
 	}
 	// ANCHOR Props
-	const [newContactAdded, setNewContactAdded] = useState(false);
+	const [crudContactList, setCrudContactList] = useState(false);
+	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
 
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
@@ -41,7 +41,17 @@ const ReactRoutes = () => {
 				setListOfContacts(data);
 			});
 		}
-	}, [newContactAdded]);
+	}, [crudContactList]);
+
+	// ANCHOR Broadcast Lists
+	const [listOfBroadcastLists, setListOfBroadcastLists] = useState([]);
+	useEffect(() => {
+		if (cookies.user) {
+			broadcastLists().then((data) => {
+				setListOfBroadcastLists(data);
+			});
+		}
+	}, [crudBroadcastList]);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -70,7 +80,7 @@ const ReactRoutes = () => {
 					path="/newcontact"
 					element={
 						<PrivateRoute>
-							<NewContact newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
+							<NewContact crudContactList={crudContactList} setCrudContactList={setCrudContactList} />
 						</PrivateRoute>
 					}
 				/>
@@ -88,7 +98,7 @@ const ReactRoutes = () => {
 					path="/deletecontacts"
 					element={
 						<PrivateRoute>
-							<DeleteContacts ListOfContacts={listOfContacts} newContactAdded={newContactAdded} setNewContactAdded={setNewContactAdded} />
+							<DeleteContacts ListOfContacts={listOfContacts} crudContactList={crudContactList} setCrudContactList={setCrudContactList} />
 						</PrivateRoute>
 					}
 				/>
@@ -97,7 +107,7 @@ const ReactRoutes = () => {
 					path="/newbroadcastlist"
 					element={
 						<PrivateRoute>
-							<NewBroadcastList ListOfContacts={listOfContacts} />
+							<NewBroadcastList ListOfContacts={listOfContacts} crudBroadcastList={crudBroadcastList} setCrudBroadcastList={setCrudBroadcastList} />
 						</PrivateRoute>
 					}
 				/>
@@ -106,7 +116,7 @@ const ReactRoutes = () => {
 					path="/broadcastlists"
 					element={
 						<PrivateRoute>
-							<BroadcastLists />
+							<BroadcastLists ListOfBroadcastLists={listOfBroadcastLists} />
 						</PrivateRoute>
 					}
 				/>
@@ -115,7 +125,7 @@ const ReactRoutes = () => {
 					path="/deletebroadcastlists"
 					element={
 						<PrivateRoute>
-							<DeleteBroadcastLists />
+							<DeleteBroadcastLists ListOfBroadcastLists={listOfBroadcastLists} crudBroadcastList={crudBroadcastList} setCrudBroadcastList={setCrudBroadcastList} />
 						</PrivateRoute>
 					}
 				/>

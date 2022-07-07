@@ -68,3 +68,9 @@ textarea:focus {
 .lineColor {
 	border-color: #a0acb7;
 }
+.bgOnSpeakerPhone {
+	background-color: #d9d9d9;
+}
+.fontColorOnSpeakerPhone {
+	color: #a3a3a3;
+}
