@@ -212,6 +212,8 @@ exports.sendMessage = async (req, res) => {
 	}
 };
 
+const fileData = (req, res) => {};
+
 //ANCHOR -  API wrapper for sending file message.
 exports.sendFileMessage = async (req, res) => {
 	//CHECK USER AUTHENTICATION
@@ -248,6 +250,7 @@ exports.sendFileMessage = async (req, res) => {
 					});
 				}
 				// console.log("AFTER UPLOAD MEDIA", wares.data);
+				fileData(wares.data.id, () => {});
 				if (messageBody.type === "image")
 					messageBody = {
 						...messageBody,
