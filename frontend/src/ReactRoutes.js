@@ -15,24 +15,26 @@ import BusinessProfile from "./Pages/BussinessProfile";
 import NewMessage from "./Pages/NewMessage";
 import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
+import { isAuthenticated } from "./helpers/auth/authentication";
 const ReactRoutes = () => {
 	// ANCHOR Props
 	const [changeInProfile, setChangeInProfile] = useState(false);
 	const [crudContactList, setCrudContactList] = useState(false);
 	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
+	const [goingIntoPrivateRoutes, setGoingIntoPrivateRoutes] = useState(false);
 
 	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [user, setUser] = useState({
-		wabaID: cookies.user.wabaID || "",
-		phoneNumberID: cookies.user.phoneNumberID || "",
+		wabaID: cookies?.user?.wabaID || "",
+		phoneNumberID: cookies?.user?.phoneNumberID || "",
 		businessProfile: {
-			address: cookies.user.businessProfile.address || "",
-			description: cookies.user.businessProfile.description || "",
-			vertical: cookies.user.businessProfile.vertical || "",
-			email: cookies.user.businessProfile.email || "",
-			websites: [cookies.user.businessProfile.websites[0] || ""],
-			messaging_product: cookies.user.businessProfile.messaging_product || "",
+			address: cookies?.user?.businessProfile.address || "",
+			description: cookies?.user?.businessProfile.description || "",
+			vertical: cookies?.user?.businessProfile.vertical || "",
+			email: cookies?.user?.businessProfile.email || "",
+			websites: [cookies?.user?.businessProfile.websites[0] || ""],
+			messaging_product: cookies?.user?.businessProfile.messaging_product || "",
 		},
 	});
 	const {
@@ -45,7 +47,15 @@ const ReactRoutes = () => {
 	}, [changeInProfile]);
 
 	// ANCHOR User & Auth
+	useEffect(() => {
+		isAuthenticated().then((data) => {
+			if (!data.isAuth) {
+				removeCookie("user");
+			}
+		});
+	}, [goingIntoPrivateRoutes]);
 	function PrivateRoute({ children }) {
+		setGoingIntoPrivateRoutes(!goingIntoPrivateRoutes);
 		if (cookies.user) {
 			return children;
 		} else {

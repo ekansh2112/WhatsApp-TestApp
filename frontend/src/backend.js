@@ -20,4 +20,5 @@ export const DeleteBroadcastLists_API = `${BACKEND}api/broadcast/delete/`;
 export const BroadcastLists_API = `${BACKEND}api/broadcast/all/`;
 
 // Message APIs
-export const SendMessage = `${BACKEND}api/messages/send/`;
+export const SendMessage_API = `${BACKEND}api/messages/send/`;
+export const SendFileMessage_API = `${BACKEND}api/messages/send/file/`;
