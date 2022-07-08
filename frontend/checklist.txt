@@ -1,11 +1,7 @@
-2. More components and less components
-3. Image Profile Update
-4. Use Node Prune
-
-isauth jab bhi call and if it is false then delete cookie
-and on logout
-correct address in newcontact
-Contacts - image, check new contact, read contacts, delete contacts
-broadcast list - make new list, read list, delete list
-latest message store and check error
-search contact
+1. Use Node Prune
+2. isauth jab bhi call and if it is false then delete cookie and on logout
+3. latest message store and check error
+4. search contact/broadcast list
+5. update Profile
+6. send image/file
+7. async in apis

@@ -48,22 +48,24 @@ exports.create_contact = async (req, res) => {
 						dob: req.body.dob, //Format: YYYY-MM-DD
 						email: req.body.email,
 						address: req.body.address,
+						image: req.body.image,
 					});
 
 					try {
 						await contact.save();
 						sendTemplate(req, phoneNumber, (wares) => {
-                            if(wares.status!==200)
-                            {
-                                return res.status(500).json({
-									stat: "error",
-									message: err,
-								});
-                            }
-							return res.json({
-								stat: "success",
-								message: "Contact created successfully",
-							});
+							// REVIEW Send Template On New Contact
+							// if(wares.status!==200)
+							// {
+							//     return res.status(500).json({
+							// 		stat: "error",
+							// 		message: err,
+							// 	});
+							// }
+						});
+						return res.json({
+							stat: "success",
+							message: "Contact created successfully",
 						});
 					} catch (err) {
 						console.log(err);
@@ -73,9 +75,7 @@ exports.create_contact = async (req, res) => {
 						});
 					}
 				}
-			} 
-            else 
-            {
+			} else {
 				return res.json({
 					stat: "error",
 					message: "Contact already exists with phone Number: " + phoneNumber,

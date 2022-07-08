@@ -144,8 +144,9 @@ exports.sendTemplate = async (req, phoneNumber, next) => {
 			name: "message",
 			language: { code: "en_US" }
 		}
-	};
-	console.log(msgbody);
+		
+	}
+
 	try {
 		// WA API CALL TO SEND MESSAGE
 		await sendAnyMessage(req, msgbody, (wares) => {

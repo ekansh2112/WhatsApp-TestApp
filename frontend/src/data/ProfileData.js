@@ -1,17 +1,23 @@
-import { ProfileUpdate_API } from "../../backend";
-export const profileDataUpdate = async (uploadData, next) => {
-	return await fetch(ProfileUpdate_API, {
+import { ProfileUpdate_API } from "../backend";
+import { toast } from "react-toastify";
+export const profileDataUpdate = (data) => {
+	return fetch(ProfileUpdate_API, {
+		credentials: "include",
 		method: "POST",
 		headers: {
-			Authorization: "Token " + tokenValue,
+			Accept: "application/json",
+			"Content-Type": "application/json",
 		},
-		body: uploadData,
+		body: JSON.stringify(data),
 	})
 		.then((response) => {
 			return response.json();
 		})
-		.then((data) => {
-			next(data);
+		.then((response) => {
+			return response;
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to update profile! Please try again!");
+			return console.log(err);
+		});
 };

@@ -26,7 +26,7 @@ exports.create_broadcast = async(req, res) =>{
    try {
         const check = await BroadcastList.find({"user_wabaID": user_wabaID, "title": title}).count();
         if(check == 0){
-            if(req.body.recipients.length < 3){
+            if(req.body.recipients.length < 2){
                return res.json({
                   stat: 'error',
                   message: 'Add atleast 2 contacts to create the list'
@@ -95,7 +95,7 @@ exports.delete_broadcast_list = async(req, res) => {
       if(broadcast_list.acknowledged == true && broadcast_list.deletedCount == 1)
       return res.json({
           stat: "success",
-          message: title + " is deleted from Contacts List"
+          message: title + " is deleted from broadcast List"
       });
 
       else{
