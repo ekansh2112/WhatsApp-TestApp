@@ -1,5 +1,6 @@
 import React from "react";
 export default function Contact({ needMB, needCheckBox, needRadio, contact, setAllCheckedBoxes }) {
+	console.log(contact.phoneNumber,"abcd")
 	return (
 		<>
 			<div className={needMB ? "flex justify-around" : "flex mb-3 justify-around"}>

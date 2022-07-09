@@ -13,11 +13,13 @@ export const ProfileUpdate_API = `${BACKEND}api/user/update/`;
 export const NewContacts_API = `${BACKEND}api/contacts/create/`;
 export const DeleteContacts_API = `${BACKEND}api/contacts/delete/`;
 export const Contacts_API = `${BACKEND}api/contacts/all/`;
+export const SearchContacts_API = `${BACKEND}api/contacts/search/`;
 
 // Broadcast Lists APIs
 export const NewBroadcastLists_API = `${BACKEND}api/broadcast/create/`;
 export const DeleteBroadcastLists_API = `${BACKEND}api/broadcast/delete/`;
 export const BroadcastLists_API = `${BACKEND}api/broadcast/all/`;
+export const SearchBroadcastList_API = `${BACKEND}api/broadcast/search/`;
 
 // Message APIs
 export const SendMessage = `${BACKEND}api/messages/send/`;

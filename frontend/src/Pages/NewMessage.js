@@ -3,7 +3,42 @@ import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import Base from "../Base";
+import { toast } from "react-toastify";
+import { searchContact } from "../data/Contacts";
 export default function NewMessage({ ListOfContacts }) {
+	const[res,setres]=useState(false);
+	const [result, setresult] = useState({
+		phoneNumber:"",
+		fname:"",
+		lname:"",
+		image:""
+	});
+	const handleChange = (name) => (event) => {
+		setsearch(event.target.value);
+		
+	};
+	const setsearch=(value)=>{
+		if (value.length===10) {
+			searchContact({ phoneNumber: value })
+				.then((data) => {
+					console.log(data);
+					setresult({
+						phoneNumber: data[0].phoneNumber,
+						fname: data[0].fname,
+						lname:data[0].lname,
+						image:data[0].image,
+					});	
+					setres(true);				
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		}
+		else{
+			setres(false);
+		}
+	}
+	console.log(result);
 	return (
 		<>
 			<Base>
@@ -12,9 +47,16 @@ export default function NewMessage({ ListOfContacts }) {
 						<section className="flex justify-center items-center mt-20">
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
 								<input className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3" type="text" placeholder="Type your message here" />
-								<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact" />
+								<input
+									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
+									type="search"
+									id="search"
+									placeholder="Search for a contact"
+									onChange={handleChange("search")}
+								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
-									{ListOfContacts?.map((contact, index) => {
+									{
+										res==true? <Contact contact={result} needRadio={true} /> : ListOfContacts?.map((contact, index) => {
 										return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needRadio={true} />;
 									})}
 								</div>

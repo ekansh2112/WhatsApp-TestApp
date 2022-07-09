@@ -24,15 +24,15 @@ const ReactRoutes = () => {
 	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [user, setUser] = useState({
-		wabaID: cookies.user.wabaID || "",
-		phoneNumberID: cookies.user.phoneNumberID || "",
+		wabaID:"",
+		phoneNumberID:"",
 		businessProfile: {
-			address: cookies.user.businessProfile.address || "",
-			description: cookies.user.businessProfile.description || "",
-			vertical: cookies.user.businessProfile.vertical || "",
-			email: cookies.user.businessProfile.email || "",
-			websites: [cookies.user.businessProfile.websites[0] || ""],
-			messaging_product: cookies.user.businessProfile.messaging_product || "",
+			address:"",
+			description: "",
+			vertical: "",
+			email: "",
+			websites: [],
+			messaging_product: "",
 		},
 	});
 	const {
@@ -40,9 +40,7 @@ const ReactRoutes = () => {
 		phoneNumberID,
 		businessProfile: { address, description, vertical, email, websites, messaging_product },
 	} = user;
-	useEffect(() => {
-		setCookie("user", user);
-	}, [changeInProfile]);
+
 
 	// ANCHOR User & Auth
 	function PrivateRoute({ children }) {

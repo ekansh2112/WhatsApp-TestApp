@@ -1,4 +1,4 @@
-import { NewBroadcastLists_API, DeleteBroadcastLists_API, BroadcastLists_API } from "../backend";
+import { NewBroadcastLists_API, DeleteBroadcastLists_API, BroadcastLists_API,SearchBroadcastList_API } from "../backend";
 export const newBroadcastList = (broadcastlist) => {
 	return fetch(NewBroadcastLists_API, {
 		credentials: "include",
@@ -49,3 +49,21 @@ export const deleteBroadcastList = (broadcastlist) => {
 		})
 		.catch((err) => console.log(err));
 };
+//FIXME: API NOT WORKING...API MENTIONED IN CONTROLLER NOT WORKING`
+export const searchBroadcastList = (broadcastlist) => {
+	return fetch(`${SearchBroadcastList_API}?${broadcastlist.title}`, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((err) => console.log(err));
+};
+
