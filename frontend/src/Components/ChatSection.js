@@ -1,5 +1,7 @@
 import React from "react";
+import InputMessage from "./InputMessage";
 import Message from "./Message";
+import ActiveChat from "./ActiveChat";
 export default function ChatSection() {
 	const disp = () => {
 		let arr = [];
@@ -12,5 +14,15 @@ export default function ChatSection() {
 		}
 		return arr;
 	};
-	return <>{disp()}</>;
+	return (
+		<>
+			<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+				<ActiveChat />
+				<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
+					{disp()}
+				</div>
+				<InputMessage />
+			</div>
+		</>
+	);
 }

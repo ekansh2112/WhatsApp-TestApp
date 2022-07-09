@@ -100,7 +100,7 @@ const storeMessage = (req, payload, wares, next) => {
 const parseForm = (req, next) => {
 	var form = formidable({
 		keepExtensions: true,
-		uploadDir: __dirname + "\\assets\\",
+		uploadDir: __dirname + "/assets/",
 		allowEmptyFiles: false
 	});
 	form.on("file", (field, file) => {

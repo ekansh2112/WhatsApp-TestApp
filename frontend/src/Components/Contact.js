@@ -2,7 +2,7 @@ import React from "react";
 export default function Contact({ needMB, needCheckBox, needRadio, contact, setAllCheckedBoxes }) {
 	return (
 		<>
-			<div className={needMB ? "flex justify-around" : "flex mb-3 justify-around"}>
+			<label className={needMB ? "flex justify-around" : "flex mb-3 justify-around"}>
 				<img className="w-14 h-14 rounded-full" src={contact.image} alt="image_1" />
 				<div className="w-40 text-sm flex flex-col justify-center">
 					<p className="text-xs mb-2">{contact.fname + " " + contact.lname}</p>
@@ -26,7 +26,7 @@ export default function Contact({ needMB, needCheckBox, needRadio, contact, setA
 						/>
 					</div>
 				)}
-			</div>
+			</label>
 		</>
 	);
 }
