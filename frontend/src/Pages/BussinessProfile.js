@@ -1,34 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { CloudUploadIcon } from "@heroicons/react/solid";
-import ProfilePic from "../Assets/ProfilePic.png";
 import Base from "../Base";
 import { profileDataUpdate } from "../data/ProfileData";
-export default function BusinessProfile({ setUser, changeInProfile, setChangeInProfile }) {
-	// const [imageEdit, setImageEdit] = useState(false);
+export default function BusinessProfile() {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+	const [profileChanged, setProfileChanged] = useState(false);
+	const [user, setUser] = useState({
+		wabaID: "",
+		phoneNumberID: "",
+		businessProfile: {
+			address: "",
+			description: "",
+			vertical: "",
+			email: "",
+			websites: [],
+			messaging_product: "",
+		},
+	});
 	const [values, setValues] = useState({
-		address: cookies.user.businessProfile.address || "",
-		description: cookies.user.businessProfile.description || "",
-		vertical: cookies.user.businessProfile.vertical || "",
-		email: cookies.user.businessProfile.email || "",
-		website: cookies.user.businessProfile.websites[0] || "",
+		newAddress: cookies.user.businessProfile.address || "",
+		newDescription: cookies.user.businessProfile.description || "",
+		newVertical: cookies.user.businessProfile.vertical || "",
+		newEmail: cookies.user.businessProfile.email || "",
+		newWebsite: cookies.user.businessProfile.websites[0] || "",
 	});
 	const navigate = useNavigate();
-	const { address, description, vertical, email, website } = values;
+	const { newAddress, newDescription, newVertical, newEmail, newWebsite } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const updateProfile = (e) => {
 		e.preventDefault();
 		profileDataUpdate({
-			address: address,
-			description: description,
-			vertical: vertical,
-			email: email,
-			websites: [website],
+			address: newAddress,
+			description: newDescription,
+			vertical: newVertical,
+			email: newEmail,
+			websites: [newWebsite],
 		})
 			.then((data) => {
 				if (data?.stat === "success") {
@@ -36,15 +46,15 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 						wabaID: cookies.user.wabaID,
 						phoneNumberID: cookies.user.phoneNumberID,
 						businessProfile: {
-							address: address,
-							description: description,
-							vertical: vertical,
-							email: email,
-							websites: [website],
+							address: newAddress,
+							description: newDescription,
+							vertical: newVertical,
+							email: newEmail,
+							websites: [newWebsite],
 							messaging_product: cookies.user.businessProfile.messaging_product,
 						},
 					});
-					setChangeInProfile(!changeInProfile);
+					setProfileChanged(true);
 					toast.success(data?.message);
 					navigate("/profile");
 				} else if (data?.stat === "error") {
@@ -55,6 +65,11 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 				console.log(e);
 			});
 	};
+	useEffect(() => {
+		if (profileChanged) {
+			setCookie("user", user);
+		}
+	}, [profileChanged]);
 	return (
 		<>
 			<Base>
@@ -90,8 +105,8 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 							type="text"
 							name="description"
 							placeholder="Add description"
-							value={description}
-							onChange={handleChange("description")}
+							value={newDescription}
+							onChange={handleChange("newDescription")}
 						/>
 						<label className="text-sm font-normal mb-2" htmlFor="address">
 							Address
@@ -101,8 +116,8 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 							type="text"
 							name="address"
 							placeholder="Add your address"
-							value={address}
-							onChange={handleChange("address")}
+							value={newAddress}
+							onChange={handleChange("newAddress")}
 						/>
 						<label className="text-sm font-normal mb-2" htmlFor="email">
 							Email
@@ -112,15 +127,15 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 							type="email"
 							name="email"
 							placeholder="Add your email"
-							value={email}
-							onChange={handleChange("email")}
+							value={newEmail}
+							onChange={handleChange("newEmail")}
 						/>
 						<div className="flex flex-row justify-between">
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-2" htmlFor="vertical">
 									Vertical
 								</label>
-								<select className="rounded-lg myselect inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium" name="vertical" value={vertical} onChange={handleChange("vertical")}>
+								<select className="rounded-lg myselect inputShadow h-9 w-44 mb-4 px-3 text-xs font-medium" name="vertical" value={newVertical} onChange={handleChange("newVertical")}>
 									<option value="AUTO">AUTO</option>
 									<option value="BEAUTY">BEAUTY</option>
 									<option value="APPAREL">APPAREL</option>
@@ -150,8 +165,8 @@ export default function BusinessProfile({ setUser, changeInProfile, setChangeInP
 									type="url"
 									name="website"
 									placeholder="Add your website"
-									value={website}
-									onChange={handleChange("website")}
+									value={newWebsite}
+									onChange={handleChange("newWebsite")}
 								/>
 							</div>
 						</div>

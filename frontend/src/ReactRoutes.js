@@ -17,7 +17,6 @@ import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
 const ReactRoutes = () => {
 	// ANCHOR Props
-	const [changeInProfile, setChangeInProfile] = useState(false);
 	const [crudContactList, setCrudContactList] = useState(false);
 	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
 
@@ -163,7 +162,7 @@ const ReactRoutes = () => {
 					path="/profile"
 					element={
 						<PrivateRoute>
-							<BusinessProfile setUser={setUser} changeInProfile={changeInProfile} setChangeInProfile={setChangeInProfile} />
+							<BusinessProfile />
 						</PrivateRoute>
 					}
 				/>

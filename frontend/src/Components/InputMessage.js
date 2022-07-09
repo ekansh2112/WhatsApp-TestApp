@@ -59,6 +59,36 @@ export default function InputMessage() {
 			toast.error("Please enter text for messsge!");
 		}
 	};
+	// const sendMessage = (e) => {
+	// 	e.preventDefault();
+	// 	if (message !== "") {
+	// 		newMessage({
+	// 			messagePayload: {
+	// 				text: { preview_url: "false", body: message },
+	// 			},
+	// 			contactNumber: "918860799603",
+	// 			messageType: "text",
+	// 		})
+	// 			.then((data) => {
+	// 				if (data?.stat === "success") {
+	// 					setValues({
+	// 						previewUrl: "",
+	// 						message: "",
+	// 						mobileNumber: "",
+	// 						messageType: "",
+	// 					});
+	// 				} else if (data?.stat === "error") {
+	// 					return toast.error(data?.message);
+	// 				}
+	// 			})
+	// 			.catch((e) => {
+	// 				toast.error("Not able to send message! Please try again!");
+	// 				console.log(e);
+	// 			});
+	// 	} else {
+	// 		toast.error("Please enter text for messsge!");
+	// 	}
+	// };
 	return (
 		<>
 			<div className="flex justify-between items-center p-5">
