@@ -20,7 +20,7 @@ export default function InputMessage({ contact }) {
 				messagePayload: {
 					text: { preview_url: "false", body: message },
 				},
-				contactNumber: 918860799603,
+				contactNumber: "918860799603",
 				messageType: messageType,
 			})
 				.then((data) => {
@@ -28,6 +28,19 @@ export default function InputMessage({ contact }) {
 						setValues({
 							message: "",
 						});
+						let res = JSON.parse(localStorage.getItem("7290941111")) || [];
+						let data = {
+							type: "send",
+							detail: {
+								message: values.message,
+								messageType: values.messageType,
+							},
+						};
+						console.log(values.mobileNumber, "abcded");
+						res.push(data);
+
+						localStorage.setItem("7290941111", JSON.stringify(res));
+						console.log(localStorage.getItem({ mobileNumber }));
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}

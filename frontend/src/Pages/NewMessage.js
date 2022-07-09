@@ -4,6 +4,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import Base from "../Base";
 import { toast } from "react-toastify";
+import { searchContact } from "../data/Contacts";
 import { newMessage } from "../data/Messages";
 export default function NewMessage({ ListOfContacts }) {
 	const navigate = useNavigate();
@@ -12,9 +13,6 @@ export default function NewMessage({ ListOfContacts }) {
 		mobileNumber: "",
 	});
 	const { message, mobileNumber } = values;
-	const handleChange = (name) => (event) => {
-		setValues({ ...values, error: false, [name]: event.target.value });
-	};
 	const sendMessage = (e) => {
 		e.preventDefault();
 		if (message !== "") {
@@ -44,6 +42,37 @@ export default function NewMessage({ ListOfContacts }) {
 			toast.error("Please enter text for messsge!");
 		}
 	};
+	const [res, setres] = useState(false);
+	const [result, setresult] = useState({
+		phoneNumber: "",
+		fname: "",
+		lname: "",
+		image: "",
+	});
+	const handleChange = (name) => (event) => {
+		setsearch(event.target.value);
+		setValues({ ...values, error: false, [name]: event.target.value });
+	};
+	const setsearch = (value) => {
+		if (value.length === 10) {
+			searchContact({ phoneNumber: value })
+				.then((data) => {
+					console.log(data);
+					setresult({
+						phoneNumber: data[0].phoneNumber,
+						fname: data[0].fname,
+						lname: data[0].lname,
+						image: data[0].image,
+					});
+					setres(true);
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		} else {
+			setres(false);
+		}
+	};
 	return (
 		<>
 			<Base>
@@ -58,11 +87,21 @@ export default function NewMessage({ ListOfContacts }) {
 									value={message}
 									onChange={handleChange("message")}
 								/>
-								<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact" />
+								<input
+									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
+									type="search"
+									id="search"
+									placeholder="Search for a contact"
+									onChange={handleChange("search")}
+								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={mobileNumber} onChange={handleChange("mobileNumber")}>
-									{ListOfContacts?.map((contact, index) => {
-										return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needRadio={true} />;
-									})}
+									{res == true ? (
+										<Contact contact={result} needRadio={true} />
+									) : (
+										ListOfContacts?.map((contact, index) => {
+											return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needRadio={true} />;
+										})
+									)}
 								</div>
 								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4" onClick={sendMessage}>
 									SEND MESSAGE
