@@ -53,6 +53,19 @@ const ReactRoutes = () => {
 			});
 		}
 	}, [crudBroadcastList]);
+
+	//ANCHOR chats
+	const [chats, setChats] = useState([]);
+	const [toggle, setToggle] = useState(false);
+	useEffect(() => {
+		var arr = [];
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			// console.log(`${key}: ${localStorage.getItem(key)}`);
+			arr.push(localStorage.getItem(key));
+		}
+		setChats(arr);
+	}, [toggle]);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -63,7 +76,7 @@ const ReactRoutes = () => {
 					path="/"
 					element={
 						<PrivateRoute>
-							<Home />
+							<Home chats={chats} toggle={toggle} setToggle={setToggle} />
 						</PrivateRoute>
 					}
 				/>

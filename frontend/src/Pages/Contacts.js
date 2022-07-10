@@ -4,13 +4,14 @@ import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import { searchContact } from "../data/Contacts";
 import Base from "../Base";
+import { useState } from "react";
 export default function Contacts({ ListOfContacts }) {
 	const [res, setres] = useState(false);
 	const [result, setresult] = useState({
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: "",
+		image: ""
 	});
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
@@ -24,7 +25,7 @@ export default function Contacts({ ListOfContacts }) {
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image,
+						image: data[0].image
 					});
 					setres(true);
 				})

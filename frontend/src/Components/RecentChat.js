@@ -1,5 +1,5 @@
-import React from "react";
-export default function RecentChat({ last, active }) {
+export default function RecentChat({ last, active, chats }) {
+	console.log(chats);
 	return (
 		<>
 			<div className="mx-10 ml-14 p-7 bg-white removeScrollbar overflow-y-scroll rounded-3xl" style={{ height: "616px", width: "315px" }}>

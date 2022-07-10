@@ -3,10 +3,17 @@ import { PaperClipIcon } from "@heroicons/react/outline";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { newMessage, newFileMessage } from "../data/Messages";
-export default function InputMessage({ contact }) {
+import { searchContact } from "../data/Contacts";
+export default function InputMessage({ contact, toggle, setToggle }) {
 	const sendButton = useRef(null);
+	const [result, setresult] = useState({
+		phoneNumber: "",
+		fname: "",
+		lname: "",
+		image: ""
+	});
 	const [values, setValues] = useState({
-		message: "",
+		message: ""
 	});
 	const { message } = values;
 	const handleChange = (name) => (event) => {
@@ -18,29 +25,42 @@ export default function InputMessage({ contact }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message },
+					text: { preview_url: "false", body: message }
 				},
-				contactNumber: "918860799603",
-				messageType: messageType,
+				contactNumber: "919958082757",
+				messageType: messageType
 			})
 				.then((data) => {
+					console.log(data);
 					if (data?.stat === "success") {
 						setValues({
-							message: "",
+							message: ""
 						});
-						let res = JSON.parse(localStorage.getItem("7290941111")) || [];
-						let data = {
-							type: "send",
-							detail: {
-								message: values.message,
-								messageType: values.messageType,
-							},
-						};
-						console.log(values.mobileNumber, "abcded");
-						res.push(data);
-
-						localStorage.setItem("7290941111", JSON.stringify(res));
-						console.log(localStorage.getItem({ mobileNumber }));
+						let res = JSON.parse(localStorage.getItem(data?.message?.receiver)) || [];
+						let data2;
+						searchContact({ phoneNumber: data?.message?.receiver.slice(2) })
+							.then((data) => {
+								console.log(data);
+								data2 = {
+									type: "send",
+									profile: {
+										phoneNumber: data[0].phoneNumber,
+										fname: data[0].fname,
+										lname: data[0].lname,
+										image: data[0].image
+									},
+									detail: {
+										message: data?.message?.message,
+										messageType: data?.message?.messageType
+									}
+								};
+								res.push(data2);
+								localStorage.setItem(data[0].phoneNumber, JSON.stringify(res));
+								setToggle(!toggle);
+							})
+							.catch((e) => {
+								console.log(e);
+							});
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}

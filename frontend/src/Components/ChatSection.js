@@ -2,7 +2,7 @@ import React from "react";
 import InputMessage from "./InputMessage";
 import Message from "./Message";
 import ActiveChat from "./ActiveChat";
-export default function ChatSection() {
+export default function ChatSection({ toggle, setToggle }) {
 	const disp = () => {
 		let arr = [];
 		for (let i = 0; i < 18; i++) {
@@ -21,7 +21,7 @@ export default function ChatSection() {
 				<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
 					{disp()}
 				</div>
-				<InputMessage />
+				<InputMessage toggle={toggle} setToggle={setToggle} />
 			</div>
 		</>
 	);
