@@ -15,13 +15,13 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 		setsearch(event.target.value);
 	};
 	const setsearch = (value) => {
-		if (value.length != 0) {
+		if (value && value.length != 0) {
 			console.log(value);
 			searchBroadcastList({ title: value })
 				.then((data) => {
-					console.log(data, "xyz");
+					console.log(data.title, "xyz");
 					setresult({
-						title: data[0].title
+						title: data.title
 					});
 					setres(true);
 				})
@@ -53,9 +53,13 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 									</Link>
 								</div>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
-									{ListOfBroadcastLists?.map((broadcastlist, index) => {
-										return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} />;
-									})}
+									{res === true ? (
+										<List broadcastlist={result} />
+									) : (
+										ListOfBroadcastLists?.map((broadcastlist, index) => {
+											return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} />;
+										})
+									)}
 								</div>
 							</div>
 						</section>

@@ -110,14 +110,14 @@ exports.search_broadcast_list = async (req, res) => {
 			user_wabaID: req.session.wabaID,
 			title: title
 		});
-		if (braodcast_list == null) {
-			res.status(500).json({
+		if (!braodcast_list) {
+			res.status(404).json({
 				stat: "error",
 				message: title + " doesn't exist in your broadcast lists. Please check the spelling and try again"
 			});
 		}
 
-		// console.log(braodcast_list)
+		console.log(braodcast_list);
 		res.send(braodcast_list);
 	} catch (error) {
 		res.status(500).json({

@@ -10,12 +10,12 @@ export default function List({ needMB, needRadio, broadcastlist }) {
 					<SpeakerphoneIcon className="h-7 w-7 fontColorOnSpeakerPhone inline" />
 				</figure>
 				<div className="w-40 text-sm flex flex-col justify-center">
-					<p className="text-xs mb-2">{broadcastlist.title}</p>
-					<p className="text-xs">{broadcastlist.recipients.length} Contacts</p>
+					<p className="text-xs mb-2">{broadcastlist?.title}</p>
+					<p className="text-xs">{broadcastlist?.recipients?.length} Contacts</p>
 				</div>
 				{needRadio && (
 					<div className="flex justify-center items-center">
-						<input className="rounded-lg h-5 w-5" type="radio" name="selectlist" value={broadcastlist.title} />
+						<input className="rounded-lg h-5 w-5" type="radio" name="selectlist" value={broadcastlist?.title} />
 					</div>
 				)}
 			</div>
