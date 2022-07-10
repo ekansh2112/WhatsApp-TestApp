@@ -49,11 +49,12 @@ const ReactRoutes = () => {
 	useEffect(() => {
 		if (cookies.user) {
 			broadcastLists().then((data) => {
+				console.log("DATA", data);
 				setListOfBroadcastLists(data);
 			});
 		}
 	}, [crudBroadcastList]);
-
+	console.log("LIST", listOfBroadcastLists);
 	//ANCHOR chats
 	const [chats, setChats] = useState([]);
 	const [toggle, setToggle] = useState(false);

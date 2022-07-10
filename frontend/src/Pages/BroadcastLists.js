@@ -8,8 +8,9 @@ import { searchBroadcastList } from "../data/BroadcastLists";
 export default function BroadcastLists({ ListOfBroadcastLists }) {
 	const [res, setres] = useState(false);
 	const [result, setresult] = useState({
-		title: "",
+		title: ""
 	});
+	console.log(ListOfBroadcastLists);
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
 	};
@@ -20,7 +21,7 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 				.then((data) => {
 					console.log(data, "xyz");
 					setresult({
-						title: data[0].title,
+						title: data[0].title
 					});
 					setres(true);
 				})

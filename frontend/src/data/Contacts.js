@@ -6,9 +6,9 @@ export const newContact = (contact) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
+			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(contact),
+		body: JSON.stringify(contact)
 	})
 		.then((response) => {
 			return response.json();
@@ -23,11 +23,12 @@ export const newContact = (contact) => {
 };
 export const contactList = () => {
 	return fetch(Contacts_API, {
+		credentials: "include",
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
+			"Content-Type": "application/json"
+		}
 	})
 		.then((response) => {
 			return response.json();
@@ -42,11 +43,12 @@ export const contactList = () => {
 };
 export const deleteContact = (contact) => {
 	return fetch(`${DeleteContacts_API}${contact.phoneNumber}`, {
+		credentials: "include",
 		method: "DELETE",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
+			"Content-Type": "application/json"
+		}
 	})
 		.then((response) => {
 			return response.json();
@@ -61,11 +63,12 @@ export const deleteContact = (contact) => {
 };
 export const searchContact = (contact) => {
 	return fetch(`${SearchContacts_API}${contact.phoneNumber}`, {
+		credentials: "include",
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
+			"Content-Type": "application/json"
+		}
 	})
 		.then((response) => {
 			return response.json();

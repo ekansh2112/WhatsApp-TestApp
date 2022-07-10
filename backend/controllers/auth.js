@@ -110,7 +110,8 @@ exports.signIn = async (req, res) => {
 	}
 	const userData = {
 		phoneNumberID: user.phoneNumberID,
-		accessToken: user.accessToken
+		accessToken: user.accessToken,
+		wabaID: user.wabaID
 	};
 	// verifying whether registered user has valid business profile.
 	await axios

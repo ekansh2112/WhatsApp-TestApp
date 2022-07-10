@@ -8,7 +8,7 @@ export default function Login() {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [values, setValues] = useState({
 		mobileNumber: "",
-		password: "",
+		password: ""
 	});
 	const navigate = useNavigate();
 	const { mobileNumber, password } = values;
@@ -23,7 +23,7 @@ export default function Login() {
 					if (data?.stat === "success") {
 						setValues({
 							mobileNumber: "",
-							password: "",
+							password: ""
 						});
 						setCookie("user", data?.data?.user);
 						toast.success(data?.message);
@@ -63,7 +63,7 @@ export default function Login() {
 					<label className="text-sm font-normal mb-2">Password</label>
 					<input
 						className="rounded-lg h-8 w-72 mb-11 px-3 text-sm font-light py-2"
-						type="text"
+						type="password"
 						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
 						name="password"
 						placeholder="Enter A Strong Password"
