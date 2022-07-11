@@ -1,4 +1,4 @@
-import { SendMessage_API, SendFileMessage_API } from "../backend";
+import { SendMessage_API, SendFileMessage_API, SendBroadcastMessage_API } from "../backend";
 import { toast } from "react-toastify";
 export const newMessage = (message) => {
 	return fetch(SendMessage_API, {
@@ -35,6 +35,27 @@ export const newFileMessage = (fileMessage) => {
 		})
 		.catch((err) => {
 			toast.error("Not able to send files! Please try again!");
+			return console.log(err);
+		});
+};
+export const newBroadcastMessage = (message) => {
+	return fetch(SendBroadcastMessage_API, {
+		credentials: "include",
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(message),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.then((response) => {
+			return response;
+		})
+		.catch((err) => {
+			toast.error("Not able to send message! Please try again!");
 			return console.log(err);
 		});
 };

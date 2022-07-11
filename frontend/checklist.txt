@@ -1,6 +1,10 @@
-1. Use Node Prune
-2. isauth jab bhi call and if it is false then delete cookie and on logout
-3. latest message store and check error
-4. search contact/broadcast list
-6. send image/file
+1. text/image/document send and receive and show
+2. send broadcast message + new message
+3. show broadcast list contents
+4. latest chat at the top
+5. delete chats from local storage
+6. profile image
 7. async in apis
+8. search not found
+9. slice message if longer
+10. menu bar remove
