@@ -63,19 +63,26 @@ const ReactRoutes = () => {
 		var arr = [];
 		for (let i = 0; i < localStorage.length; i++) {
 			const key = localStorage.key(i);
-			arr.push({ contact: key, data: JSON.parse(localStorage.getItem(key)) });
+			if (key.includes("91")) {
+				arr.push({ contact: key, data: JSON.parse(localStorage.getItem(key)) });
+			}
 		}
 		setChats(arr);
-	}, [toggle]);
-
-	useEffect(() => {
-		console.log(localStorage.getItem("latestNumber"), "idgaf7777");
 		if (JSON.parse(localStorage.getItem("latestNumber"))) {
-			setLatestChat(chats.find((data) => data?.contact === localStorage.getItem("latestNumber")));
+			setLatestChat(arr.find((data) => data?.contact === localStorage.getItem("latestNumber")));
 		} else {
-			setLatestChat(chats[0]);
+			setLatestChat(arr[0]);
 		}
 	}, [toggle, authToggle]);
+	console.log(chats);
+	// useEffect(() => {
+	// 	console.log(localStorage.getItem("latestNumber"), "idgaf7777");
+	// 	// if (JSON.parse(localStorage.getItem("latestNumber"))) {
+	// 	// 	setLatestChat(chats.find((data) => data?.contact === localStorage.getItem("latestNumber")));
+	// 	// } else {
+	// 	// 	setLatestChat(chats[0]);
+	// 	// }
+	// }, [toggle, authToggle]);
 	return (
 		<BrowserRouter>
 			<Routes>

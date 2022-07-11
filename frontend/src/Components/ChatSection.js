@@ -3,6 +3,7 @@ import InputMessage from "./InputMessage";
 import Messages from "./Messages";
 import ActiveChat from "./ActiveChat";
 export default function ChatSection({ chats, toggle, setToggle, latestChat }) {
+	console.log("IN CHAT SEC", latestChat);
 	return (
 		<>
 			{latestChat && latestChat.data.length > 0 ? (
