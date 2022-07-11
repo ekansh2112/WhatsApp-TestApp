@@ -1,5 +1,4 @@
 export default function Contact({ needMB, needCheckBox, needRadio, contact, setAllCheckedBoxes }) {
-	console.log(contact.phoneNumber, "abcd");
 	return (
 		<>
 			<label className={needMB ? "flex justify-around" : "flex mb-3 justify-around"}>

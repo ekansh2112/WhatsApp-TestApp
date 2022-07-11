@@ -6,9 +6,9 @@ export const newContact = (contact) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(contact)
+		body: JSON.stringify(contact),
 	})
 		.then((response) => {
 			return response.json();
@@ -27,8 +27,8 @@ export const contactList = () => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
@@ -47,8 +47,8 @@ export const deleteContact = (contact) => {
 		method: "DELETE",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
@@ -67,8 +67,8 @@ export const searchContact = (contact) => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();

@@ -12,7 +12,7 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: ""
+		image: "",
 	});
 	const handleChange1 = (name) => (event) => {
 		setsearch(event.target.value);
@@ -21,12 +21,11 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 		if (value.length === 10) {
 			searchContact({ phoneNumber: value })
 				.then((data) => {
-					console.log(data);
 					setresult({
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image
+						image: data[0].image,
 					});
 					setres(true);
 				})
@@ -40,7 +39,7 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 	const [allCheckedBoxes, setAllCheckedBoxes] = useState({});
 	const [values, setValues] = useState({
 		nameOfTheList: "",
-		contacts: []
+		contacts: [],
 	});
 	const navigate = useNavigate();
 	const { nameOfTheList, contacts } = values;

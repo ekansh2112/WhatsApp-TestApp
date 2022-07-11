@@ -11,7 +11,7 @@ export default function Contacts({ ListOfContacts }) {
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: ""
+		image: "",
 	});
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
@@ -20,12 +20,11 @@ export default function Contacts({ ListOfContacts }) {
 		if (value.length === 10) {
 			searchContact({ phoneNumber: value })
 				.then((data) => {
-					console.log(data);
 					setresult({
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image
+						image: data[0].image,
 					});
 					setres(true);
 				})

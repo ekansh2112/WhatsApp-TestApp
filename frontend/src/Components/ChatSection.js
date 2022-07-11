@@ -1,28 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputMessage from "./InputMessage";
-import Message from "./Message";
+import Messages from "./Messages";
 import ActiveChat from "./ActiveChat";
-export default function ChatSection({ toggle, setToggle }) {
-	const disp = () => {
-		let arr = [];
-		for (let i = 0; i < 18; i++) {
-			arr.push(
-				<div key={i} className={i % 2 === 0 ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
-					<Message />
-				</div>
-			);
-		}
-		return arr;
-	};
+export default function ChatSection({ chats, toggle, setToggle, latestChat }) {
 	return (
 		<>
-			<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
-				<ActiveChat />
-				<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
-					{disp()}
+			{latestChat && latestChat.data.length > 0 ? (
+				<>
+					<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+						<ActiveChat latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+						<Messages latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+						<InputMessage latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+					</div>
+				</>
+			) : (
+				<div className="my-6 flex justify-center items-center rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+					No chats to display!
 				</div>
-				<InputMessage toggle={toggle} setToggle={setToggle} />
-			</div>
+			)}
 		</>
 	);
 }

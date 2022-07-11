@@ -4,18 +4,13 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { newMessage, newFileMessage } from "../data/Messages";
 import { searchContact } from "../data/Contacts";
-export default function InputMessage({ contact, toggle, setToggle }) {
+export default function InputMessage({ latestChat, toggle, setToggle }) {
 	const sendButton = useRef(null);
-	const [result, setresult] = useState({
-		phoneNumber: "",
-		fname: "",
-		lname: "",
-		image: ""
-	});
 	const [values, setValues] = useState({
-		message: ""
+		message: "",
+		mobileNumber: latestChat?.contact,
 	});
-	const { message } = values;
+	const { message, mobileNumber } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
@@ -25,33 +20,33 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message }
+					text: { preview_url: "false", body: message },
 				},
-				contactNumber: "919958082757",
-				messageType: messageType
+				contactNumber: mobileNumber,
+				messageType: messageType,
 			})
 				.then((res) => {
 					if (res?.stat === "success") {
 						setValues({
-							message: ""
+							...values,
+							message: "",
 						});
 						let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
 						let data2;
 						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 							.then((data) => {
-								console.log(data);
 								data2 = {
 									type: "send",
 									profile: {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,
 										lname: data[0].lname,
-										image: data[0].image
+										image: data[0].image,
 									},
 									detail: {
 										message: res?.message?.message,
-										messageType: res?.message?.messageType
-									}
+										messageType: "text",
+									},
 								};
 								myresult.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
@@ -60,6 +55,7 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 							.catch((e) => {
 								console.log(e);
 							});
+						localStorage.setItem("latestNumber", mobileNumber);
 					} else if (res?.stat === "error") {
 						return toast.error(res?.message);
 					}
@@ -85,7 +81,7 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 		e.preventDefault();
 		const uploadData = new FormData();
 		uploadData.append("messageType", messageType);
-		uploadData.append("contactNumber", 918860799603);
+		uploadData.append("contactNumber", mobileNumber);
 		uploadData.append("file", file);
 		newFileMessage(uploadData)
 			.then((data) => {
