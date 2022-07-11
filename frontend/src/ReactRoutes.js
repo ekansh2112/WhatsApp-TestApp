@@ -34,6 +34,7 @@ const ReactRoutes = () => {
 		}
 	}
 
+	const [authToggle, setAuthToggle] = useState(false);
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
 	useEffect(() => {
@@ -42,7 +43,7 @@ const ReactRoutes = () => {
 				setListOfContacts(data);
 			});
 		}
-	}, [crudContactList]);
+	}, [crudContactList, authToggle]);
 
 	// ANCHOR Broadcast Lists
 	const [listOfBroadcastLists, setListOfBroadcastLists] = useState([]);
@@ -53,7 +54,7 @@ const ReactRoutes = () => {
 				setListOfBroadcastLists(data);
 			});
 		}
-	}, [crudBroadcastList]);
+	}, [crudBroadcastList, authToggle]);
 	console.log("LIST", listOfBroadcastLists);
 	//ANCHOR chats
 	const [chats, setChats] = useState([]);
@@ -71,7 +72,7 @@ const ReactRoutes = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route exact path="/register" element={cookies.user ? <Navigate to="/" /> : <Register />} />
-				<Route exact path="/login" element={cookies.user ? <Navigate to="/" /> : <Login />} />
+				<Route exact path="/login" element={cookies.user ? <Navigate to="/" /> : <Login setAuthToggle={setAuthToggle} authToggle={authToggle} />} />
 				<Route
 					exact
 					path="/"

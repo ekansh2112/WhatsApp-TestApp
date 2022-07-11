@@ -10,7 +10,7 @@ export default function NewMessage({ ListOfContacts }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: "",
+		mobileNumber: ""
 	});
 	const { message, mobileNumber } = values;
 	const sendMessage = (e) => {
@@ -18,16 +18,16 @@ export default function NewMessage({ ListOfContacts }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message },
+					text: { preview_url: "false", body: message }
 				},
 				contactNumber: mobileNumber,
-				messageType: "text",
+				messageType: "text"
 			})
 				.then((data) => {
 					if (data?.stat === "success") {
 						setValues({
 							message: "",
-							mobileNumber: "",
+							mobileNumber: ""
 						});
 						navigate("/");
 					} else if (data?.stat === "error") {
@@ -47,7 +47,7 @@ export default function NewMessage({ ListOfContacts }) {
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: "",
+		image: ""
 	});
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
@@ -62,7 +62,7 @@ export default function NewMessage({ ListOfContacts }) {
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image,
+						image: data[0].image
 					});
 					setres(true);
 				})

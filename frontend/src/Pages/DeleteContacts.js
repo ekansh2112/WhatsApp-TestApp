@@ -7,7 +7,7 @@ import { deleteContact } from "../data/Contacts";
 import Base from "../Base";
 export default function DeleteContacts({ setCrudContactList, crudContactList, ListOfContacts }) {
 	const [values, setValues] = useState({
-		mobileNumber: "",
+		mobileNumber: ""
 	});
 	const { mobileNumber } = values;
 	const handleChange = (name) => (event) => {
@@ -20,7 +20,7 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 				.then((data) => {
 					if (data?.stat === "success") {
 						setValues({
-							mobileNumber: "",
+							mobileNumber: ""
 						});
 						toast.success(data?.message);
 						setCrudContactList(!crudContactList);

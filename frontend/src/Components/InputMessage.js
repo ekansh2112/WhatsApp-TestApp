@@ -31,16 +31,15 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 				contactNumber: mobileNumber,
 				messageType: messageType,
 			})
-				.then((data) => {
-					console.log(data);
-					if (data?.stat === "success") {
+				.then((res) => {
+					if (res?.stat === "success") {
 						setValues({
 							...values,
 							message: "",
 						});
-						let res = JSON.parse(localStorage.getItem(data?.message?.receiver)) || [];
+						let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
 						let data2;
-						searchContact({ phoneNumber: data?.message?.receiver.slice(2) })
+						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 							.then((data) => {
 								console.log(data);
 								data2 = {
@@ -52,19 +51,19 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 										image: data[0].image,
 									},
 									detail: {
-										message: data?.message?.message,
-										messageType: data?.message?.messageType,
+										message: res?.message?.message,
+										messageType: res?.message?.messageType,
 									},
 								};
-								res.push(data2);
-								localStorage.setItem(data[0].phoneNumber, JSON.stringify(res));
+								myresult.push(data2);
+								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
 								setToggle(!toggle);
 							})
 							.catch((e) => {
 								console.log(e);
 							});
-					} else if (data?.stat === "error") {
-						return toast.error(data?.message);
+					} else if (res?.stat === "error") {
+						return toast.error(res?.message);
 					}
 				})
 				.catch((e) => {
