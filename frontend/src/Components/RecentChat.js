@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 export default function RecentChat({ chats, toggle, setToggle }) {
-	console.log(chats, "idgaf22");
-	console.log(localStorage.getItem("latestNumber"), "idgaf11122");
-	const [recentChats, setRecentChats] = useState();
-	useEffect(() => {
-		setRecentChats(chats.find((data) => data?.contact === localStorage.getItem("latestNumber")));
-	}, [toggle]);
 	return (
 		<>
 			{chats.length > 0 ? (
@@ -30,7 +24,7 @@ export default function RecentChat({ chats, toggle, setToggle }) {
 								<img className="w-14 h-14 rounded-full mr-3" src={chat.data[0].profile.image} alt="Image_1" />
 								<div className="text-sm">
 									<p className="text-xs mb-2">{chat.data[0].profile.fname + " " + chat.data[0].profile.lname}</p>
-									<p className="text-xs mt-2">{chat.data[latestMessage].detail.message.text.body.substring(0, 28)}</p>
+									<p className="text-xs mt-2">{chat.data[latestMessage].detail.message.id ? "Media" : chat.data[latestMessage].detail.message.text.body.substring(0, 28)}</p>
 								</div>
 							</div>
 						);

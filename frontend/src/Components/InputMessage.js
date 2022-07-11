@@ -84,12 +84,37 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 		uploadData.append("contactNumber", mobileNumber);
 		uploadData.append("file", file);
 		newFileMessage(uploadData)
-			.then((data) => {
-				if (data?.stat === "success") {
+			.then((res) => {
+				if (res?.stat === "success") {
 					setFile("");
+					let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
+					let data2;
+					searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
+						.then((data) => {
+							data2 = {
+								type: "send",
+								profile: {
+									phoneNumber: data[0].phoneNumber,
+									fname: data[0].fname,
+									lname: data[0].lname,
+									image: data[0].image,
+								},
+								detail: {
+									message: messageType === "image" ? res?.message?.message?.image : res?.message?.message?.document,
+									messageType: messageType,
+								},
+							};
+							myresult.push(data2);
+							localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
+							setToggle(!toggle);
+						})
+						.catch((e) => {
+							console.log(e);
+						});
+					localStorage.setItem("latestNumber", mobileNumber);
 					toast.success("File sent!");
-				} else if (data?.stat === "error") {
-					return toast.error(data?.message);
+				} else if (res?.stat === "error") {
+					return toast.error(res?.message);
 				}
 			})
 			.catch((e) => {

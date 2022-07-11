@@ -67,5 +67,5 @@ export const searchBroadcastList = async (broadcastlist) => {
 		.then((response) => {
 			return response;
 		})
-		.catch((err) => console.log("ERR", err));
+		.catch((err) => console.log(err));
 };

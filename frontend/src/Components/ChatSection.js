@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import InputMessage from "./InputMessage";
 import Messages from "./Messages";
 import ActiveChat from "./ActiveChat";
-export default function ChatSection({ chats, toggle, setToggle, latestChat }) {
-	console.log("IN CHAT SEC", latestChat);
+export default function ChatSection({ toggle, setToggle, latestChat }) {
 	return (
 		<>
 			{latestChat && latestChat.data.length > 0 ? (

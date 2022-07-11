@@ -5,7 +5,11 @@ export default function Message({ latestChat }) {
 			{latestChat.data.map((messages, index) => {
 				return (
 					<div key={index} className={messages.type === "send" ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
-						<div className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-2 px-5">{messages.detail.message.text.body}</div>
+						{messages.detail.message.id ? (
+							<img className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-2 px-5" src="" alt={messages.detail.message.id} />
+						) : (
+							<div className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-2 px-5">{messages.detail.message.text.body}</div>
+						)}
 					</div>
 				);
 			})}
