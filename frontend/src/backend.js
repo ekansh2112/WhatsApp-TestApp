@@ -1,4 +1,4 @@
-const BACKEND = "http://localhost:2000/";
+const BACKEND = "http://localhost:4000/";
 
 // Authentication APIs
 export const Register_API = `${BACKEND}api/signup/`;

@@ -8,7 +8,7 @@ export default function Login() {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [values, setValues] = useState({
 		mobileNumber: "",
-		password: ""
+		password: "",
 	});
 	const navigate = useNavigate();
 	const { mobileNumber, password } = values;
@@ -23,7 +23,7 @@ export default function Login() {
 					if (data?.stat === "success") {
 						setValues({
 							mobileNumber: "",
-							password: ""
+							password: "",
 						});
 						setCookie("user", data?.data?.user);
 						toast.success(data?.message);

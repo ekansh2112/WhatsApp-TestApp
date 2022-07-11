@@ -86,7 +86,7 @@ const ReactRoutes = () => {
 					path="/newmessage"
 					element={
 						<PrivateRoute>
-							<NewMessage ListOfContacts={listOfContacts} />
+							<NewMessage ListOfContacts={listOfContacts} toggle={toggle} setToggle={setToggle} />
 						</PrivateRoute>
 					}
 				/>

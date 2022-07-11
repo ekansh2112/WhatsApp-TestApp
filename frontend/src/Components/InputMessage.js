@@ -10,12 +10,13 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: ""
+		image: "",
 	});
 	const [values, setValues] = useState({
-		message: ""
+		message: "",
+		mobileNumber: "918860799603",
 	});
-	const { message } = values;
+	const { message, mobileNumber } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
@@ -25,16 +26,17 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message }
+					text: { preview_url: "false", body: message },
 				},
-				contactNumber: "919958082757",
-				messageType: messageType
+				contactNumber: mobileNumber,
+				messageType: messageType,
 			})
 				.then((data) => {
 					console.log(data);
 					if (data?.stat === "success") {
 						setValues({
-							message: ""
+							...values,
+							message: "",
 						});
 						let res = JSON.parse(localStorage.getItem(data?.message?.receiver)) || [];
 						let data2;
@@ -47,12 +49,12 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,
 										lname: data[0].lname,
-										image: data[0].image
+										image: data[0].image,
 									},
 									detail: {
 										message: data?.message?.message,
-										messageType: data?.message?.messageType
-									}
+										messageType: data?.message?.messageType,
+									},
 								};
 								res.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(res));
@@ -86,7 +88,7 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 		e.preventDefault();
 		const uploadData = new FormData();
 		uploadData.append("messageType", messageType);
-		uploadData.append("contactNumber", 918860799603);
+		uploadData.append("contactNumber", mobileNumber);
 		uploadData.append("file", file);
 		newFileMessage(uploadData)
 			.then((data) => {

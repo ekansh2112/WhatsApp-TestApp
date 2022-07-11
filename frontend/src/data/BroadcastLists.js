@@ -5,9 +5,9 @@ export const newBroadcastList = async (broadcastlist) => {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(broadcastlist)
+		body: JSON.stringify(broadcastlist),
 	})
 		.then((response) => {
 			return response.json();
@@ -23,8 +23,8 @@ export const broadcastLists = async () => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
@@ -41,8 +41,8 @@ export const deleteBroadcastList = async (broadcastlist) => {
 		method: "DELETE",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
@@ -59,8 +59,8 @@ export const searchBroadcastList = async (broadcastlist) => {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
 	})
 		.then((response) => {
 			return response.json();
