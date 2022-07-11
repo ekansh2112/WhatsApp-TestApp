@@ -11,7 +11,7 @@ export default function NewContact({ setCrudContactList, crudContactList }) {
 		mobileNumber: "",
 		emailAddress: "",
 		address: "",
-		birthDate: "",
+		birthDate: ""
 	});
 	const navigate = useNavigate();
 	const { firstName, lastName, mobileNumber, emailAddress, address, birthDate } = values;
@@ -29,7 +29,7 @@ export default function NewContact({ setCrudContactList, crudContactList }) {
 				phoneNumber: mobileNumber,
 				email: emailAddress,
 				address: address,
-				dob: birthDate,
+				dob: birthDate
 			})
 				.then((data) => {
 					if (data?.stat === "success") {
@@ -39,7 +39,7 @@ export default function NewContact({ setCrudContactList, crudContactList }) {
 							mobileNumber: "",
 							emailAddress: "",
 							address: "",
-							birthDate: "",
+							birthDate: ""
 						});
 						toast.success(data?.message);
 						setCrudContactList(!crudContactList);

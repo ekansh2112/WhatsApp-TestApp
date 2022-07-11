@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { signin } from "../helpers/auth/authentication";
 import { useCookies } from "react-cookie";
-export default function Login() {
+export default function Login({ setAuthToggle, authToggle }) {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [values, setValues] = useState({
 		mobileNumber: "",
@@ -26,6 +26,7 @@ export default function Login() {
 							password: ""
 						});
 						setCookie("user", data?.data?.user);
+						setAuthToggle(!authToggle);
 						toast.success(data?.message);
 						navigate("/");
 					} else if (data?.stat === "error") {
