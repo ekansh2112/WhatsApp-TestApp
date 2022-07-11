@@ -69,7 +69,7 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 										<PlusIcon className="h-6 w-6 inline" />
 									</Link>
 								</div>
-								<h1 className="text-center font-semibold text-lg capitalize">Add your first broadcastlist now!</h1>
+								<h1 className="text-center font-semibold text-lg capitalize">Add your first broadcast list now!</h1>
 							</div>
 						</section>
 					</>

@@ -120,7 +120,7 @@ const ReactRoutes = () => {
 					path="/deletecontacts"
 					element={
 						<PrivateRoute>
-							<DeleteContacts ListOfContacts={listOfContacts} crudContactList={crudContactList} setCrudContactList={setCrudContactList} />
+							<DeleteContacts toggle={toggle} setToggle={setToggle} ListOfContacts={listOfContacts} crudContactList={crudContactList} setCrudContactList={setCrudContactList} />
 						</PrivateRoute>
 					}
 				/>

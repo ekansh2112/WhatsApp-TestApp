@@ -5,9 +5,9 @@ import Contact from "../Components/Contact";
 import { toast } from "react-toastify";
 import { deleteContact } from "../data/Contacts";
 import Base from "../Base";
-export default function DeleteContacts({ setCrudContactList, crudContactList, ListOfContacts }) {
+export default function DeleteContacts({ setCrudContactList, crudContactList, ListOfContacts, toggle, setToggle }) {
 	const [values, setValues] = useState({
-		mobileNumber: ""
+		mobileNumber: "",
 	});
 	const { mobileNumber } = values;
 	const handleChange = (name) => (event) => {
@@ -21,8 +21,9 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 					if (data?.stat === "success") {
 						localStorage.removeItem(mobileNumber);
 						setValues({
-							mobileNumber: ""
+							mobileNumber: "",
 						});
+						setToggle(!toggle);
 						toast.success(data?.message);
 						setCrudContactList(!crudContactList);
 					} else if (data?.stat === "error") {

@@ -15,7 +15,7 @@ export default function ChatSection({ chats, toggle, setToggle, latestChat }) {
 					</div>
 				</>
 			) : (
-				<div className="my-6 flex justify-center items-center rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+				<div className="my-6 font-bold text-6xl flex justify-center items-center rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
 					No chats to display!
 				</div>
 			)}
