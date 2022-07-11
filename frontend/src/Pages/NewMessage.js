@@ -10,7 +10,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: ""
+		mobileNumber: "",
 	});
 	const { message, mobileNumber } = values;
 	const sendMessage = (e) => {
@@ -18,10 +18,10 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message }
+					text: { preview_url: "false", body: message },
 				},
 				contactNumber: mobileNumber,
-				messageType: "text"
+				messageType: "text",
 			})
 				.then((res) => {
 					if (res?.stat === "success") {
@@ -35,12 +35,12 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,
 										lname: data[0].lname,
-										image: data[0].image
+										image: data[0].image,
 									},
 									detail: {
 										message: res?.message?.message,
-										messageType: "text"
-									}
+										messageType: "text",
+									},
 								};
 								myresult.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
@@ -52,7 +52,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 						localStorage.setItem("latestNumber", mobileNumber);
 						setValues({
 							message: "",
-							mobileNumber: ""
+							mobileNumber: "",
 						});
 						navigate("/");
 					} else if (res?.stat === "error") {
@@ -72,7 +72,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: ""
+		image: "",
 	});
 	const handleChange = (name) => (event) => {
 		if (name === "search") setsearch(event.target.value);
@@ -86,7 +86,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image
+						image: data[0].image,
 					});
 					setres(true);
 				})

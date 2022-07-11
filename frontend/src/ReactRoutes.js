@@ -74,15 +74,6 @@ const ReactRoutes = () => {
 			setLatestChat(arr[0]);
 		}
 	}, [toggle, authToggle]);
-	console.log(chats);
-	// useEffect(() => {
-	// 	console.log(localStorage.getItem("latestNumber"), "idgaf7777");
-	// 	// if (JSON.parse(localStorage.getItem("latestNumber"))) {
-	// 	// 	setLatestChat(chats.find((data) => data?.contact === localStorage.getItem("latestNumber")));
-	// 	// } else {
-	// 	// 	setLatestChat(chats[0]);
-	// 	// }
-	// }, [toggle, authToggle]);
 	return (
 		<BrowserRouter>
 			<Routes>

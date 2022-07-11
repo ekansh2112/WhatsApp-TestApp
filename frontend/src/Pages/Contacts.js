@@ -56,10 +56,10 @@ export default function Contacts({ ListOfContacts }) {
 								</div>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
 									{res == true ? (
-										<Contact contact={result} needRadio={true} />
+										<Contact contact={result} />
 									) : (
 										ListOfContacts?.map((contact, index) => {
-											return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needRadio={true} />;
+											return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} />;
 										})
 									)}
 								</div>

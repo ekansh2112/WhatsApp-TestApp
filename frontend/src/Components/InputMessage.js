@@ -8,7 +8,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 	const sendButton = useRef(null);
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: latestChat?.contact
+		mobileNumber: latestChat?.contact,
 	});
 	const { message, mobileNumber } = values;
 	const handleChange = (name) => (event) => {
@@ -20,16 +20,16 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message }
+					text: { preview_url: "false", body: message },
 				},
 				contactNumber: mobileNumber,
-				messageType: messageType
+				messageType: messageType,
 			})
 				.then((res) => {
 					if (res?.stat === "success") {
 						setValues({
 							...values,
-							message: ""
+							message: "",
 						});
 						let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
 						let data2;
@@ -41,12 +41,12 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,
 										lname: data[0].lname,
-										image: data[0].image
+										image: data[0].image,
 									},
 									detail: {
 										message: res?.message?.message,
-										messageType: "text"
-									}
+										messageType: "text",
+									},
 								};
 								myresult.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
