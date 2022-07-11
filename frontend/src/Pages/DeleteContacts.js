@@ -19,6 +19,7 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 			deleteContact({ phoneNumber: mobileNumber.slice(2) })
 				.then((data) => {
 					if (data?.stat === "success") {
+						localStorage.removeItem(mobileNumber);
 						setValues({
 							mobileNumber: ""
 						});
