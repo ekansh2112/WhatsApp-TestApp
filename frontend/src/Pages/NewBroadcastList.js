@@ -88,13 +88,13 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 										onChange={handleChange("nameOfTheList")}
 									/>
 								</div>
-								<input
+								{/* <input
 									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
 									type="search"
 									id="search"
 									onChange={handleChange1("search")}
 									placeholder="Search for a contact"
-								/>
+								/> */}
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
 									{res == true ? (
 										<Contact contact={result} needCheckBox={true} setAllCheckedBoxes={setAllCheckedBoxes} />
