@@ -30,7 +30,6 @@ export const broadcastLists = async () => {
 			return response.json();
 		})
 		.then((response) => {
-			console.log("RES", response);
 			return response;
 		})
 		.catch((err) => console.log(err));
@@ -66,7 +65,6 @@ export const searchBroadcastList = async (broadcastlist) => {
 			return response.json();
 		})
 		.then((response) => {
-			console.log("SEARCH", response);
 			return response;
 		})
 		.catch((err) => console.log("ERR", err));

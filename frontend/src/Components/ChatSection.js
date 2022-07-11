@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputMessage from "./InputMessage";
 import Messages from "./Messages";
 import ActiveChat from "./ActiveChat";
-export default function ChatSection({ toggle, setToggle }) {
-	// useEffect(() => {
-	// 	var arr = [];
-	// 	for (let i = 0; i < localStorage.length; i++) {
-	// 		const key = localStorage.key(i);
-	// 		// console.log(`${key}: ${localStorage.getItem(key)}`);
-	// 		arr.push(localStorage.getItem(key));
-	// 	}
-	// 	setChats(arr);
-	// }, [toggle]);
+export default function ChatSection({ chats, toggle, setToggle, latestChat }) {
 	return (
 		<>
-			<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
-				<ActiveChat toggle={toggle} setToggle={setToggle} />
-				<Messages />
-				<InputMessage toggle={toggle} setToggle={setToggle} />
-			</div>
+			{latestChat && latestChat.data.length > 0 ? (
+				<>
+					<div className="my-6 rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+						<ActiveChat latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+						<Messages latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+						<InputMessage latestChat={latestChat} toggle={toggle} setToggle={setToggle} />
+					</div>
+				</>
+			) : (
+				<div className="my-6 flex justify-center items-center rounded-3xl bgOnChatPanel" style={{ height: "616px", width: "1040px" }}>
+					No chats to display!
+				</div>
+			)}
 		</>
 	);
 }

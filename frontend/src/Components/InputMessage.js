@@ -4,17 +4,11 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { newMessage, newFileMessage } from "../data/Messages";
 import { searchContact } from "../data/Contacts";
-export default function InputMessage({ contact, toggle, setToggle }) {
+export default function InputMessage({ latestChat, toggle, setToggle }) {
 	const sendButton = useRef(null);
-	const [result, setresult] = useState({
-		phoneNumber: "",
-		fname: "",
-		lname: "",
-		image: "",
-	});
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: "918860799603",
+		mobileNumber: latestChat?.contact,
 	});
 	const { message, mobileNumber } = values;
 	const handleChange = (name) => (event) => {
@@ -41,7 +35,6 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 						let data2;
 						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 							.then((data) => {
-								console.log(data);
 								data2 = {
 									type: "send",
 									profile: {
@@ -52,7 +45,7 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 									},
 									detail: {
 										message: res?.message?.message,
-										messageType: res?.message?.messageType,
+										messageType: "text",
 									},
 								};
 								myresult.push(data2);
@@ -62,6 +55,7 @@ export default function InputMessage({ contact, toggle, setToggle }) {
 							.catch((e) => {
 								console.log(e);
 							});
+						localStorage.setItem("latestNumber", mobileNumber);
 					} else if (res?.stat === "error") {
 						return toast.error(res?.message);
 					}

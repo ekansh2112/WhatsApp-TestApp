@@ -21,7 +21,6 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 		if (value.length === 10) {
 			searchContact({ phoneNumber: value })
 				.then((data) => {
-					console.log(data);
 					setresult({
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,

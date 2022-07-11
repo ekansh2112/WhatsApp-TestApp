@@ -19,6 +19,8 @@ const ReactRoutes = () => {
 	// ANCHOR Props
 	const [crudContactList, setCrudContactList] = useState(false);
 	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
+	const [authToggle, setAuthToggle] = useState(false);
+	const [latestChat, setLatestChat] = useState();
 
 	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -34,7 +36,6 @@ const ReactRoutes = () => {
 		}
 	}
 
-	const [authToggle, setAuthToggle] = useState(false);
 	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
 	useEffect(() => {
@@ -50,24 +51,31 @@ const ReactRoutes = () => {
 	useEffect(() => {
 		if (cookies.user) {
 			broadcastLists().then((data) => {
-				console.log("DATA", data);
 				setListOfBroadcastLists(data);
 			});
 		}
 	}, [crudBroadcastList, authToggle]);
-	console.log("LIST", listOfBroadcastLists);
-	//ANCHOR chats
+
+	//ANCHOR Chats
 	const [chats, setChats] = useState([]);
 	const [toggle, setToggle] = useState(false);
 	useEffect(() => {
 		var arr = [];
 		for (let i = 0; i < localStorage.length; i++) {
 			const key = localStorage.key(i);
-			// console.log(`${key}: ${localStorage.getItem(key)}`);
-			arr.push(localStorage.getItem(key));
+			arr.push({ contact: key, data: JSON.parse(localStorage.getItem(key)) });
 		}
 		setChats(arr);
 	}, [toggle]);
+
+	useEffect(() => {
+		console.log(localStorage.getItem("latestNumber"), "idgaf7777");
+		if (JSON.parse(localStorage.getItem("latestNumber"))) {
+			setLatestChat(chats.find((data) => data?.contact === localStorage.getItem("latestNumber")));
+		} else {
+			setLatestChat(chats[0]);
+		}
+	}, [toggle, authToggle]);
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -78,7 +86,7 @@ const ReactRoutes = () => {
 					path="/"
 					element={
 						<PrivateRoute>
-							<Home chats={chats} toggle={toggle} setToggle={setToggle} />
+							<Home chats={chats} toggle={toggle} setToggle={setToggle} latestChat={latestChat} />
 						</PrivateRoute>
 					}
 				/>

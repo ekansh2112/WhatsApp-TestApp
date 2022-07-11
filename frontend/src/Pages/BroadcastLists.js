@@ -10,16 +10,13 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 	const [result, setresult] = useState({
 		title: "",
 	});
-	console.log(ListOfBroadcastLists);
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
 	};
 	const setsearch = (value) => {
 		if (value && value.length != 0) {
-			console.log(value);
 			searchBroadcastList({ title: value })
 				.then((data) => {
-					console.log(data.title, "xyz");
 					setresult({
 						title: data.title,
 					});
@@ -32,7 +29,6 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 			setres(false);
 		}
 	};
-	console.log(result, "qwerty");
 	return (
 		<>
 			<Base>

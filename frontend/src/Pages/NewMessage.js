@@ -6,11 +6,11 @@ import Base from "../Base";
 import { toast } from "react-toastify";
 import { searchContact } from "../data/Contacts";
 import { newMessage } from "../data/Messages";
-export default function NewMessage({ ListOfContacts }) {
+export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: ""
+		mobileNumber: "",
 	});
 	const { message, mobileNumber } = values;
 	const sendMessage = (e) => {
@@ -18,20 +18,45 @@ export default function NewMessage({ ListOfContacts }) {
 		if (message !== "") {
 			newMessage({
 				messagePayload: {
-					text: { preview_url: "false", body: message }
+					text: { preview_url: "false", body: message },
 				},
 				contactNumber: mobileNumber,
-				messageType: "text"
+				messageType: "text",
 			})
-				.then((data) => {
-					if (data?.stat === "success") {
+				.then((res) => {
+					if (res?.stat === "success") {
+						let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
+						let data2;
+						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
+							.then((data) => {
+								data2 = {
+									type: "send",
+									profile: {
+										phoneNumber: data[0].phoneNumber,
+										fname: data[0].fname,
+										lname: data[0].lname,
+										image: data[0].image,
+									},
+									detail: {
+										message: res?.message?.message,
+										messageType: "text",
+									},
+								};
+								myresult.push(data2);
+								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
+								setToggle(!toggle);
+							})
+							.catch((e) => {
+								console.log(e);
+							});
+						localStorage.setItem("latestNumber", mobileNumber);
 						setValues({
 							message: "",
-							mobileNumber: ""
+							mobileNumber: "",
 						});
 						navigate("/");
-					} else if (data?.stat === "error") {
-						return toast.error(data?.message);
+					} else if (res?.stat === "error") {
+						return toast.error(res?.message);
 					}
 				})
 				.catch((e) => {
@@ -47,7 +72,7 @@ export default function NewMessage({ ListOfContacts }) {
 		phoneNumber: "",
 		fname: "",
 		lname: "",
-		image: ""
+		image: "",
 	});
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
@@ -57,12 +82,11 @@ export default function NewMessage({ ListOfContacts }) {
 		if (value.length === 10) {
 			searchContact({ phoneNumber: value })
 				.then((data) => {
-					console.log(data);
 					setresult({
 						phoneNumber: data[0].phoneNumber,
 						fname: data[0].fname,
 						lname: data[0].lname,
-						image: data[0].image
+						image: data[0].image,
 					});
 					setres(true);
 				})
