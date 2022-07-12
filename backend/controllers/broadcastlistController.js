@@ -1,6 +1,6 @@
 const { db } = require("../models/broadcast-list");
 const BroadcastList = require("../models/broadcast-list");
-const Contact=require("../models/contact")
+const Contact = require("../models/contact");
 const user_wabaID = "107654008661174"; //GET THE WABA ID of Business User
 
 // GET ../api/broadcast/all
@@ -8,7 +8,7 @@ exports.braodcast_list = async (req, res) => {
 	if (!req.session?.wabaID) {
 		return res.status(401).json({
 			stat: "error",
-			message: "Unauthorized"
+			message: "Unauthorized",
 		});
 	}
 	console.log(req.session.wabaID);
@@ -19,7 +19,7 @@ exports.braodcast_list = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			stat: "error",
-			message: error
+			message: error,
 		});
 	}
 };
@@ -27,31 +27,31 @@ exports.braodcast_list = async (req, res) => {
 // POST ../api/broadcast/create
 exports.create_broadcast = async (req, res) => {
 	const title = req.body.title;
-	let info=[];
+	let info = [];
 	try {
 		const check = await BroadcastList.find({ user_wabaID: req.session.wabaID, title: title }).count();
 		if (check == 0) {
 			if (req.body.recipients.length < 2) {
 				return res.json({
 					stat: "error",
-					message: "Add atleast 2 contacts to create the list"
+					message: "Add atleast 2 contacts to create the list",
 				});
 			} else {
 				// console.log(req.body.recipients.length,"ffff");
-				for(let i=0;i<req.body.recipients.length;i++){
-				const contact=await Contact.findOne({phoneNumber : req.body.recipients[i]})
-				info.push({
-					phoneNumber: req.body.recipients[i],
-					fname:contact.fname,
-					lname:contact.lname,
-					image:contact.image,
-				});
+				for (let i = 0; i < req.body.recipients.length; i++) {
+					const contact = await Contact.findOne({ phoneNumber: req.body.recipients[i] });
+					info.push({
+						phoneNumber: req.body.recipients[i],
+						fname: contact.fname,
+						lname: contact.lname,
+						image: contact.image,
+					});
 				}
-				console.log(info,"khi khi")
+				console.log(info, "khi khi");
 				const braodcast_list = new BroadcastList({
 					user_wabaID: req.session.wabaID,
 					title: req.body.title,
-					recipients: info
+					recipients: info,
 				});
 
 				try {
@@ -59,25 +59,25 @@ exports.create_broadcast = async (req, res) => {
 					console.log(check2);
 					return res.json({
 						stat: "success",
-						message: "created list successfully"
+						message: "created list successfully",
 					});
 				} catch (error) {
 					return res.status(500).json({
 						stat: "error",
-						message: error
+						message: error,
 					});
 				}
 			}
 		} else {
 			return res.json({
 				stat: "error",
-				message: "Broadcast List with title " + title + " already exists."
+				message: "Broadcast List with title " + title + " already exists.",
 			});
 		}
 	} catch (error) {
 		return res.json({
 			stat: "error",
-			message: error
+			message: error,
 		});
 	}
 };
@@ -86,7 +86,7 @@ exports.create_broadcast = async (req, res) => {
 exports.update_broadcast = async (req, res) => {
 	return res.json({
 		stat: "IN PROGRESS",
-		message: "This is Incomplete, From : PUT - UPDATE BROADCAST LIST"
+		message: "This is Incomplete, From : PUT - UPDATE BROADCAST LIST",
 	});
 };
 
@@ -99,18 +99,18 @@ exports.delete_broadcast_list = async (req, res) => {
 		if (broadcast_list.acknowledged == true && broadcast_list.deletedCount == 1)
 			return res.json({
 				stat: "success",
-				message: title + " is deleted from broadcast List"
+				message: title + " is deleted from broadcast List",
 			});
 		else {
 			return res.json({
 				sta: "success",
-				message: title + " does not exist in your broadcast lists"
+				message: title + " does not exist in your broadcast lists",
 			});
 		}
 	} catch (err) {
 		return res.status(500).json({
 			stat: "error",
-			message: err
+			message: err,
 		});
 	}
 };
@@ -121,12 +121,12 @@ exports.search_broadcast_list = async (req, res) => {
 	try {
 		const braodcast_list = await BroadcastList.findOne({
 			user_wabaID: req.session.wabaID,
-			title: title
+			title: title,
 		});
 		if (!braodcast_list) {
 			res.status(404).json({
 				stat: "error",
-				message: title + " doesn't exist in your broadcast lists. Please check the spelling and try again"
+				message: title + " doesn't exist in your broadcast lists. Please check the spelling and try again",
 			});
 		}
 
@@ -135,7 +135,7 @@ exports.search_broadcast_list = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			stat: "error",
-			message: error
+			message: error,
 		});
 	}
 };

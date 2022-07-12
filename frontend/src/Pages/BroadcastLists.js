@@ -13,6 +13,7 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 	const handleChange = (name) => (event) => {
 		setsearch(event.target.value);
 	};
+	console.log(ListOfBroadcastLists);
 	const setsearch = (value) => {
 		if (value && value.length != 0) {
 			searchBroadcastList({ title: value })
