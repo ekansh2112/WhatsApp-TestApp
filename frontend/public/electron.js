@@ -67,7 +67,7 @@ app.whenReady().then(() => {
 		setTimeout(() => {
 			splash.destroy();
 			mainApp.show();
-		}, 2000);
+		}, 3000);
 	});
 });
 

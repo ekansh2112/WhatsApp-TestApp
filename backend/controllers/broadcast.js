@@ -38,6 +38,7 @@ exports.sendBroadCast = async (req, res) => {
 					await sendAnyMessage(req, msgbody, (wares) => {
 						return res.status(200).json({
 							stat: "success",
+							broadcastList: broadcastList[0],
 						});
 					});
 				} catch (e) {}

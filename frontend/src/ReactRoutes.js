@@ -66,15 +66,15 @@ const ReactRoutes = () => {
 		for (let i = 0; i < localStorage.length; i++) {
 			const key = localStorage.key(i);
 			if (key.includes("91")) {
-				arr.push({ contact: key, data: JSON.parse(localStorage.getItem(key)) });
+				arr.push({ name: key, data: JSON.parse(localStorage.getItem(key)) });
 			}
 		}
 		arr.sort((a, b) => {
 			return parseInt(b.data[b.data.length - 1].time) - parseInt(a.data[a.data.length - 1].time);
 		});
 		setChats(arr);
-		if (JSON.parse(localStorage.getItem("latestNumber"))) {
-			setLatestChat(arr.find((data) => data?.contact === localStorage.getItem("latestNumber")));
+		if (JSON.stringify(localStorage.getItem("latestChatOnTop"))) {
+			setLatestChat(arr.find((data) => data?.name === localStorage.getItem("latestChatOnTop")));
 		} else {
 			setLatestChat(arr[0]);
 		}

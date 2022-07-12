@@ -7,7 +7,7 @@ export default function Home({ chats, toggle, setToggle, latestChat }) {
 		<>
 			<Base>
 				<div className="flex items-center">
-					<RecentChat toggle={toggle} setToggle={setToggle} chats={chats} latestChat={latestChat} />
+					<RecentChat latestChat={latestChat} chats={chats} toggle={toggle} setToggle={setToggle} />
 					<ChatSection latestChat={latestChat} chats={chats} toggle={toggle} setToggle={setToggle} />
 				</div>
 			</Base>

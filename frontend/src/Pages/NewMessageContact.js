@@ -50,7 +50,7 @@ export default function NewMessageContact({ ListOfContacts, toggle, setToggle })
 							.catch((e) => {
 								console.log(e);
 							});
-						localStorage.setItem("latestNumber", mobileNumber);
+						localStorage.setItem("latestChatOnTop", mobileNumber);
 						setValues({
 							message: "",
 							mobileNumber: "",

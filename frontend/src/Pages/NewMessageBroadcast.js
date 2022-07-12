@@ -19,16 +19,34 @@ export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setT
 		e.preventDefault();
 		if (message !== "" && nameOfTheList !== "") {
 			newBroadcastMessage({ title: nameOfTheList, message: message })
-				.then((data) => {
-					if (data?.stat === "success") {
+				.then((res) => {
+					if (res?.stat === "success") {
+						let myresult = [];
+						let data2;
+						data2 = {
+							type: "send",
+							profile: {
+								phoneNumbers: res.broadcastList.recipients,
+								fname: res.broadcastList.title,
+								image: "broadcastlist",
+							},
+							detail: {
+								message: message,
+								messageType: "text",
+							},
+							time: Date.now(),
+						};
+						myresult.push(data2);
+						localStorage.setItem(`91${res.broadcastList.title}`, JSON.stringify(myresult));
+						localStorage.setItem("latestChatOnTop", `91${res.broadcastList.title}`);
+						setToggle(!toggle);
 						setValues({
 							...values,
 							message: "",
 						});
 						navigate("/");
-						toast.success(data?.message);
-					} else if (data?.stat === "error") {
-						return toast.error(data?.message);
+					} else if (res?.stat === "error") {
+						return toast.error(res?.message);
 					}
 				})
 				.catch((e) => {

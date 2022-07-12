@@ -4,13 +4,16 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { newMessage, newFileMessage } from "../data/Messages";
 import { searchContact } from "../data/Contacts";
+import { newBroadcastMessage } from "../data/Messages";
 export default function InputMessage({ latestChat, toggle, setToggle }) {
+	var regExp = /[a-zA-Z]/g;
 	const sendButton = useRef(null);
 	const [values, setValues] = useState({
 		message: "",
-		mobileNumber: latestChat?.contact,
+		mobileNumber: !regExp.test(latestChat?.name) && latestChat?.name,
+		nameOfTheList: regExp.test(latestChat?.name) ? latestChat?.name.slice(2) : "",
 	});
-	const { message, mobileNumber } = values;
+	const { message, mobileNumber, nameOfTheList } = values;
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
@@ -56,7 +59,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 							.catch((e) => {
 								console.log(e);
 							});
-						localStorage.setItem("latestNumber", mobileNumber);
+						localStorage.setItem("latestChatOnTop", mobileNumber);
 					} else if (res?.stat === "error") {
 						return toast.error(res?.message);
 					}
@@ -134,7 +137,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 						.catch((e) => {
 							console.log(e);
 						});
-					localStorage.setItem("latestNumber", mobileNumber);
+					localStorage.setItem("latestChatOnTop", mobileNumber);
 					setFile("");
 					toast.success("File sent!");
 				} else if (res?.stat === "error") {
@@ -145,6 +148,47 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 				toast.error("Not able to send message! Please try again!");
 				console.log(e);
 			});
+	};
+
+	const sendMessageBroadcast = (e) => {
+		e.preventDefault();
+		if (message !== "" && nameOfTheList !== "") {
+			newBroadcastMessage({ title: nameOfTheList, message: message })
+				.then((res) => {
+					if (res?.stat === "success") {
+						let myresult = JSON.parse(localStorage.getItem(`91${res?.broadcastList?.title}`)) || [];
+						let data2;
+						data2 = {
+							type: "send",
+							profile: {
+								phoneNumbers: res.broadcastList.recipients,
+								fname: res.broadcastList.title,
+								image: "broadcastlist",
+							},
+							detail: {
+								message: message,
+								messageType: "text",
+							},
+							time: Date.now(),
+						};
+						myresult.push(data2);
+						localStorage.setItem(`91${res.broadcastList.title}`, JSON.stringify(myresult));
+						localStorage.setItem("latestChatOnTop", `91${res.broadcastList.title}`);
+						setToggle(!toggle);
+						setValues({
+							...values,
+							message: "",
+						});
+					} else if (res?.stat === "error") {
+						return toast.error(res?.message);
+					}
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		} else {
+			return toast.warning("Please select a list or add a message!");
+		}
 	};
 	return (
 		<>
@@ -186,7 +230,12 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 						}
 					}}
 				/>
-				<button className="rounded-full h-12 w-12 flex items-center justify-center bgOnButton rotate-90" type="submit" onClick={file ? sendFileMessage : sendMessage} ref={sendButton}>
+				<button
+					className="rounded-full h-12 w-12 flex items-center justify-center bgOnButton rotate-90"
+					type="submit"
+					onClick={file ? sendFileMessage : nameOfTheList ? sendMessageBroadcast : sendMessage}
+					ref={sendButton}
+				>
 					<PaperAirplaneIcon className="h-6 w-6" />
 				</button>
 			</div>
