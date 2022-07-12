@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-var mongooseIntlPhoneNumber = require('mongoose-intl-phone-number');
 
 const Schema = mongoose.Schema;
 

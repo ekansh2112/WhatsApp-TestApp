@@ -305,14 +305,28 @@ exports.sendFileMessage = async (req, res) => {
 	});
 };
 
-exports.getMessages = (req, res) => {
-	/**
-	 * req.body -> contactNumber
-	 * retreive all messages with above info from db.
-	 * return as json.
-	 */
-};
+exports.getMessages = async(req, res) =>{
 
+	/*
+	 * Sent Messages,
+	 * Receive Messages
+	 * API CALL: GET .../api/messages/<Phone-Number>
+	 */
+
+    const phoneNumber = "91" + req.params.id
+    try{
+		
+        const messages = await Message.find({user_wabaID : process.env.user_wabaID, phoneNumber : phoneNumber}).sort({'timeStamp': '-1'})
+		res.send(messages)
+
+    }
+    catch(err){
+        res.json({
+			stat: 'error',
+			message: err
+		})
+    }
+}
 exports.deleteMessage = (req, res) => {
 	/**
 	 *
