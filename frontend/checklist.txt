@@ -1,7 +1,6 @@
 1. text/image/document receive and show
 2. search not found
 3. profile image
-4. menu bar remove
 5. send image in broadcast
 6. remove notifications
 7. add message notifications

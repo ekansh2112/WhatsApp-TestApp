@@ -1,4 +1,4 @@
-import { NewBroadcastLists_API, DeleteBroadcastLists_API, BroadcastLists_API, SearchBroadcastList_API } from "../backend";
+import { NewBroadcastLists_API, DeleteBroadcastLists_API, BroadcastLists_API } from "../backend";
 export const newBroadcastList = async (broadcastlist) => {
 	return await fetch(NewBroadcastLists_API, {
 		credentials: "include",

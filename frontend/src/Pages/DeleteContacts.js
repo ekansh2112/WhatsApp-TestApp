@@ -14,8 +14,13 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 		lname: "",
 		image: "",
 	});
-	const handleChange1 = (name) => (event) => {
-		setsearch(event.target.value);
+	const [values, setValues] = useState({
+		mobileNumber: "",
+	});
+	const { mobileNumber } = values;
+	const handleChange = (name) => (event) => {
+		if (name === "search") setsearch(event.target.value);
+		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const setsearch = (value) => {
 		if (value.length === 10) {
@@ -35,13 +40,6 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 		} else {
 			setres(false);
 		}
-	};
-	const [values, setValues] = useState({
-		mobileNumber: "",
-	});
-	const { mobileNumber } = values;
-	const handleChange = (name) => (event) => {
-		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const removeContact = (e) => {
 		e.preventDefault();
@@ -79,7 +77,7 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 									type="search"
 									name="search"
 									placeholder="Search for a contact"
-									onChange={handleChange1("search")}
+									onChange={handleChange("search")}
 								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={mobileNumber} onChange={handleChange("mobileNumber")}>
 									{res === true ? (

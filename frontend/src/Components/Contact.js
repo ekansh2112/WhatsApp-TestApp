@@ -1,7 +1,15 @@
-export default function Contact({ needMB, needCheckBox, needRadio, contact, setAllCheckedBoxes }) {
+export default function Contact({ needMB, needCheckBox, needRadio, contact, setAllCheckedBoxes, setContactDetail, setConNumber, fromContactList }) {
 	return (
 		<>
-			<label className={needMB ? "flex justify-around" : "flex mb-3 justify-around"}>
+			<label
+				className={needMB ? "flex cursor-pointer justify-around" : "flex mb-3 cursor-pointer justify-around"}
+				onClick={() => {
+					if (fromContactList) {
+						setConNumber(contact.phoneNumber);
+						setContactDetail(true);
+					}
+				}}
+			>
 				<img className="w-14 h-14 rounded-full" src={contact.image} alt="image_1" />
 				<div className="w-40 text-sm flex flex-col justify-center">
 					<p className="text-xs mb-2">{contact.fname + " " + contact.lname}</p>
