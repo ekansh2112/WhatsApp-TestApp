@@ -67,6 +67,9 @@ const ReactRoutes = () => {
 				arr.push({ contact: key, data: JSON.parse(localStorage.getItem(key)) });
 			}
 		}
+		arr.sort((a, b) => {
+			return parseInt(b.data[b.data.length - 1].time) - parseInt(a.data[a.data.length - 1].time);
+		});
 		setChats(arr);
 		if (JSON.parse(localStorage.getItem("latestNumber"))) {
 			setLatestChat(arr.find((data) => data?.contact === localStorage.getItem("latestNumber")));
@@ -74,6 +77,7 @@ const ReactRoutes = () => {
 			setLatestChat(arr[0]);
 		}
 	}, [toggle, authToggle]);
+	console.log(chats, "CHATS");
 	return (
 		<BrowserRouter>
 			<Routes>
