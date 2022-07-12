@@ -3,32 +3,9 @@ import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import List from "../Components/List";
 import Base from "../Base";
-import { searchBroadcastList } from "../data/BroadcastLists";
 export default function BroadcastLists({ ListOfBroadcastLists }) {
 	const [listDetail, setListDetail] = useState(false);
-	const [res, setres] = useState(false);
-	const [result, setresult] = useState({
-		title: "",
-	});
-	const handleChange = (name) => (event) => {
-		setsearch(event.target.value);
-	};
-	const setsearch = (value) => {
-		if (value && value.length != 0) {
-			searchBroadcastList({ title: value })
-				.then((data) => {
-					setresult({
-						title: data.title,
-					});
-					setres(true);
-				})
-				.catch((e) => {
-					console.log(e);
-				});
-		} else {
-			setres(false);
-		}
-	};
+	const [listTitle, setListTitle] = useState();
 	return (
 		<>
 			<Base>
@@ -36,39 +13,38 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 					<>
 						<section className="flex justify-center items-center mt-20">
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
-								<div className="flex flex-row justify-between w-full h-11 mb-6">
-									<input
-										className="rounded-lg inputShadow h-full w-72 px-3 text-sm font-light py-2"
-										type="text"
-										name="search"
-										onChange={handleChange("list")}
-										placeholder="Search for a broadcast list"
-									/>
+								<div className="flex flex-row justify-center w-full h-11 mb-6">
 									<Link className="rounded-full flex justify-center items-center h-11 w-11 bgOnButton" to="/newbroadcastlist">
 										<PlusIcon className="h-6 w-6 inline" />
 									</Link>
 								</div>
-								<div
-									className={
-										listDetail ? "flex flex-col h-full overflow-y-scroll removeScrollbar w-full" : "flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full"
-									}
-								>
-									{res === true ? (
-										<List broadcastlist={result} listDetail={listDetail} setListDetail={setListDetail} />
-									) : (
-										ListOfBroadcastLists?.map((broadcastlist, index) => {
-											return (
-												<List
-													key={index}
-													broadcastlist={broadcastlist}
-													needMB={index === ListOfBroadcastLists?.length - 1 ? true : false}
-													listDetail={listDetail}
-													setListDetail={setListDetail}
-												/>
-											);
-										})
-									)}
+								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
+									{ListOfBroadcastLists?.map((broadcastlist, index) => {
+										return (
+											<List
+												key={index}
+												broadcastlist={broadcastlist}
+												needMB={index === ListOfBroadcastLists?.length - 1 ? true : false}
+												listDetail={listDetail}
+												setListDetail={setListDetail}
+												listTitle={listTitle}
+												setListTitle={setListTitle}
+												fromBroadcastLists={true}
+											/>
+										);
+									})}
 								</div>
+								{listDetail && (
+									<button
+										className="rounded-full h-10 w-24 bgOnButton mx-auto mt-3 text-sm"
+										onClick={() => {
+											setListTitle("");
+											setListDetail(false);
+										}}
+									>
+										BACK
+									</button>
+								)}
 							</div>
 						</section>
 					</>

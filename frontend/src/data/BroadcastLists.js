@@ -51,21 +51,3 @@ export const deleteBroadcastList = async (broadcastlist) => {
 		})
 		.catch((err) => console.log(err));
 };
-//FIXME: API NOT WORKING...API MENTIONED IN CONTROLLER NOT WORKING`
-export const searchBroadcastList = async (broadcastlist) => {
-	return await fetch(`${SearchBroadcastList_API}${broadcastlist.title}`, {
-		credentials: "include",
-		method: "GET",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((response) => {
-			return response.json();
-		})
-		.then((response) => {
-			return response;
-		})
-		.catch((err) => console.log(err));
-};

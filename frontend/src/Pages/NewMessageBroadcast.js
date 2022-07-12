@@ -4,7 +4,6 @@ import { PlusIcon } from "@heroicons/react/solid";
 import Base from "../Base";
 import { toast } from "react-toastify";
 import List from "../Components/List";
-import { searchBroadcastList } from "../data/BroadcastLists";
 import { newBroadcastMessage } from "../data/Messages";
 export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setToggle }) {
 	const navigate = useNavigate();
@@ -14,9 +13,6 @@ export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setT
 	});
 	const { message, nameOfTheList } = values;
 	const handleChange = (name) => (event) => {
-		if (name === "search") {
-			setsearch(event.target.value);
-		}
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
 	const sendMessageBroadcast = (e) => {
@@ -42,26 +38,6 @@ export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setT
 			return toast.warning("Please select a list or add a message!");
 		}
 	};
-	const [res, setres] = useState(false);
-	const [result, setresult] = useState({
-		title: "",
-	});
-	const setsearch = (value) => {
-		if (value && value.length != 0) {
-			searchBroadcastList({ title: value })
-				.then((data) => {
-					setresult({
-						title: data.title,
-					});
-					setres(true);
-				})
-				.catch((e) => {
-					console.log(e);
-				});
-		} else {
-			setres(false);
-		}
-	};
 	return (
 		<>
 			<Base>
@@ -76,21 +52,10 @@ export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setT
 									value={message}
 									onChange={handleChange("message")}
 								/>
-								<input
-									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
-									type="search"
-									name="search"
-									placeholder="Search for a broadcast list"
-									onChange={handleChange("search")}
-								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={nameOfTheList} onChange={handleChange("nameOfTheList")}>
-									{res == true ? (
-										<List broadcastlist={result} needRadio={true} />
-									) : (
-										ListOfBroadcastLists?.map((broadcastlist, index) => {
-											return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} needRadio={true} />;
-										})
-									)}
+									{ListOfBroadcastLists?.map((broadcastlist, index) => {
+										return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} needRadio={true} />;
+									})}
 								</div>
 								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4" onClick={sendMessageBroadcast}>
 									SEND MESSAGE

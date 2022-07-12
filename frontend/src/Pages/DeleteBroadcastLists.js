@@ -42,12 +42,6 @@ export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadca
 					<>
 						<section className="flex justify-center items-center mt-20">
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
-								<input
-									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
-									type="search"
-									name="search"
-									placeholder="Search for a broadcast list"
-								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={nameOfTheList} onChange={handleChange("nameOfTheList")}>
 									{ListOfBroadcastLists?.map((broadcastlist, index) => {
 										return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} needRadio={true} />;
