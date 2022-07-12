@@ -3,7 +3,6 @@ const BACKEND = "http://localhost:4000/";
 // Authentication APIs
 export const Register_API = `${BACKEND}api/signup/`;
 export const Login_API = `${BACKEND}api/login/`;
-export const isAuthenticated_API = `${BACKEND}api/isauth/`;
 export const Signout_API = `${BACKEND}api/logout/`;
 
 // Profile APIs

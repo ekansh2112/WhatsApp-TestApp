@@ -32,8 +32,6 @@ const ReactRoutes = () => {
 		if (cookies.user) {
 			return children;
 		} else {
-			// TODO 2 times
-			// toast.error("You need to login first!");
 			return <Navigate to="/login" />;
 		}
 	}

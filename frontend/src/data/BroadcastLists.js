@@ -15,7 +15,10 @@ export const newBroadcastList = async (broadcastlist) => {
 		.then((response) => {
 			return response;
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to add broadcast list! Please try again!");
+			return console.log(err);
+		});
 };
 export const broadcastLists = async () => {
 	return await fetch(BroadcastLists_API, {
@@ -32,7 +35,10 @@ export const broadcastLists = async () => {
 		.then((response) => {
 			return response;
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to get broadcast lists! Please try again!");
+			return console.log(err);
+		});
 };
 export const deleteBroadcastList = async (broadcastlist) => {
 	return await fetch(`${DeleteBroadcastLists_API}${broadcastlist.title}`, {
@@ -49,5 +55,8 @@ export const deleteBroadcastList = async (broadcastlist) => {
 		.then((response) => {
 			return response;
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			toast.error("Not able to delete broadcast list! Please try again!");
+			return console.log(err);
+		});
 };

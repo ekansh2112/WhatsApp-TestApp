@@ -37,7 +37,7 @@ export const contactList = () => {
 			return response;
 		})
 		.catch((err) => {
-			toast.error("Not able to display contacts! Please try again!");
+			toast.error("Not able to get contacts! Please try again!");
 			return console.log(err);
 		});
 };
@@ -75,5 +75,9 @@ export const searchContact = (contact) => {
 		})
 		.then((response) => {
 			return response;
+		})
+		.catch((err) => {
+			toast.error("Not able to search contact! Please try again!");
+			return console.log(err);
 		});
 };

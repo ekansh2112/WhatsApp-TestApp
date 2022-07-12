@@ -55,7 +55,7 @@ export const newBroadcastMessage = (message) => {
 			return response;
 		})
 		.catch((err) => {
-			toast.error("Not able to send message! Please try again!");
+			toast.error("Not able to send broadcast messages! Please try again!");
 			return console.log(err);
 		});
 };

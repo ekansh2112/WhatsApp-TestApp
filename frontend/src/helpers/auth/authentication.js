@@ -1,4 +1,4 @@
-import { Register_API, Login_API, isAuthenticated_API, Signout_API } from "../../backend";
+import { Register_API, Login_API, Signout_API } from "../../backend";
 import { toast } from "react-toastify";
 export const signup = (user) => {
 	return fetch(Register_API, {
@@ -34,23 +34,6 @@ export const signin = (user) => {
 			toast.error("Not able to login! Please try again!");
 			return console.log(err);
 		});
-};
-export const isAuthenticated = () => {
-	return fetch(isAuthenticated_API, {
-		credentials: "include",
-		method: "GET",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-	})
-		.then((response) => {
-			return response.json();
-		})
-		.then((response) => {
-			return response;
-		})
-		.catch((err) => console.log(err));
 };
 export const signout = () => {
 	return fetch(Signout_API, {
