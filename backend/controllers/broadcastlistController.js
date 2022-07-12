@@ -1,5 +1,6 @@
 const { db } = require("../models/broadcast-list");
 const BroadcastList = require("../models/broadcast-list");
+const Contact=require("../models/contact")
 const user_wabaID = "107654008661174"; //GET THE WABA ID of Business User
 
 // GET ../api/broadcast/all
@@ -26,6 +27,7 @@ exports.braodcast_list = async (req, res) => {
 // POST ../api/broadcast/create
 exports.create_broadcast = async (req, res) => {
 	const title = req.body.title;
+	let info=[];
 	try {
 		const check = await BroadcastList.find({ user_wabaID: req.session.wabaID, title: title }).count();
 		if (check == 0) {
@@ -35,10 +37,21 @@ exports.create_broadcast = async (req, res) => {
 					message: "Add atleast 2 contacts to create the list"
 				});
 			} else {
+				// console.log(req.body.recipients.length,"ffff");
+				for(let i=0;i<req.body.recipients.length;i++){
+				const contact=await Contact.findOne({phoneNumber : req.body.recipients[i]})
+				info.push({
+					phoneNumber: req.body.recipients[i],
+					fname:contact.fname,
+					lname:contact.lname,
+					image:contact.image,
+				});
+				}
+				console.log(info,"khi khi")
 				const braodcast_list = new BroadcastList({
 					user_wabaID: req.session.wabaID,
 					title: req.body.title,
-					recipients: req.body.recipients
+					recipients: info
 				});
 
 				try {
