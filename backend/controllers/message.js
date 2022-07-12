@@ -66,7 +66,7 @@ const storeMessage = (req, payload, wares, next) => {
 			let encryptedData = cipher.update(JSON.stringify(messageData), "utf-8", "hex");
 			encryptedData += cipher.final("hex");
 			const message = new Message({
-				message: encryptedData
+				message_data: encryptedData
 			});
 			//STORE THIS OBJECT IN DB
 			message.save(async (err, newMessage) => {
@@ -144,8 +144,7 @@ exports.sendTemplate = async (req, phoneNumber, next) => {
 			name: "message",
 			language: { code: "en_US" }
 		}
-		
-	}
+	};
 
 	try {
 		// WA API CALL TO SEND MESSAGE
@@ -305,28 +304,24 @@ exports.sendFileMessage = async (req, res) => {
 	});
 };
 
-exports.getMessages = async(req, res) =>{
-
+exports.getMessages = async (req, res) => {
 	/*
 	 * Sent Messages,
 	 * Receive Messages
 	 * API CALL: GET .../api/messages/<Phone-Number>
 	 */
 
-    const phoneNumber = "91" + req.params.id
-    try{
-		
-        const messages = await Message.find({user_wabaID : process.env.user_wabaID, phoneNumber : phoneNumber}).sort({'timeStamp': '-1'})
-		res.send(messages)
-
-    }
-    catch(err){
-        res.json({
-			stat: 'error',
+	const phoneNumber = "91" + req.params.id;
+	try {
+		const messages = await Message.find({ user_wabaID: process.env.user_wabaID, phoneNumber: phoneNumber }).sort({ timeStamp: "-1" });
+		res.send(messages);
+	} catch (err) {
+		res.json({
+			stat: "error",
 			message: err
-		})
-    }
-}
+		});
+	}
+};
 exports.deleteMessage = (req, res) => {
 	/**
 	 *
