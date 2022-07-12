@@ -5,7 +5,7 @@ import Base from "../Base";
 import { PlusIcon } from "@heroicons/react/solid";
 import { toast } from "react-toastify";
 import { deleteBroadcastList } from "../data/BroadcastLists";
-export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadcastList, setCrudBroadcastList }) {
+export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadcastList, setCrudBroadcastList, toggle, setToggle }) {
 	const [values, setValues] = useState({
 		nameOfTheList: "",
 	});
@@ -19,9 +19,11 @@ export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadca
 			deleteBroadcastList({ title: nameOfTheList })
 				.then((data) => {
 					if (data?.stat === "success") {
+						localStorage.removeItem(`91${nameOfTheList}`);
 						setValues({
 							nameOfTheList: "",
 						});
+						setToggle(!toggle);
 						toast.success(data?.message);
 						setCrudBroadcastList(!crudBroadcastList);
 					} else if (data?.stat === "error") {
