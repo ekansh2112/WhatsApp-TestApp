@@ -20,7 +20,7 @@ exports.sendBroadCast = async (req, res) => {
 	console.log(req.session.accessToken);
 	const broadcastList = await BroadcastList.find({ user_wabaID: req.session.wabaID, title: req.body.title });
 	console.log("BROADCAST", broadcastList);
-	if (broadcastList) {
+	if (broadcastList && broadcastList.length>0) {
 		const contactNumbers = broadcastList[0].recipients;
 		let count = contactNumbers.length;
 		for (let i = 0; i < count; i++) {
