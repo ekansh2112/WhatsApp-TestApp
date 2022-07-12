@@ -6,6 +6,7 @@ import List from "../Components/List";
 import Base from "../Base";
 import { searchBroadcastList } from "../data/BroadcastLists";
 export default function BroadcastLists({ ListOfBroadcastLists }) {
+	const [listDetail, setListDetail] = useState(false);
 	const [res, setres] = useState(false);
 	const [result, setresult] = useState({
 		title: "",
@@ -48,12 +49,24 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 										<PlusIcon className="h-6 w-6 inline" />
 									</Link>
 								</div>
-								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
+								<div
+									className={
+										listDetail ? "flex flex-col h-full overflow-y-scroll removeScrollbar w-full" : "flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full"
+									}
+								>
 									{res === true ? (
-										<List broadcastlist={result} />
+										<List broadcastlist={result} listDetail={listDetail} setListDetail={setListDetail} />
 									) : (
 										ListOfBroadcastLists?.map((broadcastlist, index) => {
-											return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} />;
+											return (
+												<List
+													key={index}
+													broadcastlist={broadcastlist}
+													needMB={index === ListOfBroadcastLists?.length - 1 ? true : false}
+													listDetail={listDetail}
+													setListDetail={setListDetail}
+												/>
+											);
 										})
 									)}
 								</div>
