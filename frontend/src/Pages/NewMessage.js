@@ -41,6 +41,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 										message: res?.message?.message,
 										messageType: "text",
 									},
+									time: Date.now(),
 								};
 								myresult.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));

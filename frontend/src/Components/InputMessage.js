@@ -47,6 +47,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 										message: res?.message?.message,
 										messageType: "text",
 									},
+									time: Date.now(),
 								};
 								myresult.push(data2);
 								localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
@@ -124,6 +125,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 									message: messageType === "image" ? imageBase64 : res?.message?.message?.document?.filename,
 									messageType: messageType,
 								},
+								time: Date.now(),
 							};
 							myresult.push(data2);
 							localStorage.setItem(data[0].phoneNumber, JSON.stringify(myresult));
