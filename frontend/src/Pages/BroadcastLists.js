@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import List from "../Components/List";
@@ -41,7 +40,7 @@ export default function BroadcastLists({ ListOfBroadcastLists }) {
 									<input
 										className="rounded-lg inputShadow h-full w-72 px-3 text-sm font-light py-2"
 										type="text"
-										id="search"
+										name="search"
 										onChange={handleChange("list")}
 										placeholder="Search for a broadcast list"
 									/>

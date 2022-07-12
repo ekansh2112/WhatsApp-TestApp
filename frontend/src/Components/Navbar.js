@@ -37,7 +37,7 @@ export default function Navbar() {
 					</div>
 					<div className="block ml-6">
 						<div className="flex">
-							<Link className="px-3 py-2 mx-4 text-sm font-medium" to="/newmessage">
+							<Link className="px-3 py-2 mx-4 text-sm font-medium" to="/newmessageselect">
 								<svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.069 17.845">
 									<path
 										d="M19.005,3.175H4.674A1.53249,1.53249,0,0,0,3,4.821V21.02l3.544-3.514H19.005a2.24553,2.24553,0,0,0,2.064-2.093V4.821A1.87192,1.87192,0,0,0,19.005,3.175Zm-4.989,9.869H7.041V11.1h6.975Zm3-4H7.041V7.1h9.975Z"
