@@ -69,6 +69,17 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 		}
 	};
 
+	const getBase64 = (file) => {
+		return new Promise((resolve) => {
+			let baseURL = "";
+			let reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				baseURL = reader.result;
+				resolve(baseURL);
+			};
+		});
+	};
 	const fileInput = useRef(null);
 	const [file, setFile] = useState("");
 	const sendFileMessage = (e) => {
@@ -86,7 +97,17 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 		newFileMessage(uploadData)
 			.then((res) => {
 				if (res?.stat === "success") {
-					setFile("");
+					let imageBase64 = "";
+					if (messageType === "image") {
+						getBase64(file)
+							.then((result) => {
+								file["base64"] = result;
+								imageBase64 = file.base64;
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					}
 					let myresult = JSON.parse(localStorage.getItem(res?.message?.receiver)) || [];
 					let data2;
 					searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
@@ -100,7 +121,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 									image: data[0].image,
 								},
 								detail: {
-									message: messageType === "image" ? res?.message?.message?.image : res?.message?.message?.document,
+									message: messageType === "image" ? imageBase64 : res?.message?.message?.document?.filename,
 									messageType: messageType,
 								},
 							};
@@ -112,6 +133,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 							console.log(e);
 						});
 					localStorage.setItem("latestNumber", mobileNumber);
+					setFile("");
 					toast.success("File sent!");
 				} else if (res?.stat === "error") {
 					return toast.error(res?.message);
