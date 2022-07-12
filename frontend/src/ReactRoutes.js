@@ -170,7 +170,13 @@ const ReactRoutes = () => {
 					path="/deletebroadcastlists"
 					element={
 						<PrivateRoute>
-							<DeleteBroadcastLists ListOfBroadcastLists={listOfBroadcastLists} crudBroadcastList={crudBroadcastList} setCrudBroadcastList={setCrudBroadcastList} />
+							<DeleteBroadcastLists
+								ListOfBroadcastLists={listOfBroadcastLists}
+								crudBroadcastList={crudBroadcastList}
+								setCrudBroadcastList={setCrudBroadcastList}
+								toggle={toggle}
+								setToggle={setToggle}
+							/>
 						</PrivateRoute>
 					}
 				/>
