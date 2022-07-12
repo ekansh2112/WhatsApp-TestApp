@@ -46,7 +46,7 @@ export default function Contacts({ ListOfContacts }) {
 									<input
 										className="rounded-lg inputShadow h-full w-72 px-3 text-sm font-light py-2"
 										type="text"
-										id="search"
+										name="search"
 										onChange={handleChange("search")}
 										placeholder="Search for a contact"
 									/>

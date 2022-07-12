@@ -3,7 +3,7 @@ import { SpeakerphoneIcon } from "@heroicons/react/solid";
 export default function List({ needMB, needRadio, broadcastlist }) {
 	return (
 		<>
-			<div className={needRadio ? (needMB ? "flex justify-around" : "flex mb-3 justify-around") : needMB ? "flex justify-center" : "flex mb-3 justify-center"}>
+			<label className={needRadio ? (needMB ? "flex justify-around" : "flex mb-3 justify-around") : needMB ? "flex justify-center" : "flex mb-3 justify-center"}>
 				<figure
 					className={needRadio ? "w-14 h-14 bgOnSpeakerPhone flex justify-center items-center rounded-full" : "w-14 h-14 mr-8 bgOnSpeakerPhone flex justify-center items-center rounded-full"}
 				>
@@ -18,7 +18,7 @@ export default function List({ needMB, needRadio, broadcastlist }) {
 						<input className="rounded-lg h-5 w-5" type="radio" name="selectlist" value={broadcastlist?.title} />
 					</div>
 				)}
-			</div>
+			</label>
 		</>
 	);
 }

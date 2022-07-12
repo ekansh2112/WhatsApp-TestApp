@@ -44,7 +44,12 @@ export default function DeleteContacts({ setCrudContactList, crudContactList, Li
 					<>
 						<section className="flex justify-center items-center mt-20">
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
-								<input className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3" type="search" id="search" placeholder="Search for a contact" />
+								<input
+									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
+									type="search"
+									name="search"
+									placeholder="Search for a contact"
+								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={mobileNumber} onChange={handleChange("mobileNumber")}>
 									{ListOfContacts?.map((contact, index) => {
 										return <Contact key={index} contact={contact} needMB={index === ListOfContacts?.length - 1 ? true : false} needRadio={true} />;

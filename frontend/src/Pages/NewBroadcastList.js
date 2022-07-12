@@ -3,39 +3,9 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import { newBroadcastList } from "../data/BroadcastLists";
-import { searchContact } from "../data/Contacts";
 import Contact from "../Components/Contact";
 import Base from "../Base";
 export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, setCrudBroadcastList }) {
-	const [res, setres] = useState(false);
-	const [result, setresult] = useState({
-		phoneNumber: "",
-		fname: "",
-		lname: "",
-		image: "",
-	});
-	const handleChange1 = (name) => (event) => {
-		setsearch(event.target.value);
-	};
-	const setsearch = (value) => {
-		if (value.length === 10) {
-			searchContact({ phoneNumber: value })
-				.then((data) => {
-					setresult({
-						phoneNumber: data[0].phoneNumber,
-						fname: data[0].fname,
-						lname: data[0].lname,
-						image: data[0].image,
-					});
-					setres(true);
-				})
-				.catch((e) => {
-					console.log(e);
-				});
-		} else {
-			setres(false);
-		}
-	};
 	const [allCheckedBoxes, setAllCheckedBoxes] = useState({});
 	const [values, setValues] = useState({
 		nameOfTheList: "",
@@ -87,31 +57,19 @@ export default function NewBroadcastList({ ListOfContacts, crudBroadcastList, se
 										onChange={handleChange("nameOfTheList")}
 									/>
 								</div>
-								{/* <input
-									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
-									type="search"
-									id="search"
-									onChange={handleChange1("search")}
-									placeholder="Search for a contact"
-								/> */}
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full">
-									{res == true ? (
-										<Contact contact={result} needCheckBox={true} setAllCheckedBoxes={setAllCheckedBoxes} />
-									) : (
-										ListOfContacts?.map((contact, index) => {
-											return (
-												<Contact
-													key={index}
-													contact={contact}
-													needMB={index === ListOfContacts?.length - 1 ? true : false}
-													needCheckBox={true}
-													setAllCheckedBoxes={setAllCheckedBoxes}
-												/>
-											);
-										})
-									)}
+									{ListOfContacts?.map((contact, index) => {
+										return (
+											<Contact
+												key={index}
+												contact={contact}
+												needMB={index === ListOfContacts?.length - 1 ? true : false}
+												needCheckBox={true}
+												setAllCheckedBoxes={setAllCheckedBoxes}
+											/>
+										);
+									})}
 								</div>
-
 								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4" onClick={createBroadcastList}>
 									SAVE BROADCAST LIST
 								</button>

@@ -12,7 +12,9 @@ import Settings from "./Pages/Settings";
 import DeleteBroadcastLists from "./Pages/DeleteBroadcastLists";
 import DeleteContacts from "./Pages/DeleteContacts";
 import BusinessProfile from "./Pages/BussinessProfile";
-import NewMessage from "./Pages/NewMessage";
+import NewMessageSelect from "./Pages/NewMessageSelect";
+import NewMessageContact from "./Pages/NewMessageContact";
+import NewMessageBroadcast from "./Pages/NewMessageBroadcast";
 import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
 const ReactRoutes = () => {
@@ -93,10 +95,28 @@ const ReactRoutes = () => {
 				/>
 				<Route
 					exact
-					path="/newmessage"
+					path="/newmessageselect"
 					element={
 						<PrivateRoute>
-							<NewMessage ListOfContacts={listOfContacts} toggle={toggle} setToggle={setToggle} />
+							<NewMessageSelect />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newmessagetocontact"
+					element={
+						<PrivateRoute>
+							<NewMessageContact ListOfContacts={listOfContacts} toggle={toggle} setToggle={setToggle} />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					exact
+					path="/newmessagetobroadcastlist"
+					element={
+						<PrivateRoute>
+							<NewMessageBroadcast ListOfBroadcastLists={listOfBroadcastLists} toggle={toggle} setToggle={setToggle} />
 						</PrivateRoute>
 					}
 				/>

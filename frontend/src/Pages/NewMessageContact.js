@@ -6,7 +6,7 @@ import Base from "../Base";
 import { toast } from "react-toastify";
 import { searchContact } from "../data/Contacts";
 import { newMessage } from "../data/Messages";
-export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
+export default function NewMessageContact({ ListOfContacts, toggle, setToggle }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		message: "",
@@ -115,7 +115,7 @@ export default function NewMessage({ ListOfContacts, toggle, setToggle }) {
 								<input
 									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
 									type="search"
-									id="search"
+									name="search"
 									placeholder="Search for a contact"
 									onChange={handleChange("search")}
 								/>

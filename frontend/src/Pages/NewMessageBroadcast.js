@@ -1,29 +1,36 @@
 import React, { useState } from "react";
-import List from "../Components/List";
-import { Link } from "react-router-dom";
-import Base from "../Base";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
+import Base from "../Base";
 import { toast } from "react-toastify";
-import { deleteBroadcastList } from "../data/BroadcastLists";
-export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadcastList, setCrudBroadcastList }) {
+import List from "../Components/List";
+import { searchBroadcastList } from "../data/BroadcastLists";
+import { newBroadcastMessage } from "../data/Messages";
+export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setToggle }) {
+	const navigate = useNavigate();
 	const [values, setValues] = useState({
+		message: "",
 		nameOfTheList: "",
 	});
-	const { nameOfTheList } = values;
+	const { message, nameOfTheList } = values;
 	const handleChange = (name) => (event) => {
+		if (name === "search") {
+			setsearch(event.target.value);
+		}
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
-	const removeBroadcastList = (e) => {
+	const sendMessageBroadcast = (e) => {
 		e.preventDefault();
-		if (nameOfTheList !== "") {
-			deleteBroadcastList({ title: nameOfTheList })
+		if (message !== "" && nameOfTheList !== "") {
+			newBroadcastMessage({ title: nameOfTheList, message: message })
 				.then((data) => {
 					if (data?.stat === "success") {
 						setValues({
-							nameOfTheList: "",
+							...values,
+							message: "",
 						});
+						navigate("/");
 						toast.success(data?.message);
-						setCrudBroadcastList(!crudBroadcastList);
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
 					}
@@ -32,7 +39,27 @@ export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadca
 					console.log(e);
 				});
 		} else {
-			return toast.warning("Please select a contact!");
+			return toast.warning("Please select a list or add a message!");
+		}
+	};
+	const [res, setres] = useState(false);
+	const [result, setresult] = useState({
+		title: "",
+	});
+	const setsearch = (value) => {
+		if (value && value.length != 0) {
+			searchBroadcastList({ title: value })
+				.then((data) => {
+					setresult({
+						title: data.title,
+					});
+					setres(true);
+				})
+				.catch((e) => {
+					console.log(e);
+				});
+		} else {
+			setres(false);
 		}
 	};
 	return (
@@ -43,18 +70,30 @@ export default function DeleteBroadcastLists({ ListOfBroadcastLists, crudBroadca
 						<section className="flex justify-center items-center mt-20">
 							<div className="rounded-lg p-7 flex flex-col panelShadow bg-white" style={{ height: "500px", width: "400px" }}>
 								<input
+									className="rounded-lg inputShadow h-9 w-full mb-4 px-3 text-xs font-light py-3"
+									type="text"
+									placeholder="Type your message here"
+									value={message}
+									onChange={handleChange("message")}
+								/>
+								<input
 									className="rounded-lg self-center inputShadow h-9 w-full mt-1 mb-5 px-3 text-xs font-light py-3"
 									type="search"
 									name="search"
 									placeholder="Search for a broadcast list"
+									onChange={handleChange("search")}
 								/>
 								<div className="flex flex-col justify-start h-full overflow-y-scroll removeScrollbar w-full" value={nameOfTheList} onChange={handleChange("nameOfTheList")}>
-									{ListOfBroadcastLists?.map((broadcastlist, index) => {
-										return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} needRadio={true} />;
-									})}
+									{res == true ? (
+										<List broadcastlist={result} needRadio={true} />
+									) : (
+										ListOfBroadcastLists?.map((broadcastlist, index) => {
+											return <List key={index} broadcastlist={broadcastlist} needMB={index === ListOfBroadcastLists?.length - 1 ? true : false} needRadio={true} />;
+										})
+									)}
 								</div>
-								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4" onClick={removeBroadcastList}>
-									DELETE
+								<button className="rounded-full flex items-center justify-center h-8 w-60 bgOnButton mx-auto mt-6 text-xs font-medium py-4" onClick={sendMessageBroadcast}>
+									SEND MESSAGE
 								</button>
 							</div>
 						</section>

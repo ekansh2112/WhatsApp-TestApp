@@ -66,6 +66,12 @@ select:focus {
 .bgOnButton {
 	background-color: #ffc632;
 }
+.bgOnButton2 {
+	background-color: #2a67b2;
+}
+.fontColorOnButton {
+	color: #fff;
+}
 .lineColor {
 	border-color: #a0acb7;
 }
