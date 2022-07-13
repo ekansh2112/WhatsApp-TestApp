@@ -27,7 +27,6 @@ export default function Login({ setAuthToggle, authToggle }) {
 						});
 						setCookie("user", data?.data?.user);
 						setAuthToggle(!authToggle);
-						toast.success(data?.message);
 						navigate("/");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);

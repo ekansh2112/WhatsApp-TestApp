@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Base from "../Base";
 import { profileDataUpdate } from "../data/ProfileData";
+import ProfilePic from "../Assets/ProfilePic.png";
 export default function BusinessProfile() {
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 	const [profileChanged, setProfileChanged] = useState(false);
@@ -78,24 +79,13 @@ export default function BusinessProfile() {
 						<div className="flex flex-row justify-between items-center mb-6">
 							<div className="flex flex-col">
 								<label className="text-sm font-normal mb-1">Name</label>
-								<input className="h-8 mb-4 text-sm font-medium py-3" type="text" id="businessname" defaultValue="The Garage Shop" readOnly />
+								<input className="h-8 mb-4 text-sm font-medium py-3" type="text" id="businessname" defaultValue="TallyXWhatsApp" readOnly />
 								<label className="text-sm font-normal mb-1">Mobile Number</label>
-								<input className="h-8 text-sm font-medium py-3" type="text" id="mobilenumber" defaultValue="+919871234580" readOnly />
+								<input className="h-8 text-sm font-medium py-3" type="text" id="mobilenumber" defaultValue="+15550843602" readOnly />
 							</div>
-							{/* <div className="flex justify-center">
-								<label htmlFor="photo-upload" className="cursor-pointer rounded-full">
-									<div className="img-wrap img-upload">
-										<CloudUploadIcon className="uploadbutton" />
-										<img className="w-auto h-full" for="photo-upload" src={ProfilePic} alt="Profile_Pic" />
-									</div>
-									<input style={{ display: "none" }} id="photo-upload" type="file" />
-								</label>
-							</div> */}
-							{/* {imageEdit && (
-								<div>
-									<button className="rounded-lg h-8 w-12 bgOnButton text-xs font-medium">SAVE</button>
-								</div>
-							)} */}
+							<div className="flex justify-center">
+								<img width="125px" className="mr-5" src={ProfilePic} alt="Profile_Pic" />
+							</div>
 						</div>
 						<label className="text-sm font-normal mb-2" htmlFor="description">
 							Description

@@ -15,7 +15,6 @@ export default function Navbar() {
 			.then((data) => {
 				if (data?.stat === "success") {
 					removeCookie("user");
-					toast.success(data?.message);
 					navigate("/login");
 				} else if (data?.stat === "error") {
 					return toast.error(data?.message);

@@ -139,7 +139,6 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 						});
 					localStorage.setItem("latestChatOnTop", mobileNumber);
 					setFile("");
-					toast.success("File sent!");
 				} else if (res?.stat === "error") {
 					return toast.error(res?.message);
 				}

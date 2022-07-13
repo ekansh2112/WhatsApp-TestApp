@@ -27,7 +27,6 @@ export default function Register() {
 							perAccToken: "",
 							password: "",
 						});
-						toast.success(data?.message);
 						navigate("/login");
 					} else if (data?.stat === "error") {
 						return toast.error(data?.message);
