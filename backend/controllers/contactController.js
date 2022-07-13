@@ -1,5 +1,6 @@
 const { db } = require("../models/contact");
 const Contact = require("../models/contact");
+const Message = require("../models/message");
 const user_wabaID = "107654008661174"; //GET THE WABA ID of Business User
 const { sendTemplate } = require("./message");
 
@@ -162,11 +163,14 @@ exports.delete_contact = async (req, res) => {
 		} else {
 			try {
 				const contacts = await Contact.deleteOne({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber });
+
 				if (contacts.acknowledged == true && contacts.deletedCount == 1) {
-					return res.json({
-						stat: "success",
-						message: phoneNumber + " is deleted from contacts successfully.",
-					});
+					await Message.deleteOne({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber });
+						return res.json({
+							stat: "success",
+							message: phoneNumber + " is deleted from contacts successfully.",
+						});
+						
 				}
 			} catch (err) {
 				return res.status(500).json({
