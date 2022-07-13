@@ -24,14 +24,12 @@ exports.signUp = async (req, res) => {
 			}
 		})
 		.then(async (wares) => {
-			// console.log("_________________", wares.status);
 			if (wares.status != 200) {
 				return res.status(wares.status).json({
 					stat: "error",
 					message: wares.statusText
 				});
 			}
-			// console.log(wares.data.data);
 			const arr = wares.data.data;
 			if (arr.find((number) => req.body.phoneNumber === number.display_phone_number)) {
 				const phoneNumberID = arr.find((number) => req.body.phoneNumber === number.display_phone_number).id;
@@ -53,7 +51,6 @@ exports.signUp = async (req, res) => {
 				});
 				user.setPassword(req.body.password);
 				user.save((err, newuser) => {
-					// console.log("_______err,newuser____________", err, newuser);
 					if (err) {
 						return res.status(400).json({
 							stat: "error",
@@ -80,7 +77,6 @@ exports.signUp = async (req, res) => {
 				});
 		})
 		.catch((err) => {
-			// console.log(err.response);
 			var message;
 			if (err.response.status === 400 || err.response.status === 401 || err.response.status === 403) {
 				message = "Invalid information provided.";

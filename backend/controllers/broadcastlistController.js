@@ -11,10 +11,8 @@ exports.braodcast_list = async (req, res) => {
 			message: "Unauthorized",
 		});
 	}
-	console.log(req.session.wabaID);
 	try {
 		const broadcast_lists = await BroadcastList.find({ user_wabaID: req.session.wabaID });
-		console.log(broadcast_lists);
 		res.send(broadcast_lists);
 	} catch (error) {
 		res.status(500).json({
@@ -37,7 +35,6 @@ exports.create_broadcast = async (req, res) => {
 					message: "Add atleast 2 contacts to create the list",
 				});
 			} else {
-				// console.log(req.body.recipients.length,"ffff");
 				for (let i = 0; i < req.body.recipients.length; i++) {
 					const contact = await Contact.findOne({ phoneNumber: req.body.recipients[i] });
 					info.push({
@@ -47,7 +44,6 @@ exports.create_broadcast = async (req, res) => {
 						image: contact.image,
 					});
 				}
-				console.log(info, "khi khi");
 				const braodcast_list = new BroadcastList({
 					user_wabaID: req.session.wabaID,
 					title: req.body.title,
@@ -56,7 +52,6 @@ exports.create_broadcast = async (req, res) => {
 
 				try {
 					const check2 = await braodcast_list.save();
-					console.log(check2);
 					return res.json({
 						stat: "success",
 						message: "created list successfully",
@@ -95,7 +90,6 @@ exports.delete_broadcast_list = async (req, res) => {
 	try {
 		const title = req.params.id;
 		const broadcast_list = await BroadcastList.deleteOne({ user_wabaID: req.session.wabaID, title: title });
-		// console.log(broadcast_list)
 		if (broadcast_list.acknowledged == true && broadcast_list.deletedCount == 1)
 			return res.json({
 				stat: "success",
@@ -130,7 +124,6 @@ exports.search_broadcast_list = async (req, res) => {
 			});
 		}
 
-		console.log(braodcast_list);
 		res.send(braodcast_list);
 	} catch (error) {
 		res.status(500).json({

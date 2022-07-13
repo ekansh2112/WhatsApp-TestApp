@@ -21,7 +21,6 @@ exports.contact_list = async (req, res) => {
 
 // POST ../api/contacts/create
 exports.create_contact = async (req, res) => {
-	console.log(req.session.wabaID);
 	const phoneNumber = "91" + req.body.phoneNumber;
 	if (phoneNumber.length != 12) {
 		res.json({
@@ -84,7 +83,6 @@ exports.create_contact = async (req, res) => {
 				});
 			}
 		} catch (error) {
-			//console.log(error);
 			return res.json({
 				stat: "error",
 				message: error,
@@ -141,7 +139,6 @@ exports.update_contact = async (req, res) => {
 					});
 				}
 			} catch (err) {
-				//console.log(err)
 				res.status(500).send(err);
 			}
 		}

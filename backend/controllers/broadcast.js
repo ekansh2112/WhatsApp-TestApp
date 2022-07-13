@@ -2,7 +2,6 @@ const BroadcastList = require("../models/broadcast-list");
 const axios = require("axios").default;
 
 const sendAnyMessage = async (req, messageBody, next) => {
-	console.log(req.session.accessToken, "s22");
 	await axios
 		.post(`${process.env.WABAPI}/${req.session.phoneNumberID}/messages`, messageBody, {
 			headers: {
@@ -10,16 +9,13 @@ const sendAnyMessage = async (req, messageBody, next) => {
 			},
 		})
 		.then((res) => {
-			console.log("___IN SEND ANY MESSAGE___", res);
 			next(res);
 		});
 };
 
 //REVIEW "ERROR CODES"
 exports.sendBroadCast = async (req, res) => {
-	console.log(req.session.accessToken);
 	const broadcastList = await BroadcastList.find({ user_wabaID: req.session.wabaID, title: req.body.title });
-	console.log("BROADCAST", broadcastList);
 	if (broadcastList && broadcastList.length>0) {
 		const contactNumbers = broadcastList[0].recipients;
 		let count = contactNumbers.length;

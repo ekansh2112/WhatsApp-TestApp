@@ -55,7 +55,7 @@ export default function Messages({ latestChat, toggle }) {
 											fill="#fff"
 										/>
 									</svg>
-									<span className="pl-4 font-semibold text-lg">{messages.detail.message}</span>
+									<span className="pl-4 font-semibold text-lg">{messages.detail.message.document.filename}</span>
 								</div>
 							) : (
 								<div className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-2 px-5">{messages.detail.message.text.body}</div>

@@ -13,14 +13,12 @@ const sendAnyMessage = async (req, messageBody, next) => {
 			}
 		})
 		.then((res) => {
-			console.log("___IN SEND ANY MESSAGE___", res);
 			next(res);
 		});
 };
 
 //ANCHOR - WA API call to upload file on fb server.
 const uploadMedia = async (req, file, type, next) => {
-	console.log("in upload media", file);
 	await axios
 		.post(
 			`${process.env.WABAPI}/${req.session.phoneNumberID}/media`,
@@ -40,7 +38,6 @@ const uploadMedia = async (req, file, type, next) => {
 			next(true, res);
 		})
 		.catch((err) => {
-			console.log("____ ERROR IN UPLOAD MEDIA____");
 			console.log(err);
 			next(false);
 		});
@@ -49,25 +46,19 @@ const uploadMedia = async (req, file, type, next) => {
 //ANCHOR - storing messages in DB after encrypting them.
 
 const decryptMessage = (message, next) => {
-	console.log("here in decr", message.salt);
 	// initVector = message.salt.split("-")[0];
 	// securityKey = message.salt.split("-")[1]
 	initVector = Buffer.from(message.salt.vectoriv, "hex");
 	securityKey = Buffer.from(message.salt.vectorkey, "hex");
 	const decipher = crypto.createDecipheriv(process.env.ALGORITHM, securityKey, initVector);
 	let decryptedData = decipher.update(message.message, "hex", "utf-8");
-	console.log("here ", initVector, securityKey);
 	decryptedData += decipher.final("utf8");
-	console.log("DECRYPTED DATA", decryptedData);
 	next(decryptedData);
 };
 const storeMessage = async (req, payload, wares, next) => {
-	console.log("in store");
 	if (wares.status != 200) {
-		console.log("not 200");
 		next(false, wares.status);
 	} else {
-		console.log("yes 200");
 		const messageData = {
 			message: payload.messagePayload,
 			messageType: payload.messageType,
@@ -80,10 +71,8 @@ const storeMessage = async (req, payload, wares, next) => {
 			user_wabaID: req.session.wabaID,
 			phoneNumber: payload.contactNumber
 		}).count();
-		console.log("COUNNNNNNNT", count);
 		try {
 			const cipher = crypto.createCipheriv(process.env.ALGORITHM, securityKey, initVector);
-			console.log("in try");
 			let encryptedData = cipher.update(JSON.stringify(messageData), "utf-8", "hex");
 			encryptedData += cipher.final("hex");
 			const message = new Message({
@@ -99,14 +88,11 @@ const storeMessage = async (req, payload, wares, next) => {
 				count: count
 			});
 			//STORE THIS OBJECT IN DB
-			console.log("EEEEEEEE", encryptedData);
 			message.save(async (err, newMessage) => {
 				if (err) {
-					console.log("err in msg save");
 					next(false, 400);
 				} else {
 					if (newMessage) {
-						console.log("NEWMESSAGE", newMessage);
 						try {
 							decryptMessage({ message: encryptedData, salt: newMessage.salt }, (mydata) => {
 								next(true, 200, JSON.parse(mydata));
@@ -115,7 +101,6 @@ const storeMessage = async (req, payload, wares, next) => {
 							next(false, 500);
 						}
 					} else {
-						console.log("no new message");
 						next(false, 500);
 					}
 				}
@@ -144,11 +129,8 @@ const parseForm = (req, next) => {
 			next(false);
 			return;
 		} else {
-			console.log("FORM.PARSE", files);
 			try {
 				const file = fs.createReadStream(files?.file?.filepath);
-				// if (!file) console.log("_______");
-				// console.log("PARSE FORM __ ", fields, file);
 				next(true, {
 					fields,
 					file: {
@@ -204,11 +186,9 @@ exports.sendMessage = async (req, res) => {
 		messageType: req.body.messageType,
 		text: req.body.messagePayload.text
 	};
-	// console.log(messageBody);
 	try {
 		// WA API CALL TO SEND MESSAGE
 		await sendAnyMessage(req, messageBody, (wares) => {
-			// console.log("SEND TEXT MESSAGE RES", wares.status, wares.statusText);
 			storeMessage(
 				req,
 				{
@@ -234,7 +214,6 @@ exports.sendMessage = async (req, res) => {
 		});
 	} catch (e) {
 		//CATCH error, if any and send response accordingly.
-		// console.log(e);
 		return res.status(e?.response?.status || 500).json({
 			stat: "error",
 			message: e?.response?.statusText || "Something went wrong."
@@ -254,14 +233,12 @@ exports.sendFileMessage = async (req, res) => {
 		});
 	}
 	parseForm(req, async (status, data) => {
-		// console.log("_____________________________________--", data);
 		if (!status)
 			return res.status(400).json({
 				stat: "error",
 				message: "File error."
 			});
 		else {
-			// console.log(data);
 			let messageBody = {
 				messaging_product: "whatsapp",
 				recipient_type: "individual",
@@ -269,17 +246,13 @@ exports.sendFileMessage = async (req, res) => {
 				type: data.fields.messageType
 			};
 
-			console.log("HELLO");
-
 			await uploadMedia(req, data.file.file, data.file?.type, async (status, wares) => {
-				// console.log("-------------------------", wares.status);
 				if (!status || !wares || wares.status != 200) {
 					return res.status((wares && wares.status) || 500).json({
 						stat: "error",
 						message: (wares && wares.statusText) || "Something went wrong!"
 					});
 				}
-				// console.log("AFTER UPLOAD MEDIA", wares.data);
 				fileData(wares.data.id, () => {});
 				if (messageBody.type === "image")
 					messageBody = {
@@ -297,7 +270,6 @@ exports.sendFileMessage = async (req, res) => {
 							id: wares.data.id
 						}
 					};
-				console.log("BEFORE SEND ANY MESSAGE", messageBody);
 				await sendAnyMessage(req, messageBody, (wares) => {
 					storeMessage(
 						req,
@@ -308,7 +280,6 @@ exports.sendFileMessage = async (req, res) => {
 						},
 						wares,
 						(status, statusCode, resData) => {
-							// console.log(resData);
 							if (!status) {
 								return res.status(statusCode).json({
 									stat: "error",
@@ -346,9 +317,7 @@ exports.getMessages = async (req, res) => {
 	try {
 		const messages = await Message.find({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber }).sort({ timeStamp: "-1" });
 		let arr = [];
-		// console.log(messages.length);
 		messages.map((msg) => {
-			console.log("IN DECRYPT", msg.salt);
 			const date = new Date(msg.timeStamp);
 			const totaltime = date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
 			decryptMessage({ message: msg.message_data, salt: msg?.salt }, (myres) => {
