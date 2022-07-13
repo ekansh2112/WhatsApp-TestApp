@@ -47,45 +47,75 @@ const uploadMedia = async (req, file, type, next) => {
 };
 
 //ANCHOR - storing messages in DB after encrypting them.
-const storeMessage = (req, payload, wares, next) => {
+
+const decryptMessage = (message, next) => {
+	console.log("here in decr", message.salt);
+	// initVector = message.salt.split("-")[0];
+	// securityKey = message.salt.split("-")[1]
+	initVector = Buffer.from(message.salt.vectoriv, "hex");
+	securityKey = Buffer.from(message.salt.vectorkey, "hex");
+	const decipher = crypto.createDecipheriv(process.env.ALGORITHM, securityKey, initVector);
+	let decryptedData = decipher.update(message.message, "hex", "utf-8");
+	console.log("here ", initVector, securityKey);
+	decryptedData += decipher.final("utf8");
+	console.log("DECRYPTED DATA", decryptedData);
+	next(decryptedData);
+};
+const storeMessage = async (req, payload, wares, next) => {
+	console.log("in store");
 	if (wares.status != 200) {
+		console.log("not 200");
 		next(false, wares.status);
 	} else {
+		console.log("yes 200");
 		const messageData = {
 			message: payload.messagePayload,
 			messageType: payload.messageType,
 			sender: req.session.phoneNumberID,
-			receiver: payload.contactNumber,
-			status: true
+			receiver: payload.contactNumber
 		};
 		const initVector = crypto.randomBytes(16);
 		const securityKey = crypto.randomBytes(32);
-
+		const count = await Message.find({
+			user_wabaID: req.session.wabaID,
+			phoneNumber: payload.contactNumber
+		}).count();
+		console.log("COUNNNNNNNT", count);
 		try {
 			const cipher = crypto.createCipheriv(process.env.ALGORITHM, securityKey, initVector);
+			console.log("in try");
 			let encryptedData = cipher.update(JSON.stringify(messageData), "utf-8", "hex");
 			encryptedData += cipher.final("hex");
 			const message = new Message({
-				message_data: encryptedData
+				user_wabaID: req.session.wabaID,
+				phoneNumber: payload.contactNumber,
+				message_data: encryptedData,
+				sent_or_received: "sent",
+				// salt: initVector.toString("hex") + "-" + securityKey.toString("hex")
+				salt: {
+					vectoriv: initVector.toString("hex"),
+					vectorkey: securityKey.toString("hex")
+				},
+				count: count
 			});
 			//STORE THIS OBJECT IN DB
+			console.log("EEEEEEEE", encryptedData);
 			message.save(async (err, newMessage) => {
 				if (err) {
-					// console.log(err);
+					console.log("err in msg save");
 					next(false, 400);
 				} else {
 					if (newMessage) {
-						// console.log("NEWMESSAGE", newMessage);
+						console.log("NEWMESSAGE", newMessage);
 						try {
-							const decipher = crypto.createDecipheriv(process.env.ALGORITHM, securityKey, initVector);
-							let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
-							decryptedData += decipher.final("utf8");
-							console.log("DECRYPTED DATA", JSON.parse(decryptedData));
-							next(true, 200, JSON.parse(decryptedData));
+							decryptMessage({ message: encryptedData, salt: newMessage.salt }, (mydata) => {
+								next(true, 200, JSON.parse(mydata));
+							});
 						} catch (e) {
 							next(false, 500);
 						}
 					} else {
+						console.log("no new message");
 						next(false, 500);
 					}
 				}
@@ -304,6 +334,7 @@ exports.sendFileMessage = async (req, res) => {
 	});
 };
 
+//ANCHOR get message
 exports.getMessages = async (req, res) => {
 	/*
 	 * Sent Messages,
@@ -311,10 +342,67 @@ exports.getMessages = async (req, res) => {
 	 * API CALL: GET .../api/messages/<Phone-Number>
 	 */
 
-	const phoneNumber = "91" + req.params.id;
+	const phoneNumber = req.params.id;
 	try {
-		const messages = await Message.find({ user_wabaID: process.env.user_wabaID, phoneNumber: phoneNumber }).sort({ timeStamp: "-1" });
-		res.send(messages);
+		const messages = await Message.find({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber }).sort({ timeStamp: "-1" });
+		let arr = [];
+		// console.log(messages.length);
+		messages.map((msg) => {
+			console.log("IN DECRYPT", msg.salt);
+			const date = new Date(msg.timeStamp);
+			const totaltime = date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds();
+			decryptMessage({ message: msg.message_data, salt: msg?.salt }, (myres) => {
+				const dres = JSON.parse(myres);
+				if (msg.sent_or_received == "received") {
+					if (dres.type == "image") {
+						arr.push({
+							message: {
+								image: dres.image
+							},
+							messageType: dres.type,
+							time: totaltime,
+							count: msg.count,
+							type: "received"
+						});
+					} else if (dres.type == "document") {
+						arr.push({
+							message: {
+								document: dres.document
+							},
+							messageType: dres.type,
+							time: totaltime,
+							count: msg.count,
+							type: "received"
+						});
+					} else if (dres.type == "text") {
+						arr.push({
+							message: {
+								text: dres.text
+							},
+							messageType: dres.type,
+							time: totaltime,
+							count: msg.count,
+							type: "received"
+						});
+					}
+				} else {
+					arr.push({
+						message: dres.message,
+						messageType: dres.messageType,
+						time: totaltime,
+						count: msg.count,
+						type: "sent"
+					});
+				}
+			});
+		});
+		arr.sort((a, b) => {
+			return a.count - b.count;
+		});
+		return res.json({
+			stat: "success",
+			messages: arr
+		});
 	} catch (err) {
 		res.json({
 			stat: "error",

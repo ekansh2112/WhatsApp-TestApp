@@ -23,3 +23,4 @@ export const BroadcastLists_API = `${BACKEND}api/broadcast/all/`;
 export const SendMessage_API = `${BACKEND}api/messages/send/`;
 export const SendFileMessage_API = `${BACKEND}api/messages/send/file/`;
 export const SendBroadcastMessage_API = `${BACKEND}api/broadcast/send/`;
+export const GetMessages_API = `${BACKEND}api/messages/`;

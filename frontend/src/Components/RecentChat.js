@@ -29,7 +29,7 @@ export default function RecentChat({ chats, toggle, setToggle }) {
 									</figure>
 									<div className="text-sm">
 										<p className="text-xs mb-2">{chat.name.slice(2)}</p>
-										<p className="text-xs mt-2">{chat.data[0].detail.message.substring(0, 28)}</p>
+										<p className="text-xs mt-2">{chat.data[latestMessage].detail.message.substring(0, 28)}</p>
 									</div>
 								</div>
 							);

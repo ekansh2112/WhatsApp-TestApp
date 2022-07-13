@@ -39,7 +39,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 							.then((data) => {
 								data2 = {
-									type: "send",
+									type: "sent",
 									profile: {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,
@@ -117,7 +117,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 					searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 						.then((data) => {
 							data2 = {
-								type: "send",
+								type: "sent",
 								profile: {
 									phoneNumber: data[0].phoneNumber,
 									fname: data[0].fname,
@@ -159,7 +159,7 @@ export default function InputMessage({ latestChat, toggle, setToggle }) {
 						let myresult = JSON.parse(localStorage.getItem(`91${res?.broadcastList?.title}`)) || [];
 						let data2;
 						data2 = {
-							type: "send",
+							type: "sent",
 							profile: {
 								phoneNumbers: res.broadcastList.recipients,
 								fname: res.broadcastList.title,

@@ -1,12 +1,16 @@
-import React from "react";
-export default function Messages({ latestChat }) {
+import React, { useEffect, useRef } from "react";
+export default function Messages({ latestChat, toggle }) {
 	var regExp = /[a-zA-Z]/g;
+	const scrollToBottom = useRef(null);
+	useEffect(() => {
+		scrollToBottom.current.scrollIntoView();
+	}, [toggle]);
 	return (
 		<div className="pt-3 overflow-y-scroll removeScrollbar" style={{ height: "440px" }}>
 			{latestChat.data.map((messages, index) => {
 				if (regExp.test(latestChat.name)) {
 					return (
-						<div key={index} className={messages.type === "send" ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
+						<div key={index} className={messages.type === "sent" ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
 							{messages.detail.messageType === "image" ? (
 								<img className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-5 px-5" src={messages.detail.message} alt="image" />
 							) : messages.detail.messageType === "document" ? (
@@ -33,7 +37,7 @@ export default function Messages({ latestChat }) {
 					);
 				} else {
 					return (
-						<div key={index} className={messages.type === "send" ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
+						<div key={index} className={messages.type === "sent" ? "flex justify-end px-5 pb-2" : "flex justify-start px-5 pb-2"}>
 							{messages.detail.messageType === "image" ? (
 								<img className="rounded-xl bgOnMessage mt-1 max-w-md text-sm py-5 px-5" src={messages.detail.message} alt="image" />
 							) : messages.detail.messageType === "document" ? (
@@ -60,6 +64,7 @@ export default function Messages({ latestChat }) {
 					);
 				}
 			})}
+			<div className="invisible" ref={scrollToBottom}></div>
 		</div>
 	);
 }

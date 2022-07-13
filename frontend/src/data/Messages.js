@@ -1,4 +1,4 @@
-import { SendMessage_API, SendFileMessage_API, SendBroadcastMessage_API } from "../backend";
+import { SendMessage_API, SendFileMessage_API, SendBroadcastMessage_API, GetMessages_API } from "../backend";
 import { toast } from "react-toastify";
 export const newMessage = (message) => {
 	return fetch(SendMessage_API, {
@@ -55,7 +55,28 @@ export const newBroadcastMessage = (message) => {
 			return response;
 		})
 		.catch((err) => {
-			toast.error("Not able to send broadcast messages! Please try again!");
+			toast.error("Not able to send broadcast message! Please try again!");
+			return console.log(err);
+		});
+};
+export const getMessages = async (phoneNumber, next) => {
+	return await fetch(`${GetMessages_API}${phoneNumber}`, {
+		credentials: "include",
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+		},
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.then((response) => {
+			next(response.messages);
+			return response;
+		})
+		.catch((err) => {
+			toast.error("Not able to get message! Please try again!");
 			return console.log(err);
 		});
 };

@@ -30,7 +30,7 @@ export default function NewMessageContact({ ListOfContacts, toggle, setToggle })
 						searchContact({ phoneNumber: res?.message?.receiver.slice(2) })
 							.then((data) => {
 								data2 = {
-									type: "send",
+									type: "sent",
 									profile: {
 										phoneNumber: data[0].phoneNumber,
 										fname: data[0].fname,

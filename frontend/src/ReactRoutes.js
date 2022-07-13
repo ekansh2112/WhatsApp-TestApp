@@ -17,6 +17,7 @@ import NewMessageContact from "./Pages/NewMessageContact";
 import NewMessageBroadcast from "./Pages/NewMessageBroadcast";
 import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
+import { getMessages } from "./data/Messages";
 const ReactRoutes = () => {
 	// ANCHOR Props
 	const [crudContactList, setCrudContactList] = useState(false);
@@ -67,9 +68,9 @@ const ReactRoutes = () => {
 				arr.push({ name: key, data: JSON.parse(localStorage.getItem(key)) });
 			}
 		}
-		arr.sort((a, b) => {
-			return parseInt(b.data[b.data.length - 1].time) - parseInt(a.data[a.data.length - 1].time);
-		});
+		// arr.sort((a, b) => {
+		// 	return parseInt(b.data[b.data.length - 1].time) - parseInt(a.data[a.data.length - 1].time);
+		// });
 		setChats(arr);
 		if (JSON.stringify(localStorage.getItem("latestChatOnTop"))) {
 			setLatestChat(arr.find((data) => data?.name === localStorage.getItem("latestChatOnTop")));
@@ -77,6 +78,40 @@ const ReactRoutes = () => {
 			setLatestChat(arr[0]);
 		}
 	}, [toggle, authToggle]);
+	useEffect(() => {
+		let timer1 = setInterval(() => {
+			listOfContacts &&
+				listOfContacts.length &&
+				listOfContacts?.map((data) => {
+					return getMessages(data?.phoneNumber, (msg) => {
+						let arr = [];
+						msg &&
+							msg.length > 0 &&
+							msg.map((msgData, msgKey) => {
+								arr.push({
+									type: msgData.type,
+									time: msgData.time,
+									profile: {
+										phoneNumber: data.phoneNumber,
+										fname: data.fname,
+										lname: data.lname,
+										image: data.image,
+									},
+									detail: {
+										message: msgData.message,
+										messageType: msgData.messageType,
+									},
+									count: msgData.count,
+								});
+							});
+						if (arr.length > 0) localStorage.setItem(data?.phoneNumber, JSON.stringify(arr));
+					});
+				});
+		}, 2000);
+		return () => {
+			clearInterval(timer1);
+		};
+	}, [listOfContacts]);
 	return (
 		<BrowserRouter>
 			<Routes>

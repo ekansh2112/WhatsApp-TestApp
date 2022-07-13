@@ -24,7 +24,7 @@ export default function NewMessageBroadcast({ ListOfBroadcastLists, toggle, setT
 						let myresult = [];
 						let data2;
 						data2 = {
-							type: "send",
+							type: "sent",
 							profile: {
 								phoneNumbers: res.broadcastList.recipients,
 								fname: res.broadcastList.title,
