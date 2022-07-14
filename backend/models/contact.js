@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ContactSchema = new Schema({
@@ -8,50 +7,32 @@ const ContactSchema = new Schema({
 		trim: true,
 		required: true,
 	},
-
-
 	fname: {
 		type: String,
 		required: true,
 	},
-
-
 	lname: {
 		type: String,
-		default : "",
+		default: "",
 	},
-
-	
 	phoneNumber: {
 		type: String,
-		required: true
-
-    },
-
-
-	dob:{
+		required: true,
+	},
+	dob: {
 		type: Date,
 	},
-
-
-	image : {
+	image: {
 		type: String,
-		default : ""
-	},
-
-
-    email:{
-        type: String,
 		default: "",
-    },
-
-
-	address:{
+	},
+	email: {
 		type: String,
-		default : "",
-    }
+		default: "",
+	},
+	address: {
+		type: String,
+		default: "",
+	},
 });
-
-
-
-module.exports = mongoose.model('Contact', ContactSchema);
+module.exports = mongoose.model("Contact", ContactSchema);

@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import { toast } from "react-toastify";
-import { deleteContact } from "../data/Contacts";
-import { searchContact } from "../data/Contacts";
+import { searchContact, deleteContact } from "../data/Contacts";
 import Base from "../Base";
 export default function DeleteContacts({ setCrudContactList, crudContactList, ListOfContacts, toggle, setToggle }) {
 	const [res, setres] = useState(false);

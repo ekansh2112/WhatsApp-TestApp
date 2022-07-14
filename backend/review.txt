@@ -1,2 +1,0 @@
-1. delete contacts of a user when user gets deleted.
-2. user profile api -> not working

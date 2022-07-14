@@ -1,9 +1,7 @@
 const { db } = require("../models/broadcast-list");
 const BroadcastList = require("../models/broadcast-list");
 const Contact = require("../models/contact");
-const user_wabaID = "107654008661174"; //GET THE WABA ID of Business User
 
-// GET ../api/broadcast/all
 exports.braodcast_list = async (req, res) => {
 	if (!req.session?.wabaID) {
 		return res.status(401).json({
@@ -21,8 +19,6 @@ exports.braodcast_list = async (req, res) => {
 		});
 	}
 };
-
-// POST ../api/broadcast/create
 exports.create_broadcast = async (req, res) => {
 	const title = req.body.title;
 	let info = [];
@@ -49,7 +45,6 @@ exports.create_broadcast = async (req, res) => {
 					title: req.body.title,
 					recipients: info,
 				});
-
 				try {
 					const check2 = await braodcast_list.save();
 					return res.json({
@@ -76,16 +71,12 @@ exports.create_broadcast = async (req, res) => {
 		});
 	}
 };
-
-// PUT ../api/broadcast/update/:id -- Here :id is name of Broadcast List
 exports.update_broadcast = async (req, res) => {
 	return res.json({
 		stat: "IN PROGRESS",
 		message: "This is Incomplete, From : PUT - UPDATE BROADCAST LIST",
 	});
 };
-
-// DELETE ../api/broadcast/delete/:id -- Here :id is name of Broadcast List
 exports.delete_broadcast_list = async (req, res) => {
 	try {
 		const title = req.params.id;
@@ -108,8 +99,6 @@ exports.delete_broadcast_list = async (req, res) => {
 		});
 	}
 };
-
-// GET ../api/broadcast/:id  -- Here :id is name of Broadcast List
 exports.search_broadcast_list = async (req, res) => {
 	const title = req.params.id;
 	try {
@@ -123,7 +112,6 @@ exports.search_broadcast_list = async (req, res) => {
 				message: title + " doesn't exist in your broadcast lists. Please check the spelling and try again",
 			});
 		}
-
 		res.send(braodcast_list);
 	} catch (error) {
 		res.status(500).json({

@@ -8,26 +8,25 @@ exports.signUp = async (req, res) => {
 	if (isUser != undefined) {
 		return res.status(409).json({
 			stat: "error",
-			message: "User already exists"
+			message: "User already exists",
 		});
 	}
 	const userData = {
 		wabaID: req.body.wabaID,
-		accessToken: req.body.accessToken
-		// phoneNumber: req.body.phoneNumber,
+		accessToken: req.body.accessToken,
 	};
 	await axios
 		.get(`${process.env.WABAPI}/${userData.wabaID}/phone_numbers`, {
 			headers: {
 				Accept: "*/*",
-				Authorization: `Bearer ${userData.accessToken}`
-			}
+				Authorization: `Bearer ${userData.accessToken}`,
+			},
 		})
 		.then(async (wares) => {
 			if (wares.status != 200) {
 				return res.status(wares.status).json({
 					stat: "error",
-					message: wares.statusText
+					message: wares.statusText,
 				});
 			}
 			const arr = wares.data.data;
@@ -38,7 +37,7 @@ exports.signUp = async (req, res) => {
 					if (wares.status != 200) {
 						return res.status(wares.status).json({
 							stat: "error",
-							message: wares.statusText
+							message: wares.statusText,
 						});
 					}
 					profileData = wares.data.data?.[0];
@@ -47,25 +46,25 @@ exports.signUp = async (req, res) => {
 					...userData,
 					phoneNumber: req.body.phoneNumber,
 					phoneNumberID,
-					businessProfile: profileData
+					businessProfile: profileData,
 				});
 				user.setPassword(req.body.password);
 				user.save((err, newuser) => {
 					if (err) {
 						return res.status(400).json({
 							stat: "error",
-							message: err._message
+							message: err._message,
 						});
 					} else {
 						if (newuser) {
 							return res.json({
 								stat: "success",
-								message: "User created succesfully."
+								message: "User created succesfully.",
 							});
 						} else {
 							return res.status(500).json({
 								stat: "error",
-								message: "something went wrong, please try again"
+								message: "something went wrong, please try again",
 							});
 						}
 					}
@@ -73,7 +72,7 @@ exports.signUp = async (req, res) => {
 			} else
 				return res.status(404).json({
 					stat: "error",
-					message: "Business account with provided details, does not exist"
+					message: "Business account with provided details, does not exist",
 				});
 		})
 		.catch((err) => {
@@ -85,52 +84,46 @@ exports.signUp = async (req, res) => {
 			}
 			return res.status(err.response.status).json({
 				stat: "error",
-				message
+				message,
 			});
 		});
 };
-
 exports.signIn = async (req, res) => {
 	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
 	if (!user) {
 		return res.status(404).json({
 			stat: "error",
-			message: "User does not exist"
+			message: "User does not exist",
 		});
 	}
 	if (!user.validPassword(req.body.password)) {
 		return res.status(400).json({
 			stat: "error",
-			message: "Wrong Password"
+			message: "Wrong Password",
 		});
 	}
 	const userData = {
 		phoneNumberID: user.phoneNumberID,
 		accessToken: user.accessToken,
-		wabaID: user.wabaID
+		wabaID: user.wabaID,
 	};
-	// verifying whether registered user has valid business profile.
 	await axios
 		.get(`${process.env.WABAPI}/${userData.phoneNumberID}`, {
 			headers: {
 				Accept: "*/*",
-				Authorization: `Bearer ${userData.accessToken}`
-			}
+				Authorization: `Bearer ${userData.accessToken}`,
+			},
 		})
 		.then((wares) => {
 			if (wares.status != 200) {
 				return res.status(wares.status).json({
 					stat: "error",
-					message: wares.statusText
+					message: wares.statusText,
 				});
 			}
 			req.session.phoneNumberID = userData.phoneNumberID;
 			req.session.accessToken = userData.accessToken;
 			req.session.wabaID = user.wabaID;
-			/*
-			setting up data inside our session,
-			at this point, cookie will get set in the browser.
-			*/
 			return res.json({
 				stat: "success",
 				message: "User logged in",
@@ -138,45 +131,43 @@ exports.signIn = async (req, res) => {
 					user: {
 						wabaID: user.wabaID,
 						phoneNumberID: user.phoneNumberID,
-						businessProfile: user.businessProfile
-					}
-				}
+						businessProfile: user.businessProfile,
+					},
+				},
 			});
 		})
 		.catch((err) => {
 			console.log(err.response.status);
 			return res.status(err.response.status).json({
 				stat: "error",
-				message: "Something went wrong, please try again."
+				message: "Something went wrong, please try again.",
 			});
 		});
 };
-
 exports.logout = (req, res) => {
 	req.session.destroy((err) => {
 		if (err) {
 			return res.status(400).json({
 				stat: "error",
-				message: "Unable to logout, please try again."
+				message: "Unable to logout, please try again.",
 			});
 		}
 		res.clearCookie(process.env?.SESS_NAME);
 		return res.json({
 			stat: "success",
-			message: "User logged out successfully"
+			message: "User logged out successfully",
 		});
 	});
 };
-
 exports.isAuthenticated = (req, res) => {
 	if (req.session.phoneNumberID && req.session.accessToken) {
 		return res.json({
 			isAuth: true,
-			phoneNumberID: req.session.phoneNumberID
+			phoneNumberID: req.session.phoneNumberID,
 		});
 	} else {
 		return res.json({
-			isAuth: false
+			isAuth: false,
 		});
 	}
 };

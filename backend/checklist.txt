@@ -1,2 +1,0 @@
-1. image response on send message.
-2. broadcast message -> navneet

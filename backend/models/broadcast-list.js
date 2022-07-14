@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const broadcastListSchema = new Schema({
@@ -7,17 +7,13 @@ const broadcastListSchema = new Schema({
 		trim: true,
 		required: true,
 	},
-
-    title:{
-        type: String,
-        required: true,
-    },
-
-    recipients:{
-        type: Array,
-        required: true,
-    }
-
+	title: {
+		type: String,
+		required: true,
+	},
+	recipients: {
+		type: Array,
+		required: true,
+	},
 });
-
-module.exports = mongoose.model('BroadcastList', broadcastListSchema);
+module.exports = mongoose.model("BroadcastList", broadcastListSchema);

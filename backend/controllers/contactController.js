@@ -1,14 +1,11 @@
 const { db } = require("../models/contact");
 const Contact = require("../models/contact");
 const Message = require("../models/message");
-const user_wabaID = "107654008661174"; //GET THE WABA ID of Business User
 const { sendTemplate } = require("./message");
 
-// GET ../api/contacts/all
 exports.contact_list = async (req, res) => {
 	try {
 		const contacts = await Contact.find({ user_wabaID: req.session.wabaID });
-		//FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
 		res.send(contacts);
 	} catch (err) {
 		console.log(err);
@@ -18,8 +15,6 @@ exports.contact_list = async (req, res) => {
 		});
 	}
 };
-
-// POST ../api/contacts/create
 exports.create_contact = async (req, res) => {
 	const phoneNumber = "91" + req.body.phoneNumber;
 	if (phoneNumber.length != 12) {
@@ -33,7 +28,6 @@ exports.create_contact = async (req, res) => {
 			if (check == 0) {
 				const fname = req.body.fname;
 				const lname = req.body.lname;
-
 				const check2 = await Contact.find({ user_wabaID: req.session.wabaID, fname: fname, lname: lname }).count();
 				if (check2 != 0) {
 					res.json({
@@ -46,24 +40,14 @@ exports.create_contact = async (req, res) => {
 						fname: req.body.fname,
 						lname: req.body.lname,
 						phoneNumber: phoneNumber,
-						dob: req.body.dob, //Format: YYYY-MM-DD
+						dob: req.body.dob,
 						email: req.body.email,
 						address: req.body.address,
 						image: req.body.image,
 					});
-
 					try {
 						await contact.save();
-						sendTemplate(req, phoneNumber, (wares) => {
-							// REVIEW Send Template On New Contact
-							// if(wares.status!==200)
-							// {
-							//     return res.status(500).json({
-							// 		stat: "error",
-							// 		message: err,
-							// 	});
-							// }
-						});
+						sendTemplate(req, phoneNumber, (wares) => {});
 						return res.json({
 							stat: "success",
 							message: "Contact created successfully",
@@ -90,11 +74,8 @@ exports.create_contact = async (req, res) => {
 		}
 	}
 };
-
-// UPDATE ../api/contacts/update/:id -  - Search by Contact Number
 exports.update_contact = async (req, res) => {
 	const phoneNumber = "91" + req.params.id;
-
 	try {
 		const check = await Contact.find({ phoneNumber: phoneNumber, user_wabaID: req.session.wabaID }).count();
 		if (check == 0) {
@@ -104,25 +85,21 @@ exports.update_contact = async (req, res) => {
 			});
 		} else {
 			const details = {
-				user_wabaID: req.session.wabaID, //GET THE WABA ID of Business User
+				user_wabaID: req.session.wabaID,
 				fname: req.body.fname,
 				lname: req.body.lname,
 				phoneNumber: phoneNumber,
 				email: req.body.email,
 				address: req.body.address,
 			};
-
 			try {
 				const contacts = await Contact.updateOne({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber }, details);
-				//FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
-
 				if (contacts.matchedCount < 1)
 					return res.json({
 						stat: "error",
 						message: "Contact not found",
 					});
 				else if (contacts.modifiedCount >= 1)
-					//res.send(contacts);
 					return res.json({
 						stat: "success",
 						message: "Contact updated successfully",
@@ -146,8 +123,6 @@ exports.update_contact = async (req, res) => {
 		console.log(error);
 	}
 };
-
-// DELETE ../api/contacts/delete/:id - Search by Contact Number
 exports.delete_contact = async (req, res) => {
 	const phoneNumber = "91" + req.params.id;
 	try {
@@ -160,14 +135,12 @@ exports.delete_contact = async (req, res) => {
 		} else {
 			try {
 				const contacts = await Contact.deleteOne({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber });
-
 				if (contacts.acknowledged == true && contacts.deletedCount == 1) {
 					await Message.deleteOne({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber });
-						return res.json({
-							stat: "success",
-							message: phoneNumber + " is deleted from contacts successfully.",
-						});
-						
+					return res.json({
+						stat: "success",
+						message: phoneNumber + " is deleted from contacts successfully.",
+					});
 				}
 			} catch (err) {
 				return res.status(500).json({
@@ -183,13 +156,10 @@ exports.delete_contact = async (req, res) => {
 		});
 	}
 };
-
-// GET ../api/contacts/search/:id -  - Search by Contact Number
 exports.search_contact = async (req, res) => {
 	try {
 		const phoneNumber = "91" + req.params.id;
 		const contacts = await Contact.find({ user_wabaID: req.session.wabaID, phoneNumber: phoneNumber });
-		//FILTER CONTACTS OF INDIVIDUAL BY THEIR WABA ID
 		if (contacts.length == 0)
 			return res.json({
 				stat: "error",

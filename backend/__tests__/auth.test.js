@@ -8,12 +8,10 @@ describe("Authentication API", () => {
 		const mongoserver = await MongoMemoryServer.create();
 		await mongoose.connect(mongoserver.getUri());
 	});
-
 	afterAll(async () => {
 		await mongoose.disconnect();
 		await mongoose.connection.close();
 	});
-
 	describe("REGISTRATION", () => {
 		describe("Wrong input", () => {
 			it("when provided wrong waba id", async () => {
@@ -23,13 +21,12 @@ describe("Authentication API", () => {
 						wabaID: "102699879238080",
 						accessToken: process.env.TEST_TOKEN,
 						phoneNumber: "15550843602",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
 					.expect(400);
 			});
-
 			it("when provided wrong access token -> unauthorized", async () => {
 				await request(app)
 					.post("/api/signup/")
@@ -37,7 +34,7 @@ describe("Authentication API", () => {
 						wabaID: "101699879238080",
 						accessToken: process.env.TEST_TOKEN_WRONG,
 						phoneNumber: "15550843602",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
@@ -51,7 +48,7 @@ describe("Authentication API", () => {
 						wabaID: "101699879238080",
 						accessToken: process.env.TEST_TOKEN,
 						phoneNumber: "15550843600",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
@@ -67,7 +64,7 @@ describe("Authentication API", () => {
 						wabaID: "101699879238080",
 						accessToken: process.env.TEST_TOKEN,
 						phoneNumber: "15550843602",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
@@ -81,7 +78,7 @@ describe("Authentication API", () => {
 							wabaID: "101699879238080",
 							accessToken: process.env.TEST_TOKEN,
 							phoneNumber: "15550843602",
-							password: "testing123"
+							password: "testing123",
 						})
 						.set("Accept", "*/*")
 						.expect("Content-Type", "application/json; charset=utf-8")
@@ -89,9 +86,7 @@ describe("Authentication API", () => {
 				});
 			});
 		});
-		//TODO: email and password validation tests pending
 	});
-
 	describe("LOGIN", () => {
 		describe("Wrong details", () => {
 			it("POST -> wrong phone number", async () => {
@@ -99,7 +94,7 @@ describe("Authentication API", () => {
 					.post("/api/login/")
 					.send({
 						phoneNumber: "15551843602",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
@@ -110,35 +105,26 @@ describe("Authentication API", () => {
 					.post("/api/login/")
 					.send({
 						phoneNumber: "15550843602",
-						password: "testing13"
+						password: "testing13",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
 					.expect(400);
 			});
 		});
-
 		describe("Successful login", () => {
 			it("POST -> correct credentials", async () => {
 				await request(app)
 					.post("/api/login/")
 					.send({
 						phoneNumber: "15550843602",
-						password: "testing123"
+						password: "testing123",
 					})
 					.set("Accept", "*/*")
 					.expect("Content-Type", "application/json; charset=utf-8")
 					.expect(200);
 			});
-			//FIXME: session code testing not working
-			// it("GET -> check auth", async () => {
-			// 	const response = await request(app).get("/api/isauth/").expect("Content-Type", "application/json; charset=utf-8");
-			// 	expect(response.statusCode).toBe(200);
-			// 	expect(response.body.isAuth).toEqual(true);
-			// 	expect(response.body.phoneNumberID).not.toBe(undefined);
-			// });
 		});
-
 		describe("Check auth and logout", () => {
 			it("POST -> logout", async () => {
 				await request(app).post("/api/logout/").expect(200);

@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PlusIcon } from "@heroicons/react/solid";
 import Contact from "../Components/Contact";
 import { searchContact } from "../data/Contacts";
 import Base from "../Base";
-import { useState } from "react";
 export default function Contacts({ ListOfContacts }) {
 	const [contactDetail, setContactDetail] = useState(false);
 	const [conNumber, setConNumber] = useState();

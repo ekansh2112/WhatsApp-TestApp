@@ -12,11 +12,9 @@ const sendAnyMessage = async (req, messageBody, next) => {
 			next(res);
 		});
 };
-
-//REVIEW "ERROR CODES"
 exports.sendBroadCast = async (req, res) => {
 	const broadcastList = await BroadcastList.find({ user_wabaID: req.session.wabaID, title: req.body.title });
-	if (broadcastList && broadcastList.length>0) {
+	if (broadcastList && broadcastList.length > 0) {
 		const contactNumbers = broadcastList[0].recipients;
 		let count = contactNumbers.length;
 		for (let i = 0; i < count; i++) {

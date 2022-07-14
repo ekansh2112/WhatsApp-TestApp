@@ -19,16 +19,13 @@ import { contactList } from "./data/Contacts";
 import { broadcastLists } from "./data/BroadcastLists";
 import { getMessages } from "./data/Messages";
 const ReactRoutes = () => {
-	// ANCHOR Props
 	const [crudContactList, setCrudContactList] = useState(false);
 	const [crudBroadcastList, setCrudBroadcastList] = useState(false);
 	const [authToggle, setAuthToggle] = useState(false);
 	const [latestChat, setLatestChat] = useState();
 
-	// ANCHOR Cookies
 	const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
-	// ANCHOR User & Auth
 	function PrivateRoute({ children }) {
 		if (cookies.user) {
 			return children;
@@ -37,7 +34,6 @@ const ReactRoutes = () => {
 		}
 	}
 
-	// ANCHOR Contacts
 	const [listOfContacts, setListOfContacts] = useState([]);
 	useEffect(() => {
 		if (cookies.user) {
@@ -47,7 +43,6 @@ const ReactRoutes = () => {
 		}
 	}, [crudContactList, authToggle]);
 
-	// ANCHOR Broadcast Lists
 	const [listOfBroadcastLists, setListOfBroadcastLists] = useState([]);
 	useEffect(() => {
 		if (cookies.user) {
@@ -57,7 +52,6 @@ const ReactRoutes = () => {
 		}
 	}, [crudBroadcastList, authToggle]);
 
-	//ANCHOR Chats
 	const [chats, setChats] = useState([]);
 	const [toggle, setToggle] = useState(false);
 	useEffect(() => {

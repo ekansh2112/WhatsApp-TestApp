@@ -5,15 +5,13 @@ const connectDB = async () => {
 	try {
 		await mongoose.connect(process.env.MONGOURI, {
 			useNewUrlParser: true,
-			useUnifiedTopology: true
+			useUnifiedTopology: true,
 		});
 	} catch (err) {
 		console.error(err.message);
-		// exit process with failure
 		process.exit(1);
 	}
 };
-
 const port = process.env.PORT || 3000;
 const start = async () => {
 	try {
@@ -24,5 +22,4 @@ const start = async () => {
 		process.exit(1);
 	}
 };
-
 start();
